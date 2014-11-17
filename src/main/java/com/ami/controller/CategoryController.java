@@ -16,7 +16,7 @@ import com.ami.model.Status;
 import com.ami.services.CategoryServices;
 
 /*
- *  controller class for categories modify
+ *  controller class for categories 
  */
 @Controller
 @RequestMapping("/categories")
