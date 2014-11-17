@@ -27,6 +27,23 @@ public class UserServicesImpl implements UserServices {
 		list.add(id);
 		return genericDao.getEntity(query, list);
 	}
+	
+	@Override
+	public User getEntityByMailId(String MailId) throws Exception {
+		String query = "from User where email = ?";
+		List<Object> list = new ArrayList<>();
+		list.add(MailId);
+		return genericDao.getEntity(query, list);
+	}
+	
+	@Override
+	public User getEntityByFNLN(String firstName , String lastName) throws Exception {
+		String query = "from User where firstName = ? and lastName = ?";
+		List<Object> list = new ArrayList<>();
+		list.add(firstName);
+		list.add(lastName);
+		return genericDao.getEntity(query, list);
+	}
 
 	@Override
 	public List<User> getEntityList() throws Exception {
@@ -38,5 +55,23 @@ public class UserServicesImpl implements UserServices {
 	public boolean deleteEntity(long id) throws Exception {
 		return genericDao.deleteEntity(getEntityById(id));
 	}
+
+	
+	@Override
+	public int updateEntity(String query, List<Object> values) throws Exception {
+   	query = "UPDATE User set firstName = :fn "  + 
+                "WHERE id = :id";
+   //	values.add(e)
+   
+   //Query query = session.createQuery(hql);
+   //query.setParameter("salary", 1000);
+   //query.setParameter("employee_id", 10);
+   //int result = query.executeUpdate();
+   //System.out.println("Rows affected: " + result);    	
+		//return false;
+		return genericDao.updateEntity(query, values);
+	}
+	
+	
 
 }

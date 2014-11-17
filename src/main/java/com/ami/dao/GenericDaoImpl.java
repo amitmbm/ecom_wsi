@@ -25,27 +25,29 @@ public class GenericDaoImpl implements GenericDao {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
 			session.save(entity);
-			session.close();
 			tx.commit();
+			session.close();
 			return entity;
 		}catch(Exception e){
+			e.printStackTrace();
 			tx.rollback();
-		}
-		finally{
-
 		}
 		return null;
 	}
 
-
+/*
+ * (non-Javadoc)
+ * @see com.ami.dao.GenericDao#getEntity(java.lang.String, java.util.List)
+ * need to change it to just one value
+ */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getEntity(String query, List<Object> values) throws Exception {
 		T entity = null;
 		try{
 			session = sessionFactory.openSession();
-			tx = session.getTransaction();
-			session.beginTransaction();
+			//tx = session.getTransaction();
+			tx = session.beginTransaction();
 			Query sqlQuery = session.createQuery(query);
 
 			if (values != null && values.size() > 0){
@@ -55,6 +57,7 @@ public class GenericDaoImpl implements GenericDao {
 			}
 			entity = (T)sqlQuery.uniqueResult();
 			tx.commit();
+			session.close();
 		}catch(Exception e){
 			e.printStackTrace();
 			tx.rollback();	
@@ -81,7 +84,9 @@ public class GenericDaoImpl implements GenericDao {
 			}
 			entities = sqlQuery.list();
 			tx.commit();
+			session.close();
 		}catch(Exception e){
+			e.printStackTrace();
 			tx.rollback();	
 		}
 		return entities;
@@ -95,11 +100,38 @@ public class GenericDaoImpl implements GenericDao {
 			session.beginTransaction();
 			session.delete(delete);
 			tx.commit();
+			session.close();
 			return true;
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			tx.rollback();
 		}
 		return false;
-	};
+	}
+	
+    @Override
+	public <T> int updateEntity(String query, List<Object> values)throws Exception {  
+	     int result=0;
+    	try{
+			session = sessionFactory.openSession();
+			tx = session.getTransaction();
+			session.beginTransaction();
+			Query sqlQuery = session.createQuery(query);
+
+			if (values != null && values.size() > 0){
+				for (int i = 0; i < values.size() ; i++){
+					sqlQuery.setParameter(i, values.get(i));
+				}
+			}
+		    result = sqlQuery.executeUpdate();
+			tx.commit();
+			session.close();
+    	}
+    	catch(Exception e){
+			e.printStackTrace();
+			tx.rollback();	
+		}
+		return result;
+}
 }

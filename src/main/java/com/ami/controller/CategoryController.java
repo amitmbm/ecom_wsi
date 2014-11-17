@@ -27,7 +27,7 @@ public class CategoryController {
 
 //	static final Logger logger = Logger.getLogger(RestController.class);
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json" , consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody
 	Status createCategory(@RequestBody Category category) {
 		try {

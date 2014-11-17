@@ -1,38 +1,43 @@
 package com.ami.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ami.dao.CategoryDao;
+import com.ami.dao.GenericDao;
 import com.ami.model.Category;
 
 @Component
 public class CategoryServicesImpl implements CategoryServices {
 	
 	@Autowired
-	CategoryDao categoryDao;
+	GenericDao genericDao;
 	
 
 	@Override
-	public boolean addCategory(Category category) throws Exception {
-		return categoryDao.addCategory(category);
+	public Category addCategory(Category category) throws Exception {
+		return genericDao.addEntity(category);
 	}
 
 	@Override
 	public Category getCategoryById(long id) throws Exception {
-		return categoryDao.getCategoryById(id);
+		String query = "from Category where catId = ?";
+		List<Object> list = new ArrayList<>();
+		list.add(id);
+		return genericDao.getEntity(query, list);
 	}
 
 	@Override
 	public List<Category> getCategoryList() throws Exception {
-		return categoryDao.getCategoryList();
+		String query = "from Category";
+		return genericDao.getEntities(query, null);
 	}
 
 	@Override
 	public boolean deleteCategory(long id) throws Exception {
-		return categoryDao.deleteCategory(id);
+		return genericDao.deleteEntity(getCategoryById(id));
 	}
 
 }
