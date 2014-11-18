@@ -26,7 +26,17 @@ public class UserController {
 
 //	static final Logger logger = Logger.getLogger(RestController.class);
 
-	@RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE ,headers = "Accept=application/json")
+	/*
+	 *  Add user REST API and post body should be in below format
+	            {
+           			"firstName" : "rohit",
+  					"lastName" : "laddha" ,
+  					"email" : "rohit.laddha@kony.com",
+                    "phone" : "0888888888"
+                   }
+	 */
+	
+	@RequestMapping(method = RequestMethod.POST, consumes="application/json" )
 	public @ResponseBody
 	Status addUser(@RequestBody User user) {
 		try {
@@ -39,7 +49,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET ,  produces="application/json")
 	public @ResponseBody
 	User getUser(@PathVariable("id") long id) {
 		User user = null;
@@ -52,7 +62,11 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(value = "/name", method = RequestMethod.GET , headers = "Accept=application/json")
+	/*
+	 * how i can pass firstname and lastname in headers ?
+	 */
+	
+	@RequestMapping(value = "/name", method = RequestMethod.GET ,  produces="application/json")
 	public @ResponseBody
 	User getUser(@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName) {
@@ -66,7 +80,7 @@ public class UserController {
 		return user;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET ,  produces="application/json")
 	public @ResponseBody
 	List<User> getUsers() {
 
