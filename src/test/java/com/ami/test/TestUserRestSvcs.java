@@ -2,11 +2,15 @@ package com.ami.test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.ami.controller.UserController;
 
 /**
  * 
@@ -16,6 +20,16 @@ import org.testng.annotations.Test;
 public class TestUserRestSvcs {
 	
 	protected static MockMvc mockMvc;
+	
+	//@BeforeClass
+	static{
+		MockitoAnnotations.initMocks(null);
+		UserController instance = new UserController();
+		//ReflectionTestUtils.setField(instance, "socialContext", this);
+		mockMvc = MockMvcBuilders.standaloneSetup(instance).build();
+		System.out.println("moclmvc object is" + mockMvc);
+	}
+
 	
      @Test(enabled=true , description="used to create the user")
 	 private void createUser(String fisrtName , String lastName , String email , long phone) {

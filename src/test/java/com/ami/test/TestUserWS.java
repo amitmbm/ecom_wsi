@@ -13,7 +13,7 @@ public class TestUserWS {
 	@Test(enabled=true , description="used to create the user")
 	public void createUserWithValidData()
 	{
-		ResultActions resultActions = UserWSUtil.createUser("ABC", "DEF", "abc.xy@gmail.com", "908909099");
+		ResultActions resultActions = UserWSUtil.createUser("rohitladdhaladdha", "DEF", "abc.xy@gmail.com", "908909099");
 		Assert.assertEquals(resultActions.andReturn().getResponse().getStatus(), 200,"failed to create the User");
 	}
 	
@@ -46,9 +46,9 @@ public class TestUserWS {
 		Assert.assertEquals(resultActions.andReturn().getResponse().getStatus(), 200,"failed to create the User");
 	}
 	
-	/*
-	 * below is the delete related code
-	 */
+	
+	 //* below is the delete related code
+	 
 	
 	@Test(enabled=true , description="used to create the user")
 	public void deleteUserWithValidId()
@@ -78,9 +78,9 @@ public class TestUserWS {
 		Assert.assertEquals(resultActions.andReturn().getResponse().getStatus(), 200,"failed to create the User");
 	}
 	
-	/*
-	 * Read opartion(add more below acc to delete)
-	 */
+	
+	 //* Read opartion(add more below acc to delete)
+	 
 	
 	@Test(enabled=true , description="used to create the user")
 	public void ReadUserWithValidId()
@@ -96,9 +96,9 @@ public class TestUserWS {
 		Assert.assertEquals(resultActions.andReturn().getResponse().getStatus(), 200,"failed to create the User");
 	}
 	
-	/*
-	 *  update 
-	 */
+	
+	 //*  update 
+	 
 	
 	@Test(enabled=true , description="used to create the user")
 	public void updateUserWithValidId()

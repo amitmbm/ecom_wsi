@@ -36,14 +36,14 @@ public class UserController {
                    }
 	 */
 	
-	@RequestMapping(method = RequestMethod.POST, consumes="application/json" )
+	@RequestMapping(method = RequestMethod.POST , headers = "Accept=application/json" )
 	public @ResponseBody
 	Status addUser(@RequestBody User user) {
 		try {
 			dataServices.addEntity(user);
 			return new Status(1, "User added Successfully !");
 		} catch (Exception e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 			return new Status(0, e.toString());
 		}
 
