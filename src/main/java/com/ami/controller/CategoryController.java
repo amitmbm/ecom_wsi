@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ami.dto.CategoryDTO;
+import com.ami.exceptions.CustomException;
 import com.ami.model.Category;
 import com.ami.model.Status;
 import com.ami.services.CategoryServices;
@@ -27,13 +29,29 @@ public class CategoryController {
 
 //	static final Logger logger = Logger.getLogger(RestController.class);
 
-	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json" , consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody
-	Status createCategory(@RequestBody Category category) {
+	Status createCategory(@RequestBody CategoryDTO category) {
+		//CategoryServices categoryServices = new CategoryServicesImpl();
+		//System.out.println("category Svc object is" + categoryServices);
 		try {
-			categoryServices.addCategory(category);
+			Category categoryDao=null;
+			if(categoryServices.validateCategory(category))
+			{
+			    categoryDao = new Category();
+				categoryDao.setCatId(category.getCatguid());
+				categoryDao.setCategoryName(category.getCatName());
+				categoryDao.setDesc(category.getCatDesc());
+		
+			}
+			categoryServices.addCategory(categoryDao);
 			return new Status(1, "Category added Successfully !");
-		} catch (Exception e) {
+		}catch(CustomException e)
+		{
+			e.printStackTrace();
+			return new Status(0, e.toString());
+		}
+		catch (Exception e) {
 			 e.printStackTrace();
 			return new Status(0, e.toString());
 		}

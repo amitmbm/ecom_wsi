@@ -1,73 +1,72 @@
 package com.ami.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "category")
+@Table(name = "product_category")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Category  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	@Column(name = "cat_id")
-	private long catId;
+	@Column(name = "cat_guid")
+	private UUID catguid;
 
-	@Column(name = "category_name")
-	private String categoryName;
+	@Column(name = "cat_name")
+	private String catName;
 
-	@Column(name = "desc")
-	private String desc;
+	@Column(name = "cat_desc")
+	private String catDesc;
 
 	/**
 	 * @return the catId
 	 */
-	public long getCatId() {
-		return catId;
+	public UUID getCatId() {
+		return catguid;
 	}
 
 	/**
-	 * @param catId the catId to set
+	 * @param uuid the catId to set
 	 */
-	public void setCatId(long catId) {
-		this.catId = catId;
+	public void setCatId(UUID uuid) {
+		this.catguid = uuid;
 	}
 
 	/**
 	 * @return the categoryName
 	 */
 	public String getCategoryName() {
-		return categoryName;
+		return catName;
 	}
 
 	/**
 	 * @param categoryName the categoryName to set
 	 */
 	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+		this.catName = categoryName;
 	}
 
 	/**
 	 * @return the desc
 	 */
 	public String getDesc() {
-		return desc;
+		return catDesc;
 	}
 
 	/**
 	 * @param desc the desc to set
 	 */
 	public void setDesc(String desc) {
-		this.desc = desc;
+		this.catDesc = desc;
 	}
 	
 	

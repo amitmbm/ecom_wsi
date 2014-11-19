@@ -2,6 +2,7 @@ package com.ami.services;
 
 import java.util.List;
 
+import com.ami.dto.CategoryDTO;
 import com.ami.model.Category;
 
 public interface CategoryServices {
@@ -10,5 +11,7 @@ public interface CategoryServices {
 	public Category getCategoryById(long id) throws Exception;
 	public List<Category> getCategoryList() throws Exception;
 	public boolean deleteCategory(long id) throws Exception;
+	
+	public boolean validateCategory(CategoryDTO categoryDTO) throws Exception;
 
 }

@@ -107,5 +107,23 @@
         <artifactId>testng</artifactId>
         <version>6.3.1</version>
 </dependency>
+	<!-- for utility functions like StringUtils etc. -->
+	<dependency>
+		<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		<version>2.5</version>
+	</dependency>
+	<!-- dependency for mockmvc test framework -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<!-- below is required to remove the java.lang.ClassNotFoundException: javax.servlet.ServletContext. -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+	</dependency>
   </dependencies>
 </project>
