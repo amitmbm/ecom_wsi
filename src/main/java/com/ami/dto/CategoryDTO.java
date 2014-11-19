@@ -4,20 +4,20 @@ import java.util.UUID;
 
 public class CategoryDTO {
 	
-	UUID catguid;
+	String catguid;
 	String catName;
 	String catDesc;
 	/**
 	 * @return the catguid
 	 */
-	public UUID getCatguid() {
-		catguid= UUID.randomUUID();
+	public String getCatguid() {
+		catguid= UUID.randomUUID().toString();
 		return catguid;
 	}
 	/**
 	 * @param catguid the catguid to set
 	 */
-	public void setCatguid(UUID catguid) {
+	public void setCatguid(String catguid) {
 		this.catguid = catguid;
 	}
 	/**

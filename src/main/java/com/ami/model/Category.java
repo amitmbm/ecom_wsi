@@ -1,7 +1,6 @@
 package com.ami.model;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +18,7 @@ public class Category  implements Serializable{
 
 	@Id
 	@Column(name = "cat_guid")
-	private UUID catguid;
+	private String catguid;
 
 	@Column(name = "cat_name")
 	private String catName;
@@ -30,14 +29,14 @@ public class Category  implements Serializable{
 	/**
 	 * @return the catId
 	 */
-	public UUID getCatId() {
+	public String getCatId() {
 		return catguid;
 	}
 
 	/**
 	 * @param uuid the catId to set
 	 */
-	public void setCatId(UUID uuid) {
+	public void setCatId(String uuid) {
 		this.catguid = uuid;
 	}
 
