@@ -1,0 +1,61 @@
+package com.ami.test;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.ami.controller.CategoryController;
+import com.ami.services.CategoryServicesImpl;
+
+
+@WebAppConfiguration
+@ContextConfiguration({
+		"file:Src/main/webapp/WEB-INF/spring-config.xml"
+ })
+public class SetupTest extends AbstractTestNGSpringContextTests{
+
+	@Mock
+    private CategoryServicesImpl categoryServicesImpl;
+  
+    @InjectMocks
+    private CategoryController categoryController;
+ 
+    private MockMvc mockMvc;
+ 
+    @BeforeClass
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+ 
+        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+        
+        System.out.println("mockmvc" + mockMvc);
+ 
+      //  when(validator.supports(any(Class.class))).thenReturn(true);
+    }
+    
+    @Test
+    public void test1()
+    {
+    	String url="/categories";
+    	String payLoad = "{\"catName\":\"mobile\",\"catDesc\":\"mobileandtablet\" ,\"catguid\":\"abcd\"}";
+    	try {
+			mockMvc.perform(post(url).content(payLoad).contentType(MediaType.APPLICATION_JSON));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       // Assert.assertEquals(resultActions.andReturn().getResponse().getStatus(), 200,"failed to create the orchestration");
+    }
+ 
+  
+}

@@ -22,12 +22,15 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="annotatedClasses">
+		<!-- below is required as these are hibernate annoted class and component will not include these -->
+		 <property name="annotatedClasses">
 			<list>
-				<value>com.ami.model.User</value>
+				<value>com.ami.model.UserProfile</value> 
+				<value>com.ami.model.SubCategory</value> 
 				<value>com.ami.model.Category</value>
+				<value>com.ami.model.User</value>
 			</list>
-		</property>
+		</property> 
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>

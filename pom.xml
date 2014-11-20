@@ -119,11 +119,24 @@
 		<artifactId>spring-test</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
+	<!-- below is required to add the @Mock annotation to inject mock beans -->
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>1.9.5</version>
+	</dependency>
+	
 	<!-- below is required to remove the java.lang.ClassNotFoundException: javax.servlet.ServletContext. -->
 	<dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>javax.servlet-api</artifactId>
 		<version>3.0.1</version>
 	</dependency>
+	<!-- below is required to add the libarary related to JSON -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
   </dependencies>
 </project>

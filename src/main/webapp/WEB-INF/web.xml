@@ -4,6 +4,12 @@
 	version="2.5">
 
 	<display-name>Spring Maven Project with hibernate(mysql)</display-name>
+	<!-- Adding it to check whether using http://stackoverflow.com/questions/19291797/how-to-load-applicationcontext-xml , mockmvc is able
+	to load the service obj or not
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener> -->
 
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>

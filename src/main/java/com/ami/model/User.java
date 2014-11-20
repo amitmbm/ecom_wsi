@@ -4,73 +4,69 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User implements Serializable {
-
+public class User implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
-
+    
 	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private long id;
-
-	@Column(name = "first_name")
-	private String firstName;
-
-	@Column(name = "last_name")
-	private String lastName;
-
-	@Column(name = "email")
+	@Column(name = "user_email")
 	private String email;
 
-	@Column(name = "phone")
-	private String phone;
+	@Column(name = "user_passwd")
+	private String passwd;
+    
+	@Column(name = "is_registerd")
+	private byte isRegister;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
+	/**
+	 * @return the email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * @param email the email to set
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public String getPhone() {
-		return phone;
+	/**
+	 * @return the passwd
+	 */
+	public String getPasswd() {
+		return passwd;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	/**
+	 * @param passwd the passwd to set
+	 */
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
 	}
+
+	/**
+	 * @return the isRegister
+	 */
+	public byte getIsRegister() {
+		return isRegister;
+	}
+
+	/**
+	 * @param isRegister the isRegister to set
+	 */
+	public void setIsRegister(byte isRegister) {
+		this.isRegister = isRegister;
+	}
+	
+    
 }

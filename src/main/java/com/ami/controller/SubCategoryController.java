@@ -17,42 +17,36 @@ import com.ami.model.Category;
 import com.ami.model.Status;
 import com.ami.services.CategoryServices;
 
-/*
- *  controller class for categories
- */
 @Controller
-@RequestMapping("/categories")
-public class CategoryController {
-	
+@RequestMapping("/categories/{catguid}/subcategories")
+public class SubCategoryController {
+
 	@Autowired
 	CategoryServices categoryServices;
 
-//	static final Logger logger = Logger.getLogger(RestController.class);
+	// static final Logger logger = Logger.getLogger(RestController.class);
 
-	@RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody
 	Status createCategory(@RequestBody CategoryDTO category) {
-		//CategoryServices categoryServices = new CategoryServicesImpl();
-		//System.out.println("category Svc object is" + categoryServices);
+		// CategoryServices categoryServices = new CategoryServicesImpl();
+		// System.out.println("category Svc object is" + categoryServices);
 		try {
-			Category categoryDao=null;
-			if(categoryServices.validateCategory(category))
-			{
-			    categoryDao = new Category();
+			Category categoryDao = null;
+			if (categoryServices.validateCategory(category)) {
+				categoryDao = new Category();
 				categoryDao.setCatId(category.getCatguid());
 				categoryDao.setCategoryName(category.getCatName());
 				categoryDao.setDesc(category.getCatDesc());
-		
+
 			}
 			categoryServices.addCategory(categoryDao);
 			return new Status(1, "Category added Successfully !");
-		}catch(CustomException e)
-		{
+		} catch (CustomException e) {
 			e.printStackTrace();
 			return new Status(0, e.toString());
-		}
-		catch (Exception e) {
-			 e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 			return new Status(0, e.toString());
 		}
 

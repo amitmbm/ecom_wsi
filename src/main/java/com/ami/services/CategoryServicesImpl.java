@@ -26,8 +26,8 @@ public class CategoryServicesImpl implements CategoryServices {
 	}
 
 	@Override
-	public Category getCategoryById(long id) throws Exception {
-		String query = "from Category where catId = ?";
+	public Category getCategoryById(String id) throws Exception {
+		String query = "from Category where catguid = ?";
 		List<Object> list = new ArrayList<>();
 		list.add(id);
 		return genericDao.getEntity(query, list);
@@ -40,14 +40,15 @@ public class CategoryServicesImpl implements CategoryServices {
 	}
 
 	@Override
-	public boolean deleteCategory(long id) throws Exception {
+	public boolean deleteCategory(String id) throws Exception {
 		return genericDao.deleteEntity(getCategoryById(id));
 	}
 
 	@Override
 	public boolean validateCategory(CategoryDTO categoryDTO) throws Exception {
+		System.out.println("inside");
 		String catName = categoryDTO.getCatName();
-		
+		System.out.println("going inside the validate call");
 		if (catName.isEmpty() || catName==null) 
 		{
 			throw new CustomException("category Name cannot be empty" , 001);
