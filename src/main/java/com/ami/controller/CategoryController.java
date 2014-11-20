@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ami.creational.ILogger;
+import com.ami.creational.LoggerManager;
 import com.ami.dto.CategoryDTO;
+import com.ami.enums.LogLevel;
 import com.ami.exceptions.CustomException;
 import com.ami.model.Category;
 import com.ami.model.Status;
@@ -27,13 +30,13 @@ public class CategoryController {
 	@Autowired
 	CategoryServices categoryServices;
 
-//	static final Logger logger = Logger.getLogger(RestController.class);
+	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(CategoryController.class.getName());
 
 	@RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+	//@ResponseStatus(value=HttpStatus.CREATED , reason="category Added")
 	public @ResponseBody
 	Status createCategory(@RequestBody CategoryDTO category) {
-		//CategoryServices categoryServices = new CategoryServicesImpl();
-		//System.out.println("category Svc object is" + categoryServices);
+		logger.logMessage(LogLevel.INFO,"CategoryController called ");
 		try {
 			Category categoryDao=null;
 			if(categoryServices.validateCategory(category))
@@ -42,17 +45,23 @@ public class CategoryController {
 				categoryDao.setCatId(category.getCatguid());
 				categoryDao.setCategoryName(category.getCatName());
 				categoryDao.setDesc(category.getCatDesc());
-		
+				categoryServices.addCategory(categoryDao);
+				return new Status(1, "Category added Successfully !");
 			}
-			categoryServices.addCategory(categoryDao);
-			return new Status(1, "Category added Successfully !");
+			else
+			{
+				return new Status(1, "Category added Successfully !");	
+			}
 		}catch(CustomException e)
 		{
 			e.printStackTrace();
+			logger.logException(LogLevel.ERROR, "exception occured while creating a category", e);
 			return new Status(0, e.toString());
+			
 		}
 		catch (Exception e) {
 			 e.printStackTrace();
+			 logger.logException(LogLevel.ERROR, "exception occured while creating a category", e);
 			return new Status(0, e.toString());
 		}
 
