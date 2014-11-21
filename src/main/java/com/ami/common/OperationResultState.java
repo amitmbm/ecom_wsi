@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 /*
  * Author : Amit Khandelwal 
+ * Thsi class is use to set the common peroperty , which every REST response will have.
  */
 public class OperationResultState extends JSONObject {
 

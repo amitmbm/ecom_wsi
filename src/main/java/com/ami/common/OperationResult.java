@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 /**
  * @author Amit Khandelwal
+ * This class is useful to set the REST opartions reult .
  *
  * @param <T>
  */
