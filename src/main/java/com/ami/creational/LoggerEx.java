@@ -21,6 +21,7 @@ class LoggerEx {
          }
          catch(Exception e)
          {
+        	 System.out.println("Exception");
         	 logger.logException(LogLevel.ERROR, "exception came", e);
          }
 	}	

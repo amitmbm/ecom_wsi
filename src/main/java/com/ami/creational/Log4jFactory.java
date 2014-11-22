@@ -5,9 +5,12 @@ package com.ami.creational;
  * @author (KH1871) Amit Khandelwal
  *
  */
-public class Log4jFactory implements ILoggerFactory {
+public enum Log4jFactory implements ILoggerFactory {
+	INSTANCE;
 
-	public ILogger getLogger(String loggerName) {		
+	@Override
+	public ILogger getLogger(String loggerName) {
+		// TODO Auto-generated method stub
 		return new Log4jLogger(loggerName);
 	}
 }

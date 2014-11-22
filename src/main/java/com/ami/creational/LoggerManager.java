@@ -10,7 +10,6 @@ package com.ami.creational;
 public class LoggerManager
 {
  public static ILoggerFactory getLoggerFactory() {
-		//right now default to log4j logger
-		return new Log4jFactory();
+		return Log4jFactory.INSTANCE;
 	}
 }

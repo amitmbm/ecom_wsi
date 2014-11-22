@@ -1,49 +1,53 @@
 package com.ami.dto;
 
-import java.util.UUID;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import com.ami.entity.ProductCategory;
+
+@XmlRootElement(name = "category")
 public class CategoryDTO {
 	
-	String catguid;
-	String catName;
-	String catDesc;
-	/**
-	 * @return the catguid
-	 */
+	private String catguid;
+	private String catname;
+	private String catdesc;
+	
+	public CategoryDTO() {
+	}
+	
+	public CategoryDTO(ProductCategory productCategory) {
+		setCatdesc(productCategory.getCatDesc());
+		setCatguid(productCategory.getCatGuid());
+		setCatname(productCategory.getCatName());
+	}
+
+	@XmlElement(name = "id")
 	public String getCatguid() {
-		catguid= UUID.randomUUID().toString();
 		return catguid;
 	}
-	/**
-	 * @param catguid the catguid to set
-	 */
+
 	public void setCatguid(String catguid) {
 		this.catguid = catguid;
 	}
-	/**
-	 * @return the catName
-	 */
-	public String getCatName() {
-		return catName;
+
+	@XmlElement(name = "name")
+	public String getCatname() {
+		return catname;
 	}
-	/**
-	 * @param catName the catName to set
-	 */
-	public void setCatName(String catName) {
-		this.catName = catName;
+
+	public void setCatname(String catname) {
+		this.catname = catname;
 	}
-	/**
-	 * @return the catDesc
-	 */
-	public String getCatDesc() {
-		return catDesc;
+
+	@XmlElement(name = "desc")
+	public String getCatdesc() {
+		return catdesc;
 	}
-	/**
-	 * @param catDesc the catDesc to set
-	 */
-	public void setCatDesc(String catDesc) {
-		this.catDesc = catDesc;
+
+	public void setCatdesc(String catdesc) {
+		this.catdesc = catdesc;
 	}
 	
-
+	
+	
 }

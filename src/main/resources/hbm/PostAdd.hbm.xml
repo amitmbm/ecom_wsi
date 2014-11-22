@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 22, 2014 5:45:05 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.ami.entity.PostAdd" table="post_add" catalog="olxm">
+        <id name="addGuid" type="string">
+            <column name="add_guid" length="36" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="productSubCategory" class="com.ami.entity.ProductSubCategory" fetch="select">
+            <column name="sub_cat_guid" length="36" not-null="true" />
+        </many-to-one>
+        <many-to-one name="users" class="com.ami.entity.Users" fetch="select">
+            <column name="user_email" length="128" not-null="true" />
+        </many-to-one>
+        <many-to-one name="productSubCategoryType" class="com.ami.entity.ProductSubCategoryType" fetch="select">
+            <column name="type_guid" length="36" not-null="true" />
+        </many-to-one>
+        <property name="addDesc" type="string">
+            <column name="add_desc" length="2048" not-null="true" />
+        </property>
+        <property name="price" type="int">
+            <column name="price" not-null="true" unique="true" />
+        </property>
+        <property name="negotiable" type="java.lang.Byte">
+            <column name="negotiable" />
+        </property>
+    </class>
+</hibernate-mapping>

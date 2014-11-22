@@ -4,26 +4,38 @@
 	version="2.5">
 
 	<display-name>Spring Maven Project with hibernate(mysql)</display-name>
-	<!-- Adding it to check whether using http://stackoverflow.com/questions/19291797/how-to-load-applicationcontext-xml , mockmvc is able
-	to load the service obj or not
+	<!-- Adding it to check whether using http://stackoverflow.com/questions/19291797/how-to-load-applicationcontext-xml 
+		, mockmvc is able to load the service obj or not <listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
+		</listener> -->
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:ApplicationContext.xml
+		</param-value>
+	</context-param>
 	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener> -->
-
+	</listener>
+	
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
 		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring-config.xml</param-value>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>com.ami.controller</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>mvc-dispatcher</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>

@@ -134,4 +134,21 @@ public class GenericDaoImpl implements GenericDao {
 		}
 		return result;
 }
+
+	@Override
+	public <T> T updateEntity(T entity) throws Exception {
+
+		try{
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			session.update(entity);
+			tx.commit();
+			session.close();
+			return entity;
+		}catch(Exception e){
+			e.printStackTrace();
+			tx.rollback();
+		}
+		return null;
+	}
 }
