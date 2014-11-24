@@ -1,58 +1,63 @@
 package com.ami.dto;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.ami.entity.UserProfileId;
+
+@XmlRootElement(name = "userprofile")
 public class UserProfileDTO {
 
-	String firstName;
-	String lastName;
-	String phone;
-	String email;
-	/**
-	 * @return the firstName
-	 */
+	private String firstName;
+	private String lastName;
+	private Long phoneNum;
+	private String userEmail;
+	
+	public UserProfileDTO() {
+	}
+	
+	public UserProfileDTO(UserProfileId UserProfileId)
+	{
+	  setFirstName(UserProfileId.getFirstName());
+	  setLastName(UserProfileId.getLastName());
+	  setPhoneNum(UserProfileId.getPhoneNum());
+	  setUserEmail(UserProfileId.getUserEmail());
+	}
+
+	@XmlElement(name = "first_name")
 	public String getFirstName() {
 		return firstName;
 	}
-	/**
-	 * @param firstName the firstName to set
-	 */
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	/**
-	 * @return the lastName
-	 */
+
+	@XmlElement(name = "last_name")
 	public String getLastName() {
 		return lastName;
 	}
-	/**
-	 * @param lastName the lastName to set
-	 */
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	/**
-	 * @return the phone
-	 */
-	public String getPhone() {
-		return phone;
+
+	@XmlElement(name = "phoneno")
+	public Long getPhoneNum() {
+		return phoneNum;
 	}
-	/**
-	 * @param phone the phone to set
-	 */
-	public void setPhone(String phone) {
-		this.phone = phone;
+
+	public void setPhoneNum(Long phoneNum) {
+		this.phoneNum = phoneNum;
 	}
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
+
+	@XmlElement(name = "mailid")
+	public String getUserEmail() {
+		return userEmail;
 	}
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	
 	

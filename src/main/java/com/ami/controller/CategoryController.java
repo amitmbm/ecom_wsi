@@ -266,7 +266,7 @@ public class CategoryController {
 		Response response = null;
 		try {
 			categoryServices.deleteCategory(catguid);
-			response = Response.status(Response.Status.GONE)
+			response = Response.status(Response.Status.OK)
 					.entity("Category deleted successfully").build();
 		} catch (ResourceNotFoundException re) {
 			response = Response.status(Response.Status.NOT_FOUND)
@@ -288,7 +288,7 @@ public class CategoryController {
 		Response response = null;
 		try {
 			categoryServices.deleteSubCategory(subcatguid);
-			response = Response.status(Response.Status.GONE)
+			response = Response.status(Response.Status.OK)
 					.entity("Sub-Category Deleted Successfully::").build();
 		} catch (ResourceNotFoundException re) {
 			response = Response.status(Response.Status.NOT_FOUND)
@@ -378,7 +378,7 @@ public class CategoryController {
 		Response response = null;
 		try {
 			categoryServices.deleteSubCategoryType(typeGuid);
-			response = Response.status(Response.Status.GONE)
+			response = Response.status(Response.Status.OK)
 					.entity("Sub-Category-type Deleted Successfully::").build();
 		} catch (ResourceNotFoundException re) {
 			response = Response.status(Response.Status.NOT_FOUND)
