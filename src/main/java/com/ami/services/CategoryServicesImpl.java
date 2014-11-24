@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 import com.ami.dao.GenericDao;
 import com.ami.dto.CategoryDTO;
 import com.ami.dto.SubCategoryDTO;
+import com.ami.dto.TypeDTO;
 import com.ami.entity.ProductCategory;
 import com.ami.entity.ProductSubCategory;
+import com.ami.entity.ProductSubCategoryType;
 import com.ami.exceptions.CustomException;
 import com.ami.exceptions.ResourceNotFoundException;
 
@@ -24,6 +26,7 @@ public class CategoryServicesImpl implements CategoryServices {
 	GenericDao genericDao;
 	
 
+	// Adding a Category
 	@Override
 	public ProductCategory addCategory(CategoryDTO categoryDTO) throws Exception {
 		ProductCategory productCategory = new ProductCategory();
@@ -36,6 +39,7 @@ public class CategoryServicesImpl implements CategoryServices {
 		return genericDao.addEntity(productCategory);
 	}
 
+	// updating a Category
 	@Override
 	public ProductCategory updateCategory(CategoryDTO categoryDTO, String catGuid) throws Exception {
 		try{
@@ -52,7 +56,7 @@ public class CategoryServicesImpl implements CategoryServices {
 		}	
 	}
 	
-	
+	// Adding a Sub-Category
 	@Override
 	public ProductSubCategory addSubCategory(SubCategoryDTO subCategoryDTO, String catGuid) throws Exception {
 		ProductCategory productCategory = getCategoryById(catGuid);
@@ -67,6 +71,24 @@ public class CategoryServicesImpl implements CategoryServices {
 		return genericDao.addEntity(productSubCategory);
 	}
 	
+	// updating a Sub-Category
+	@Override
+	public ProductSubCategory updateSubCategory(SubCategoryDTO subCategoryDTO, String subCatGuid) throws Exception {
+		try{
+			ProductSubCategory productSubCategory = getSubCategoryById(subCatGuid);
+			if (subCategoryDTO.getSubCatDesc() != null)
+				productSubCategory.setSubCatDesc(subCategoryDTO.getSubCatDesc());
+			
+			if(subCategoryDTO.getSubCatName() != null)
+				productSubCategory.setSubCatName(subCategoryDTO.getSubCatName());
+			
+			return genericDao.updateEntity(productSubCategory);
+		}catch(ResourceNotFoundException re){
+			throw re;
+		}	
+	}
+	
+	// Get a Category by Id
 	@Override
 	public ProductCategory getCategoryById(String id) throws Exception {
 		String query = "from ProductCategory where catGuid = ?";
@@ -74,21 +96,53 @@ public class CategoryServicesImpl implements CategoryServices {
 		list.add(id);
 		ProductCategory productCategory = genericDao.getEntity(query, list);
 		if (productCategory == null)
-			throw new ResourceNotFoundException("id :"+id+" not exist");
+			throw new ResourceNotFoundException("Cat-id :"+ id+ " not exist");
 		return productCategory;
 	}
+	
+	// Get a Sub-Category by Id
+	@Override
+	public ProductSubCategory getSubCategoryById(String id) throws Exception {
+		String query = "from ProductSubCategory where subCatGuid = ?";
+		List<Object> list = new ArrayList<Object>();
+		list.add(id);
+		ProductSubCategory productSubCategory = genericDao.getEntity(query,
+				list);
+		if (productSubCategory == null)
+			throw new ResourceNotFoundException("Sub-catguid :" + id
+					+ " not exist");
+		return productSubCategory;
+	}
 
+
+	// get Category List	
 	@Override
 	public List<ProductCategory> getCategoryList() throws Exception {
-		String query = "from Category";
+		String query = "from ProductCategory";
 		return genericDao.getEntities(query, null);
 	}
 
+	// get Sub-Category List	
+	@Override
+	public List<ProductSubCategory> getSubCategoryList() throws Exception {
+		String query = "from ProductSubCategory";
+		return genericDao.getEntities(query, null);
+	}
+	
+	// delete Category by Id
 	@Override
 	public boolean deleteCategory(String id) throws Exception {
 		return genericDao.deleteEntity(getCategoryById(id));
 	}
+	
+	// delete SubCategory by Id
+		@Override
+		public boolean deleteSubCategory(String id) throws Exception {
+			return genericDao.deleteEntity(getSubCategoryById(id));
+		}
 
+		
+		
 	@Override
 	public boolean validateCategory(CategoryDTO categoryDTO) throws CustomException {
 		System.out.println("inside");
@@ -117,5 +171,62 @@ public class CategoryServicesImpl implements CategoryServices {
 		}
 		return true;
 	}
+
+	// Get a Sub-Category-type by Id
+		@Override
+		public ProductSubCategoryType getSubCategoryTypeById(String typeGuid) throws Exception {
+			String query = "from ProductSubCategoryType where typeGuid = ?";
+			List<Object> list = new ArrayList<Object>();
+			list.add(typeGuid);
+			ProductSubCategoryType productSubCategoryType = genericDao.getEntity(query,
+					list);
+			if (productSubCategoryType == null)
+				throw new ResourceNotFoundException("type guid :" + typeGuid
+						+ " not exist");
+			return productSubCategoryType;
+		}
+		
+	// Add a Type in sub-category
+	@Override
+	public ProductSubCategoryType addSubCategoryType(TypeDTO typeDTO , String subCatGuid) throws Exception {
+		ProductSubCategory productSubCategory = getSubCategoryById(subCatGuid);
+		ProductSubCategoryType productSubCategoryType = new ProductSubCategoryType();
+		productSubCategoryType.setProductSubCategory(productSubCategory);
+		productSubCategoryType.setTypeName(typeDTO.getTypeName());
+		
+		String typeguid= UUID.randomUUID().toString();
+		productSubCategoryType.setTypeGuid(typeguid);
+		
+		return genericDao.addEntity(productSubCategoryType);
+	}
+
+	@Override
+	public ProductSubCategoryType updateSubCategoryType(TypeDTO typeDTO,
+			String typeGuid) throws Exception {
+		try{
+			ProductSubCategoryType productSubCategoryType = getSubCategoryTypeById(typeGuid);
+			if (typeDTO.getTypeName()!= null)
+				productSubCategoryType.setTypeName(typeDTO.getTypeName());
+						
+			return genericDao.updateEntity(productSubCategoryType);
+		}catch(ResourceNotFoundException re){
+			throw re;
+		}	
+	}
+
+
+	@Override
+	public List<ProductSubCategoryType> getSubCategoryTypeList()
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteSubCategoryType(String typeGuid) throws Exception {
+		return genericDao.deleteEntity(getSubCategoryTypeById(typeGuid));
+	}
+
+		
 }
 

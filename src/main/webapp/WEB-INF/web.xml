@@ -4,10 +4,7 @@
 	version="2.5">
 
 	<display-name>Spring Maven Project with hibernate(mysql)</display-name>
-	<!-- Adding it to check whether using http://stackoverflow.com/questions/19291797/how-to-load-applicationcontext-xml 
-		, mockmvc is able to load the service obj or not <listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
-		</listener> -->
-
+	
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -19,6 +16,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<!-- here we are using the jersey and springs servlet , hence on top we have to define where is our application context and contextloader is defined -->
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
@@ -26,6 +24,7 @@
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>com.ami.controller</param-value>
 		</init-param>
+		<!-- json.pojomapping is required to understand the jersey about the JSON and pojo mapping -->
 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 			<param-value>true</param-value>

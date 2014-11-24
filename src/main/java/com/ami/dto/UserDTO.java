@@ -1,43 +1,52 @@
 package com.ami.dto;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.ami.entity.Users;
+
+@XmlRootElement(name = "user")
 public class UserDTO {
 
-	String emailId;
-	String passwd;
-	Byte isRegister;
-	/**
-	 * @return the emailId
-	 */
+	private String emailId;
+	private String passwd;
+	private Byte isRegister;
+	
+	public UserDTO()
+	{
+		
+	}
+	
+	public UserDTO(Users users)
+	{
+		setEmailId(users.getUserEmail());
+		setPasswd(users.getUserPasswd());
+		setIsRegister(users.getIsRegisterd());
+	}
+	
+	@XmlElement(name = "mailid")
 	public String getEmailId() {
 		return emailId;
 	}
-	/**
-	 * @param emailId the emailId to set
-	 */
+	
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	/**
-	 * @return the passwd
-	 */
+	
+	@XmlElement(name = "passwd")
 	public String getPasswd() {
 		return passwd;
 	}
-	/**
-	 * @param passwd the passwd to set
-	 */
+	
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
-	/**
-	 * @return the isRegister
-	 */
+	
+	@XmlElement(name = "isregister")
 	public Byte getIsRegister() {
 		return isRegister;
 	}
-	/**
-	 * @param isRegister the isRegister to set
-	 */
+	
 	public void setIsRegister(Byte isRegister) {
 		this.isRegister = isRegister;
 	}
