@@ -7,6 +7,7 @@ import com.ami.entity.ProductSubCategory;
 
 @XmlRootElement(name = "subcategory")
 public class SubCategoryDTO {
+	
 	private String subCatGuid;
 	private String subCatName;
 	private String subCatDesc;
@@ -15,9 +16,9 @@ public class SubCategoryDTO {
 	}
 	
 	public SubCategoryDTO(ProductSubCategory productSubCategory) {
-		setSubCatDesc(productSubCategory.getSubCatDesc());
 		setSubCatGuid(productSubCategory.getSubCatGuid());
 		setSubCatName(productSubCategory.getSubCatName());
+		setSubCatDesc(productSubCategory.getSubCatDesc());
 	}
 
 	@XmlElement(name = "id")

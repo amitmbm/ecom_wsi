@@ -16,12 +16,12 @@ public class UserProfileDTO {
 	public UserProfileDTO() {
 	}
 	
-	public UserProfileDTO(UserProfileId UserProfileId)
+	public UserProfileDTO(UserProfileId userProfileId)
 	{
-	  setFirstName(UserProfileId.getFirstName());
-	  setLastName(UserProfileId.getLastName());
-	  setPhoneNum(UserProfileId.getPhoneNum());
-	  setUserEmail(UserProfileId.getUserEmail());
+	  setFirstName(userProfileId.getFirstName());
+	  setLastName(userProfileId.getLastName());
+	  setPhoneNum(userProfileId.getPhoneNum());
+	  setUserEmail(userProfileId.getUserEmail());
 	}
 
 	@XmlElement(name = "first_name")
@@ -42,7 +42,7 @@ public class UserProfileDTO {
 		this.lastName = lastName;
 	}
 
-	@XmlElement(name = "phoneno")
+	@XmlElement(name = "phone")
 	public Long getPhoneNum() {
 		return phoneNum;
 	}

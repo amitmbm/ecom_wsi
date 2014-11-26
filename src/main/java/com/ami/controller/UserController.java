@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 import com.ami.creational.ILogger;
 import com.ami.creational.LoggerManager;
 import com.ami.dto.UserDTO;
+import com.ami.dto.UserProfileDTO;
+import com.ami.dto.UserWithProfileDTO;
+import com.ami.entity.UserProfileId;
 import com.ami.entity.Users;
 import com.ami.enums.LogLevel;
 import com.ami.exceptions.CustomException;
@@ -34,7 +37,7 @@ public class UserController {
 			UserController.class.getName());
 
 	// Add a User
-	@POST
+	/*@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(UserDTO userDTO) {
@@ -60,7 +63,7 @@ public class UserController {
 
 		return response;
 
-	}
+	}*/
 
 	
 	// update a user
@@ -158,5 +161,84 @@ public class UserController {
 		return response;
 	}
 
+	@SuppressWarnings("unused")
+	@POST
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addUser(UserWithProfileDTO userWithProfileDTO) {
+		Response response = null;
+		Response finalResponse = null;
+		try {
+			// categoryServices.validateCategory(categoryDTO);
+
+			 UserDTO userDTO = new UserDTO();
+			 // setting the users from the UserWithProfile Payload.
+			 userDTO.setEmailId(userWithProfileDTO.getEmailId());
+		     userDTO.setIsRegister((byte) 'N');
+		     userDTO.setPasswd("amit");
+			Users user = dataServices.addUser(userDTO);
+			
+			response = Response.status(Response.Status.CREATED).build();
+			// calling the userprofile Post method .
+			
+			Response responseForProfile = addUserProfile(userWithProfileDTO);
+			if(response!=null && responseForProfile != null)
+			{
+				 finalResponse = Response.status(Response.Status.CREATED).build();
+			}
+				
+		} catch (CustomException e) {
+			response = Response.status(Response.Status.BAD_REQUEST)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while posting a user", e);
+		} catch (Exception e) {
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while posting a user", e);
+		}
+
+		return finalResponse;
+
+	}
+
+	
+    // Adding the UserProfile from the payload of Users Endpoint
+	public Response addUserProfile(UserWithProfileDTO userWithProfileDTO) {
+		Response response = null;
+		try{
+			
+		
+		UserProfileDTO userProfileDTO = new UserProfileDTO();
+		userProfileDTO.setFirstName(userWithProfileDTO.getFirstName());
+		userProfileDTO.setLastName(userWithProfileDTO.getLastName());
+		userProfileDTO.setPhoneNum(userWithProfileDTO.getPhoneNum());
+		userProfileDTO.setUserEmail(userWithProfileDTO.getEmailId());
+		
+		UserProfileId userProfileId = dataServices.addUserProfile(userProfileDTO);
+		
+		response = Response.status(Response.Status.CREATED).build(); 
+		
+		}
+		catch(CustomException e)
+		{
+			response = Response.status(Response.Status.BAD_REQUEST)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while posting a user-profile", e);	
+		}
+		catch(Exception e)
+		{
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while posting a user-profile", e);
+		}
+		
+		return response;
+	}
+	
+	
 }
 

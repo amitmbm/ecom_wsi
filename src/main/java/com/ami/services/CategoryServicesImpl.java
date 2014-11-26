@@ -200,6 +200,7 @@ public class CategoryServicesImpl implements CategoryServices {
 		return genericDao.addEntity(productSubCategoryType);
 	}
 
+	// update a sub-category Type
 	@Override
 	public ProductSubCategoryType updateSubCategoryType(TypeDTO typeDTO,
 			String typeGuid) throws Exception {
@@ -221,7 +222,8 @@ public class CategoryServicesImpl implements CategoryServices {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+  
+	// delete a sub-category-type
 	@Override
 	public boolean deleteSubCategoryType(String typeGuid) throws Exception {
 		return genericDao.deleteEntity(getSubCategoryTypeById(typeGuid));

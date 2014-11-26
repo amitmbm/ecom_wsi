@@ -12,6 +12,7 @@ import com.ami.exceptions.CustomException;
 
 public interface CategoryServices {
 	
+	// category related stubs
 	public ProductCategory addCategory(CategoryDTO categoryDTO) throws Exception;
 	public ProductCategory updateCategory(CategoryDTO categoryDTO, String catGuid) throws Exception;
 	public ProductCategory getCategoryById(String guid) throws Exception;

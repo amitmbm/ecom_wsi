@@ -42,7 +42,7 @@ public class UserDTO {
 		this.passwd = passwd;
 	}
 	
-	@XmlElement(name = "isregister")
+	@XmlElement(name = "is_register")
 	public Byte getIsRegister() {
 		return isRegister;
 	}
