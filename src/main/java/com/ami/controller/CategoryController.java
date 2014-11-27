@@ -42,6 +42,8 @@ public class CategoryController {
 	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
 			CategoryController.class.getName());
 
+	// Below are the CRUD operations related to Category
+	
 	// post a category
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -68,6 +70,29 @@ public class CategoryController {
 					"exception occured while posting a category", e);
 		}
 
+		return response;
+	}
+
+	// Get Category
+	@GET
+	@Path("/{catguid}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getCategory(@PathParam("catguid") String catGuid) {
+		ProductCategory productCategory = null;
+		Response response = null;
+		try {
+			productCategory = categoryServices.getCategoryById(catGuid);
+			response = Response.status(Response.Status.OK)
+					.entity(new CategoryDTO(productCategory)).build();
+		} catch (ResourceNotFoundException re) {
+			response = Response.status(Response.Status.NOT_FOUND)
+					.entity(" RESOURCE_NOT_FOUND Exception").build();
+			logger.logException(LogLevel.ERROR, "Get Category failed ::", re);
+		} catch (Exception e) {
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR, "Get category failed ::", e);
+		}
 		return response;
 	}
 
@@ -103,6 +128,31 @@ public class CategoryController {
 		return response;
 	}
 
+	// Delete a Category
+	@DELETE
+	@Path("/{catguid}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response deleteCategory(@PathParam("catguid") String catguid) {
+		System.out.println("inside delete cat" + catguid);
+		Response response = null;
+		try {
+			categoryServices.deleteCategory(catguid);
+			response = Response.status(Response.Status.OK)
+					.entity("Category deleted successfully").build();
+		} catch (ResourceNotFoundException re) {
+			response = Response.status(Response.Status.NOT_FOUND)
+					.entity(" NOT_FOUND error").build();
+			logger.logException(LogLevel.ERROR, "delete Category failed ::", re);
+		} catch (Exception e) {
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR, "Deleted category failed ::", e);
+		}
+		return response;
+	}
+
+	// Below are the CRUD operations related to Sub-category
+
 	// post a sub-category
 	@POST
 	@Path("{catguid}/subcategories")
@@ -130,6 +180,31 @@ public class CategoryController {
 					.entity("error").build();
 			logger.logException(LogLevel.ERROR,
 					"update Sub-Category failed ::", e);
+		}
+		return response;
+	}
+
+	// Get Sub-Category
+	@GET
+	@Path("{catguid}/subcategories/{subcatguid}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getSubCategory(@PathParam("subcatguid") String subCatguid) {
+		ProductSubCategory productSubCategory = null;
+		Response response = null;
+		try {
+			productSubCategory = categoryServices
+					.getSubCategoryById(subCatguid);
+			response = Response.status(Response.Status.OK)
+					.entity(new SubCategoryDTO(productSubCategory)).build();
+		} catch (ResourceNotFoundException re) {
+			response = Response.status(Response.Status.NOT_FOUND)
+					.entity(" NOT_FOUND error").build();
+			logger.logException(LogLevel.ERROR, "Get Sub-Category failed ::",
+					re);
+		} catch (Exception e) {
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR, "Get Sub-category failed ::", e);
 		}
 		return response;
 	}
@@ -169,50 +244,26 @@ public class CategoryController {
 		return response;
 	}
 
-	// Get Category
-	@GET
-	@Path("/{catguid}")
-	@Produces({ MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
-	public Response getCategory(@PathParam("catguid") String catGuid) {
-		ProductCategory productCategory = null;
-		Response response = null;
-		try {
-			productCategory = categoryServices.getCategoryById(catGuid);
-			response = Response.status(Response.Status.OK)
-					.entity(new CategoryDTO(productCategory)).build();
-		} catch (ResourceNotFoundException re) {
-			response = Response.status(Response.Status.NOT_FOUND)
-					.entity(" RESOURCE_NOT_FOUND Exception").build();
-			logger.logException(LogLevel.ERROR, "Get Category failed ::", re);
-		} catch (Exception e) {
-			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "Get category failed ::", e);
-		}
-		return response;
-	}
-
-	// Get Sub-Category
-	@GET
+	// Delete a Sub-Category
+	@DELETE
 	@Path("{catguid}/subcategories/{subcatguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getSubCategory(@PathParam("subcatguid") String subCatguid) {
-		ProductSubCategory productSubCategory = null;
+	public Response deleteSubCategory(@PathParam("subcatguid") String subcatguid) {
 		Response response = null;
 		try {
-			productSubCategory = categoryServices
-					.getSubCategoryById(subCatguid);
+			categoryServices.deleteSubCategory(subcatguid);
 			response = Response.status(Response.Status.OK)
-					.entity(new SubCategoryDTO(productSubCategory)).build();
+					.entity("Sub-Category Deleted Successfully::").build();
 		} catch (ResourceNotFoundException re) {
 			response = Response.status(Response.Status.NOT_FOUND)
 					.entity(" NOT_FOUND error").build();
-			logger.logException(LogLevel.ERROR, "Get Sub-Category failed ::",
-					re);
+			logger.logException(LogLevel.ERROR,
+					"deleted Sub-Category failed ::", re);
 		} catch (Exception e) {
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "Get Sub-category failed ::", e);
+			logger.logException(LogLevel.ERROR,
+					"Deleted Sub-category failed ::", e);
 		}
 		return response;
 	}
@@ -257,52 +308,7 @@ public class CategoryController {
 		return response;
 	}
 
-	// Delete a Category
-	@DELETE
-	@Path("/{catguid}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response deleteCategory(@PathParam("catguid") String catguid) {
-		System.out.println("inside delete cat" + catguid);
-		Response response = null;
-		try {
-			categoryServices.deleteCategory(catguid);
-			response = Response.status(Response.Status.OK)
-					.entity("Category deleted successfully").build();
-		} catch (ResourceNotFoundException re) {
-			response = Response.status(Response.Status.NOT_FOUND)
-					.entity(" NOT_FOUND error").build();
-			logger.logException(LogLevel.ERROR, "delete Category failed ::", re);
-		} catch (Exception e) {
-			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "Deleted category failed ::", e);
-		}
-		return response;
-	}
-
-	// Delete a Sub-Category
-	@DELETE
-	@Path("{catguid}/subcategories/{subcatguid}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response deleteSubCategory(@PathParam("subcatguid") String subcatguid) {
-		Response response = null;
-		try {
-			categoryServices.deleteSubCategory(subcatguid);
-			response = Response.status(Response.Status.OK)
-					.entity("Sub-Category Deleted Successfully::").build();
-		} catch (ResourceNotFoundException re) {
-			response = Response.status(Response.Status.NOT_FOUND)
-					.entity(" NOT_FOUND error").build();
-			logger.logException(LogLevel.ERROR,
-					"deleted Sub-Category failed ::", re);
-		} catch (Exception e) {
-			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR,
-					"Deleted Sub-category failed ::", e);
-		}
-		return response;
-	}
+	/* Below are the CRUD operations on Sub-category Type */
 
 	// post a sub-category type
 	@POST
@@ -331,6 +337,32 @@ public class CategoryController {
 					.entity("error").build();
 			logger.logException(LogLevel.ERROR,
 					"Add Sub-Category-type failed ::", e);
+		}
+		return response;
+	}
+
+	// Get Sub-Category-type
+	@GET
+	@Path("{catguid}/subcategories/{subcatguid}/types/{typeguid}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getSubCategoryType(@PathParam("typeguid") String typeGuid) {
+		ProductSubCategoryType productSubCategoryType = null;
+		Response response = null;
+		try {
+			productSubCategoryType = categoryServices
+					.getSubCategoryTypeById(typeGuid);
+			response = Response.status(Response.Status.OK)
+					.entity(new TypeDTO(productSubCategoryType)).build();
+		} catch (ResourceNotFoundException re) {
+			response = Response.status(Response.Status.NOT_FOUND)
+					.entity(" NOT_FOUND error").build();
+			logger.logException(LogLevel.ERROR,
+					"Get Sub-Category-type failed ::", re);
+		} catch (Exception e) {
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR,
+					"Get Sub-category-type failed ::", e);
 		}
 		return response;
 	}
@@ -393,30 +425,5 @@ public class CategoryController {
 		}
 		return response;
 	}
-	
-	// Get Sub-Category
-		@GET
-		@Path("{catguid}/subcategories/{subcatguid}/types/{typeguid}")
-		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		public Response getSubCategoryType(@PathParam("typeguid") String typeGuid) {
-			ProductSubCategoryType productSubCategoryType = null;
-			Response response = null;
-			try {
-				productSubCategoryType = categoryServices
-						.getSubCategoryTypeById(typeGuid);
-				response = Response.status(Response.Status.OK)
-						.entity(new TypeDTO(productSubCategoryType)).build();
-			} catch (ResourceNotFoundException re) {
-				response = Response.status(Response.Status.NOT_FOUND)
-						.entity(" NOT_FOUND error").build();
-				logger.logException(LogLevel.ERROR, "Get Sub-Category-type failed ::",
-						re);
-			} catch (Exception e) {
-				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-						.entity("error").build();
-				logger.logException(LogLevel.ERROR, "Get Sub-category-type failed ::", e);
-			}
-			return response;
-		}
 
 }
