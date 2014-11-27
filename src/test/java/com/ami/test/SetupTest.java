@@ -20,7 +20,7 @@ import com.ami.services.CategoryServicesImpl;
 
 @WebAppConfiguration
 @ContextConfiguration({
-		"file:Src/main/webapp/WEB-INF/spring-config.xml"
+		"file:Src/main/resources/ApplicationContext.xml"
  })
 public class SetupTest extends AbstractTestNGSpringContextTests{
 
@@ -46,7 +46,7 @@ public class SetupTest extends AbstractTestNGSpringContextTests{
     @Test
     public void test1()
     {
-    	String url="/categories";
+    	String url="http://localhost:9090/TestWS/api/v1/manage/categories";
     	String payLoad = "{\"catName\":\"mobile\",\"catDesc\":\"mobileandtablet\" ,\"catguid\":\"abcd\"}";
     	try {
 			mockMvc.perform(post(url).content(payLoad).contentType(MediaType.APPLICATION_JSON));

@@ -1,13 +1,13 @@
-package com.ami.common;
+/*package com.ami.common;
 
 import org.json.JSONObject;
 
-/**
+*//**
  * @author Amit Khandelwal
  * This class is useful to set the REST opartions reult .
  *
  * @param <T>
- */
+ *//*
 @SuppressWarnings("serial")
 public class OperationResult<T> extends JSONObject {
 
@@ -60,3 +60,4 @@ public class OperationResult<T> extends JSONObject {
     }
 	
 }
+*/

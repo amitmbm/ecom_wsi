@@ -172,7 +172,7 @@ public class CategoryController {
 	// Get Category
 	@GET
 	@Path("/{catguid}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
 	public Response getCategory(@PathParam("catguid") String catGuid) {
 		ProductCategory productCategory = null;
 		Response response = null;

@@ -1,11 +1,11 @@
-package com.ami.common;
+/*package com.ami.common;
 
 import org.json.JSONObject;
 
-/*
+
  * Author : Amit Khandelwal 
  * Thsi class is use to set the common peroperty , which every REST response will have.
- */
+ 
 public class OperationResultState extends JSONObject {
 
 	private boolean success;
@@ -65,3 +65,4 @@ public class OperationResultState extends JSONObject {
         this.newFLag = newFLag;
     }
 }
+*/

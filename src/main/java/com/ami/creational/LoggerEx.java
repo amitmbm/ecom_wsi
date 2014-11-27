@@ -15,7 +15,7 @@ class LoggerEx {
 	{
 		System.out.println("inaide the fn call");
          
-  //       logger.logMessage(LogLevel.FATAL, "FATAL Msg");
+         logger.logMessage(LogLevel.FATAL, "FATAL Msg");
          try{
          int a=5/0;
          }
