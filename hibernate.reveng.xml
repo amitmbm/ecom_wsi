@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-schema="authconfig" match-name=".*"/>
+  <table-filter match-catalog="authconfig" match-name="acs_keystore"/>
+  <table-filter match-catalog="authconfig" match-name="acs_namespace"/>
+  <table-filter match-catalog="authconfig" match-name="app_config"/>
+  <table-filter match-catalog="authconfig" match-name="app_services"/>
+  <table-filter match-catalog="authconfig" match-name="appclaims"/>
+  <table-filter match-catalog="authconfig" match-name="auth_provider"/>
+  <table-filter match-catalog="authconfig" match-name="claims"/>
+  <table-filter match-catalog="authconfig" match-name="group_roles"/>
+  <table-filter match-catalog="authconfig" match-name="groups"/>
+  <table-filter match-catalog="authconfig" match-name="oauth_tokens"/>
+  <table-filter match-catalog="authconfig" match-name="permissions"/>
+  <table-filter match-catalog="authconfig" match-name="provclaims"/>
+  <table-filter match-catalog="authconfig" match-name="resource_permissions"/>
+  <table-filter match-catalog="authconfig" match-name="resources"/>
+  <table-filter match-catalog="authconfig" match-name="rolens"/>
+  <table-filter match-catalog="authconfig" match-name="roles"/>
+  <table-filter match-catalog="authconfig" match-name="saml_provider_store"/>
+  <table-filter match-catalog="authconfig" match-name="scope"/>
+  <table-filter match-catalog="authconfig" match-name="sessions"/>
+  <table-filter match-catalog="authconfig" match-name="tenant_enc_keys"/>
+  <table-filter match-catalog="authconfig" match-name="token_provider"/>
+  <table-filter match-catalog="authconfig" match-name="user_groups"/>
+  <table-filter match-catalog="authconfig" match-name="user_profile"/>
+  <table-filter match-catalog="authconfig" match-name="user_roles"/>
+  <table-filter match-catalog="authconfig" match-name="users"/>
+</hibernate-reverse-engineering>

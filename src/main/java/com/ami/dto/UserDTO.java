@@ -10,7 +10,7 @@ public class UserDTO {
 
 	private String emailId;
 	private String passwd;
-	private Byte isRegister;
+	private Boolean isRegister;
 	
 	public UserDTO()
 	{
@@ -21,7 +21,7 @@ public class UserDTO {
 	{
 		setEmailId(users.getUserEmail());
 		setPasswd(users.getUserPasswd());
-		setIsRegister(users.getIsRegisterd());
+		//setIsRegister(users.getIsRegisterd());
 	}
 	
 	@XmlElement(name = "mailid")
@@ -41,14 +41,16 @@ public class UserDTO {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
-	
+
 	@XmlElement(name = "is_register")
-	public Byte getIsRegister() {
+	public Boolean getIsRegister() {
 		return isRegister;
 	}
-	
-	public void setIsRegister(Byte isRegister) {
+
+	public void setIsRegister(Boolean isRegister) {
 		this.isRegister = isRegister;
 	}
+   
+	
 	
 }

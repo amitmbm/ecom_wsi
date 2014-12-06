@@ -11,6 +11,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.View;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,7 @@ import com.ami.services.CategoryServicesImpl;
 
 @WebAppConfiguration
 @ContextConfiguration({
-		"file:Src/main/webapp/WEB-INF/spring-config.xml"
+		"file:Src/main/resources/ApplicationContext.xml"
  })
 public class SetupTest extends AbstractTestNGSpringContextTests{
 
@@ -29,6 +30,9 @@ public class SetupTest extends AbstractTestNGSpringContextTests{
   
     @InjectMocks
     private CategoryController categoryController;
+    
+    @Mock
+    View mockView;
  
     private MockMvc mockMvc;
  
@@ -36,7 +40,7 @@ public class SetupTest extends AbstractTestNGSpringContextTests{
     public void setup() {
         MockitoAnnotations.initMocks(this);
  
-        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).setSingleView(mockView).build();
         
         System.out.println("mockmvc" + mockMvc);
  
@@ -44,10 +48,10 @@ public class SetupTest extends AbstractTestNGSpringContextTests{
     }
     
     @Test
-    public void test1()
+    public void test()
     {
-    	String url="/categories";
-    	String payLoad = "{\"catName\":\"mobile\",\"catDesc\":\"mobileandtablet\" ,\"catguid\":\"abcd\"}";
+    	String url="http://localhost:9090/TestWS/api/v1/manage/categories/";
+    	String payLoad = "{\"name\":\"mobile\",\"desc\":\"mobileandtablet\" }";
     	try {
 			mockMvc.perform(post(url).content(payLoad).contentType(MediaType.APPLICATION_JSON));
 		} catch (Exception e) {

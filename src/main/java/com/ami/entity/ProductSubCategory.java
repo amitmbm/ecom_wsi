@@ -1,7 +1,8 @@
 package com.ami.entity;
 
-// Generated Nov 22, 2014 5:45:05 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,11 +14,15 @@ public class ProductSubCategory implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7635468318095594658L;
+	private static final long serialVersionUID = -7862421340696481392L;
 	private String subCatGuid;
 	private ProductCategory productCategory;
 	private String subCatName;
 	private String subCatDesc;
+	private String createdBy;
+	private String updatedBy;
+	private Date createdAt;
+	private Date updatedAt;
 	private Set productSubCategoryTypes = new HashSet(0);
 	private Set postAdds = new HashSet(0);
 
@@ -25,19 +30,27 @@ public class ProductSubCategory implements java.io.Serializable {
 	}
 
 	public ProductSubCategory(String subCatGuid, String subCatName,
-			String subCatDesc) {
+			String subCatDesc, Date createdAt, Date updatedAt) {
 		this.subCatGuid = subCatGuid;
 		this.subCatName = subCatName;
 		this.subCatDesc = subCatDesc;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
 	public ProductSubCategory(String subCatGuid,
 			ProductCategory productCategory, String subCatName,
-			String subCatDesc, Set productSubCategoryTypes, Set postAdds) {
+			String subCatDesc, String createdBy, String updatedBy,
+			Date createdAt, Date updatedAt, Set productSubCategoryTypes,
+			Set postAdds) {
 		this.subCatGuid = subCatGuid;
 		this.productCategory = productCategory;
 		this.subCatName = subCatName;
 		this.subCatDesc = subCatDesc;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 		this.productSubCategoryTypes = productSubCategoryTypes;
 		this.postAdds = postAdds;
 	}
@@ -72,6 +85,38 @@ public class ProductSubCategory implements java.io.Serializable {
 
 	public void setSubCatDesc(String subCatDesc) {
 		this.subCatDesc = subCatDesc;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return this.updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getCreatedAt() {
+		return this.createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return this.updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public Set getProductSubCategoryTypes() {

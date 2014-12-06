@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Nov 22, 2014 5:45:05 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.ami.entity.Users" table="users" catalog="olxm">
         <id name="userEmail" type="string">
@@ -11,8 +11,23 @@
         <property name="userPasswd" type="string">
             <column name="user_passwd" length="128" not-null="true" />
         </property>
-        <property name="isRegisterd" type="java.lang.Byte">
+        <property name="isRegisterd" type="java.lang.Boolean">
             <column name="is_registerd" />
+        </property>
+        <property name="userKey" type="string">
+            <column name="user_key" length="36" />
+        </property>
+        <property name="createdBy" type="string">
+            <column name="created_by" length="128" />
+        </property>
+        <property name="updatedBy" type="string">
+            <column name="updated_by" length="128" />
+        </property>
+        <property name="createdAt" type="timestamp">
+            <column name="created_at" length="19" not-null="true" />
+        </property>
+        <property name="updatedAt" type="timestamp">
+            <column name="updated_at" length="19" not-null="true" />
         </property>
         <set name="postAdds" table="post_add" inverse="true" lazy="true" fetch="select">
             <key>
@@ -20,11 +35,6 @@
             </key>
             <one-to-many class="com.ami.entity.PostAdd" />
         </set>
-        <set name="userProfiles" table="user_profile" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="user_email" length="128" not-null="true" />
-            </key>
-            <one-to-many class="com.ami.entity.UserProfile" />
-        </set>
+        <one-to-one name="userProfile" class="com.ami.entity.UserProfile"></one-to-one>
     </class>
 </hibernate-mapping>

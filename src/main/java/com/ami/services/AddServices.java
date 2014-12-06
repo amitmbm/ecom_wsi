@@ -10,10 +10,10 @@ import com.ami.entity.PostAdd;
  */
 public interface AddServices {
 
-	public PostAdd addAdd(PostDTO postDTO, String subCatGuid, String typeGuid,String mailId) throws Exception;
+	public PostAdd postAdd(PostDTO postDTO) throws Exception;
 	public PostAdd updateAdd(PostDTO postDTO, String addGuid) throws Exception;
 	public PostAdd getAddById(String addGuid) throws Exception;
-	public List<PostAdd> getAddList() throws Exception;
+	public List<PostAdd> getAddList(int low , int high) throws Exception;
 	public boolean deleteAdd(String addGuid) throws Exception;
 	//public boolean validateAdd(PostDTO postDTO) throws CustomException;
 	

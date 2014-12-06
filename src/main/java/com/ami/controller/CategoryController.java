@@ -16,9 +16,12 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ami.common.ErrorConstants;
+import com.ami.common.Utility;
 import com.ami.creational.ILogger;
 import com.ami.creational.LoggerManager;
 import com.ami.dto.CategoryDTO;
+import com.ami.dto.ErrorsDTO;
 import com.ami.dto.SubCategoryDTO;
 import com.ami.dto.TypeDTO;
 import com.ami.entity.ProductCategory;
@@ -32,8 +35,9 @@ import com.ami.services.CategoryServices;
 /*
  *  controller class for categories
  */
+
 @Component
-@Path("/api/v1/manage/categories")
+@Path("/api/v1/manage/")
 public class CategoryController {
 
 	@Autowired
@@ -43,6 +47,7 @@ public class CategoryController {
 			CategoryController.class.getName());
 
 	// post a category
+	@Path("categories")
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -62,8 +67,9 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR,
 					"exception occured while posting a category", e);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
+					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
 					"exception occured while posting a category", e);
 		}
@@ -73,7 +79,7 @@ public class CategoryController {
 
 	// update a category
 	@PUT
-	@Path("/{catguid}")
+	@Path("categories/{catguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateCategory(CategoryDTO categoryDTO,
@@ -95,17 +101,18 @@ public class CategoryController {
 					.entity(" NOT_FOUND error").build();
 			logger.logException(LogLevel.ERROR, "update category failed ::", re);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "update category failed ::", e);
+					.entity(errorsDTO).build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while updating a category", e);
 		}
 		return response;
 	}
 
 	// post a sub-category
 	@POST
-	@Path("{catguid}/subcategories")
+	@Path("categories/{catguid}/subcategories")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createSubCategory(SubCategoryDTO subCategoryDTO,
@@ -126,17 +133,18 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR,
 					"update Sub-Category failed ::", e);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
+					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
-					"update Sub-Category failed ::", e);
+					"exception occured while posting a sub-category", e);
 		}
 		return response;
 	}
 
 	// update a sub-category
 	@PUT
-	@Path("{catguid}/subcategories/{subcatguid}")
+	@Path("/subcategories/{subcatguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateSubCategory(SubCategoryDTO subCategoryDTO,
@@ -160,18 +168,18 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR,
 					"update Sub-Category failed ::", re);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
+					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
-					"update sub-category failed ::", e);
+					"exception occured while updating a sub-category", e);
 		}
 		return response;
 	}
 
 	// Get Category
 	@GET
-	@Path("/{catguid}")
+	@Path("categories/{catguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response getCategory(@PathParam("catguid") String catGuid) {
 		ProductCategory productCategory = null;
@@ -185,16 +193,18 @@ public class CategoryController {
 					.entity(" RESOURCE_NOT_FOUND Exception").build();
 			logger.logException(LogLevel.ERROR, "Get Category failed ::", re);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "Get category failed ::", e);
+					.entity(errorsDTO).build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while getting a category", e);
 		}
 		return response;
 	}
 
 	// Get Sub-Category
 	@GET
-	@Path("{catguid}/subcategories/{subcatguid}")
+	@Path("/subcategories/{subcatguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response getSubCategory(@PathParam("subcatguid") String subCatguid) {
 		ProductSubCategory productSubCategory = null;
@@ -210,9 +220,11 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR, "Get Sub-Category failed ::",
 					re);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "Get Sub-category failed ::", e);
+					.entity(errorsDTO).build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while Getting a Sub-Category", e);
 		}
 		return response;
 	}
@@ -259,7 +271,7 @@ public class CategoryController {
 
 	// Delete a Category
 	@DELETE
-	@Path("/{catguid}")
+	@Path("categories/{catguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response deleteCategory(@PathParam("catguid") String catguid) {
 		System.out.println("inside delete cat" + catguid);
@@ -273,16 +285,18 @@ public class CategoryController {
 					.entity(" NOT_FOUND error").build();
 			logger.logException(LogLevel.ERROR, "delete Category failed ::", re);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "Deleted category failed ::", e);
+					.entity(errorsDTO).build();
+			logger.logException(LogLevel.ERROR,
+					"exception occured while deleting a category", e);
 		}
 		return response;
 	}
 
 	// Delete a Sub-Category
 	@DELETE
-	@Path("{catguid}/subcategories/{subcatguid}")
+	@Path("subcategories/{subcatguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response deleteSubCategory(@PathParam("subcatguid") String subcatguid) {
 		Response response = null;
@@ -296,17 +310,18 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR,
 					"deleted Sub-Category failed ::", re);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
+					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
-					"Deleted Sub-category failed ::", e);
+					"exception occured while deleting a Sub-category", e);
 		}
 		return response;
 	}
 
 	// post a sub-category type
 	@POST
-	@Path("{catguid}/subcategories/{subcatguid}/types")
+	@Path("subcategories/{subcatguid}/types")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createSubCategoryType(TypeDTO typeDTO,
@@ -327,17 +342,18 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR,
 					"Add Sub-Category-type failed ::", e);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
+					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
-					"Add Sub-Category-type failed ::", e);
+					"exception occured while posting a Sub-category-type", e);
 		}
 		return response;
 	}
 
 	// update a sub-category-type
 	@PUT
-	@Path("{catguid}/subcategories/{subcatguid}/types/{typeguid}")
+	@Path("types/{typeguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateSubCategoryType(TypeDTO typeDTO,
@@ -361,18 +377,18 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR,
 					"update Sub-Category-type failed ::", re);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
+					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
-					"update sub-category-type failed ::", e);
+					"exception occured while updating a category-type", e);
 		}
 		return response;
 	}
 
 	// Delete a Sub-Category-type
 	@DELETE
-	@Path("{catguid}/subcategories/{subcatguid}/types/{typeguid}")
+	@Path("types/{typeguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response deleteSubCategoryType(@PathParam("typeguid") String typeGuid) {
 		Response response = null;
@@ -386,17 +402,18 @@ public class CategoryController {
 			logger.logException(LogLevel.ERROR,
 					"deleted Sub-Category-type failed ::", re);
 		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
+					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
-					"Deleted Sub-category-type failed ::", e);
+					"exception occured while deleting a category-type", e);
 		}
 		return response;
 	}
 	
 	// Get Sub-Category
 		@GET
-		@Path("{catguid}/subcategories/{subcatguid}/types/{typeguid}")
+		@Path("types/{typeguid}")
 		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 		public Response getSubCategoryType(@PathParam("typeguid") String typeGuid) {
 			ProductSubCategoryType productSubCategoryType = null;
@@ -412,9 +429,11 @@ public class CategoryController {
 				logger.logException(LogLevel.ERROR, "Get Sub-Category-type failed ::",
 						re);
 			} catch (Exception e) {
+				ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-						.entity("error").build();
-				logger.logException(LogLevel.ERROR, "Get Sub-category-type failed ::", e);
+						.entity(errorsDTO).build();
+				logger.logException(LogLevel.ERROR,
+						"exception occured while getting a category-type", e);
 			}
 			return response;
 		}

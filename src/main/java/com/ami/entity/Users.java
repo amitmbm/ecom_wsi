@@ -1,7 +1,8 @@
 package com.ami.entity;
 
-// Generated Nov 22, 2014 5:45:05 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,28 +14,42 @@ public class Users implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2020048463084835548L;
+	private static final long serialVersionUID = 7245681925470656433L;
 	private String userEmail;
 	private String userPasswd;
-	private Byte isRegisterd;
+	private Boolean isRegisterd;
+	private String userKey;
+	private String createdBy;
+	private String updatedBy;
+	private Date createdAt;
+	private Date updatedAt;
 	private Set postAdds = new HashSet(0);
-	private Set userProfiles = new HashSet(0);
+	private UserProfile userProfile;
 
 	public Users() {
 	}
 
-	public Users(String userEmail, String userPasswd) {
+	public Users(String userEmail, String userPasswd, Date createdAt,
+			Date updatedAt) {
 		this.userEmail = userEmail;
 		this.userPasswd = userPasswd;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
-	public Users(String userEmail, String userPasswd, Byte isRegisterd,
-			Set postAdds, Set userProfiles) {
+	public Users(String userEmail, String userPasswd, Boolean isRegisterd,
+			String userKey, String createdBy, String updatedBy, Date createdAt,
+			Date updatedAt, Set postAdds, UserProfile userProfile) {
 		this.userEmail = userEmail;
 		this.userPasswd = userPasswd;
 		this.isRegisterd = isRegisterd;
+		this.userKey = userKey;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 		this.postAdds = postAdds;
-		this.userProfiles = userProfiles;
+		this.userProfile = userProfile;
 	}
 
 	public String getUserEmail() {
@@ -53,12 +68,52 @@ public class Users implements java.io.Serializable {
 		this.userPasswd = userPasswd;
 	}
 
-	public Byte getIsRegisterd() {
+	public Boolean getIsRegisterd() {
 		return this.isRegisterd;
 	}
 
-	public void setIsRegisterd(Byte isRegisterd) {
+	public void setIsRegisterd(Boolean isRegisterd) {
 		this.isRegisterd = isRegisterd;
+	}
+
+	public String getUserKey() {
+		return this.userKey;
+	}
+
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return this.updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getCreatedAt() {
+		return this.createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return this.updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public Set getPostAdds() {
@@ -69,12 +124,12 @@ public class Users implements java.io.Serializable {
 		this.postAdds = postAdds;
 	}
 
-	public Set getUserProfiles() {
-		return this.userProfiles;
+	public UserProfile getUserProfile() {
+		return this.userProfile;
 	}
 
-	public void setUserProfiles(Set userProfiles) {
-		this.userProfiles = userProfiles;
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
 	}
 
 }

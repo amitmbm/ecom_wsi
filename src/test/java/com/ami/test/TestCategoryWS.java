@@ -1,6 +1,12 @@
 package com.ami.test;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.ami.dto.CategoryDTO;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 /*
  * Author :-> Amit
@@ -8,13 +14,54 @@ import org.testng.annotations.Test;
  */
 public class TestCategoryWS {
 	
-	@Test(enabled=true , description="used to create the user")
-	public void createUserWithValidData()
+	Client client = Client.create();
+	String catUrl = TestUtility.manageUrl+"/categories/";
+	String id=null;
+	
+	@Test(enabled=true , description="used to create the CATEGORY")
+	public void createCategoryWithValidData()
 	{
-	//	ResultActions resultActions = CategoryWSUtil.createCategory();
-	//	Assert.assertEquals(resultActions.andReturn().getResponse().getStatus(), 200,"failed to create the User");
+		WebResource webResource = client.resource(catUrl);
+		String payLoad = "{\"name\":\"Home and kitchen\",\"desc\":\"TV etc Add\" }";
+		ClientResponse response = webResource.type("application/json").post(ClientResponse.class,payLoad);
+		CategoryDTO output = response.getEntity(CategoryDTO.class);
+		
+	    id = output.getCatguid();
+	    System.out.println("created catguid is:: " + id);
+		Assert.assertEquals(response.getStatus(), 201,"failed to create the Category");
 	}
 	
+	@Test(enabled=true , description="used to get the CATEGORY" , dependsOnMethods="createCategoryWithValidData")
+	public void getCategoryWithValidID()
+	{
+		WebResource webResource = client.resource(catUrl + id);
+		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+		CategoryDTO output = response.getEntity(CategoryDTO.class);
+		System.out.println("get the category name as" + output.getCatname());
+		Assert.assertEquals(response.getStatus(), 200,"failed to get the Category");
+	}
+	
+	@Test(enabled= true , description="used to update the CATEGORY" , dependsOnMethods="getCategoryWithValidID")
+	public void updateCategoryWithValidID()
+	{
+		WebResource webResource = client.resource(catUrl + id);
+		String payLoad = "{\"name\":\"Home and kitchen\",\"desc\":\"TV,fridge,AC etc Add\" }";
+		ClientResponse response = webResource.type("application/json").put(ClientResponse.class,payLoad);
+		CategoryDTO output = response.getEntity(CategoryDTO.class);
+		System.out.println("get the updated category name as" + output.getCatname());
+		Assert.assertEquals(response.getStatus(), 200,"failed to update the Category");
+	}
+	
+	@Test(enabled= true , description="used to delete the CATEGORY" , dependsOnMethods="updateCategoryWithValidID")
+	public void deleteCategoryWithValidID()
+	{
+		WebResource webResource = client.resource(catUrl + id);
+		ClientResponse response = webResource.accept("application/json").delete(ClientResponse.class);
+	//	CategoryDTO output = response.getEntity(CategoryDTO.class);
+		
+		//System.out.println("get the updated category name as" + output.getCatname());
+		Assert.assertEquals(response.getStatus(), 200,"failed to delete the Category");
+	}
 	
 /*	@Test(enabled=true , description="used to create the user")
 	public void createUserWithInValidFirstName()

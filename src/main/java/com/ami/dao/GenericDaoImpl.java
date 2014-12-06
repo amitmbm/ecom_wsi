@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,38 +15,31 @@ public class GenericDaoImpl implements GenericDao {
 	SessionFactory sessionFactory;
 
 	Session session = null;
-	Transaction tx = null;
 
 
 	@Override
 	public <T> T addEntity(T entity) throws Exception {
 		try{
-			session = sessionFactory.openSession();
-			tx = session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
 			session.save(entity);
-			tx.commit();
-			session.close();
 			return entity;
 		}catch(Exception e){
 			e.printStackTrace();
-			tx.rollback();
 		}
 		return null;
 	}
 
-/*
- * (non-Javadoc)
- * @see com.ami.dao.GenericDao#getEntity(java.lang.String, java.util.List)
- * need to change it to just one value
- */
+	/*
+	 * (non-Javadoc)
+	 * @see com.ami.dao.GenericDao#getEntity(java.lang.String, java.util.List)
+	 * need to change it to just one value
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getEntity(String query, List<Object> values) throws Exception {
 		T entity = null;
 		try{
-			session = sessionFactory.openSession();
-			//tx = session.getTransaction();
-			tx = session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
 			Query sqlQuery = session.createQuery(query);
 
 			if (values != null && values.size() > 0){
@@ -56,15 +48,31 @@ public class GenericDaoImpl implements GenericDao {
 				}
 			}
 			entity = (T)sqlQuery.uniqueResult();
-			tx.commit();
-			session.close();
 		}catch(Exception e){
 			e.printStackTrace();
-			tx.rollback();	
 		}
 		return entity;
 	}
 
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ami.dao.GenericDao#getEntity(java.lang.String, java.util.List)
+	 * need to change it to just one value
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T getEntityNative(String query) throws Exception {
+		T entity = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Query sqlQuery = session.createSQLQuery(query);
+			entity = (T)sqlQuery.uniqueResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return entity;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -72,9 +80,7 @@ public class GenericDaoImpl implements GenericDao {
 			throws Exception {
 		List<T> entities = null;
 		try{
-			session = sessionFactory.openSession();
-			tx = session.getTransaction();
-			session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
 			Query sqlQuery = session.createQuery(query);
 
 			if (values != null && values.size() > 0){
@@ -83,11 +89,9 @@ public class GenericDaoImpl implements GenericDao {
 				}
 			}
 			entities = sqlQuery.list();
-			tx.commit();
-			session.close();
 		}catch(Exception e){
 			e.printStackTrace();
-			tx.rollback();	
+			//tx.rollback();	
 		}
 		return entities;
 	}
@@ -95,28 +99,21 @@ public class GenericDaoImpl implements GenericDao {
 	@Override
 	public <T> boolean deleteEntity(T delete) throws Exception {
 		try{
-			session = sessionFactory.openSession();
-			tx = session.getTransaction();
-			session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
 			session.delete(delete);
-			tx.commit();
-			session.close();
 			return true;
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			tx.rollback();
 		}
 		return false;
 	}
-	
-    @Override
+
+	@Override
 	public <T> int updateEntity(String query, List<Object> values)throws Exception {  
-	     int result=0;
-    	try{
-			session = sessionFactory.openSession();
-			tx = session.getTransaction();
-			session.beginTransaction();
+		int result=0;
+		try{
+			session = sessionFactory.getCurrentSession();
 			Query sqlQuery = session.createQuery(query);
 
 			if (values != null && values.size() > 0){
@@ -124,31 +121,30 @@ public class GenericDaoImpl implements GenericDao {
 					sqlQuery.setParameter(i, values.get(i));
 				}
 			}
-		    result = sqlQuery.executeUpdate();
-			tx.commit();
-			session.close();
-    	}
-    	catch(Exception e){
+			result = sqlQuery.executeUpdate();
+		}
+		catch(Exception e){
 			e.printStackTrace();
-			tx.rollback();	
 		}
 		return result;
-}
+	}
 
 	@Override
 	public <T> T updateEntity(T entity) throws Exception {
 
 		try{
-			session = sessionFactory.openSession();
-			tx = session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
 			session.update(entity);
-			tx.commit();
-			session.close();
 			return entity;
 		}catch(Exception e){
 			e.printStackTrace();
-			tx.rollback();
 		}
 		return null;
+	}
+
+	public <T> T addUpdateEntity(T entity)throws Exception{
+		session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(entity);
+		return entity;
 	}
 }

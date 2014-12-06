@@ -13,9 +13,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.0.5.RELEASE</spring.version>
-		<hibernate.version>4.3.5.Final</hibernate.version>
-		<log4j.version>1.2.17</log4j.version>
+		<spring.version>3.2.9.RELEASE</spring.version>
+		<hibernate.version>4.2.11.Final</hibernate.version>
+		<log4j.version>2.0.1</log4j.version>
 		<jdk.version>1.6</jdk.version>
 		<jersey-version>1.18.1</jersey-version>
 		<context.path>SpringRestCrud</context.path>
@@ -46,16 +46,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -95,13 +85,19 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
+			<artifactId>hibernate</artifactId>
+			<version>3.2.3.ga</version>
+			<exclusions>
+				<exclusion>
+					<groupId>cglib</groupId>
+					<artifactId>cglib</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>3.2.9.RELEASE</version>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>2.1_3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -140,17 +136,17 @@
 			<artifactId>json</artifactId>
 			<version>20140107</version>
 		</dependency>
-		<!-- below dependencies are related to logger -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.syslog4j</groupId>
-			<artifactId>syslog4j</artifactId>
-			<version>0.9.30</version>
-		</dependency>
+	<!-- below dependencies are related to logger -->
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-api</artifactId>
+		<version>${log4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-core</artifactId>
+		<version>${log4j.version}</version>
+	</dependency>
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
 			<artifactId>jersey-spring</artifactId>
@@ -218,4 +214,10 @@
 			<version>${jersey-version}</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+	<repository>
+		<id>java.net</id>
+		<url>http://download.java.net/maven/2/</url>
+	</repository>
+	</repositories>
 </project>

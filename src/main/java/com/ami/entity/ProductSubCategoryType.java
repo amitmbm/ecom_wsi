@@ -1,7 +1,8 @@
 package com.ami.entity;
 
-// Generated Nov 22, 2014 5:45:05 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,27 +14,40 @@ public class ProductSubCategoryType implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7057134206240174899L;
+	private static final long serialVersionUID = -1896442219965373336L;
 	private String typeGuid;
 	private ProductSubCategory productSubCategory;
 	private String typeName;
+	private String createdBy;
+	private String updatedBy;
+	private Date createdAt;
+	private Date updatedAt;
 	private Set postAdds = new HashSet(0);
 
 	public ProductSubCategoryType() {
 	}
 
 	public ProductSubCategoryType(String typeGuid,
-			ProductSubCategory productSubCategory, String typeName) {
+			ProductSubCategory productSubCategory, String typeName,
+			Date createdAt, Date updatedAt) {
 		this.typeGuid = typeGuid;
 		this.productSubCategory = productSubCategory;
 		this.typeName = typeName;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
 	public ProductSubCategoryType(String typeGuid,
-			ProductSubCategory productSubCategory, String typeName, Set postAdds) {
+			ProductSubCategory productSubCategory, String typeName,
+			String createdBy, String updatedBy, Date createdAt, Date updatedAt,
+			Set postAdds) {
 		this.typeGuid = typeGuid;
 		this.productSubCategory = productSubCategory;
 		this.typeName = typeName;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 		this.postAdds = postAdds;
 	}
 
@@ -59,6 +73,38 @@ public class ProductSubCategoryType implements java.io.Serializable {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return this.updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getCreatedAt() {
+		return this.createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return this.updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public Set getPostAdds() {

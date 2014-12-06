@@ -3,25 +3,49 @@ package com.ami.dto;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.ami.entity.UserProfileId;
+import com.ami.entity.UserProfile;
 
-@XmlRootElement(name = "userprofile")
+@XmlRootElement(name = "user_profile")
 public class UserProfileDTO {
 
+	private String emailId;
+	private String passwd;
 	private String firstName;
 	private String lastName;
 	private Long phoneNum;
-	private String userEmail;
-	
+	private Boolean isRegister;
+
 	public UserProfileDTO() {
+
 	}
-	
-	public UserProfileDTO(UserProfileId userProfileId)
+
+	public UserProfileDTO(UserProfile userProfile)
 	{
-	  setFirstName(userProfileId.getFirstName());
-	  setLastName(userProfileId.getLastName());
-	  setPhoneNum(userProfileId.getPhoneNum());
-	  setUserEmail(userProfileId.getUserEmail());
+		setEmailId(userProfile.getUserEmail());
+		setFirstName(userProfile.getFirstName());
+		setLastName(userProfile.getLastName());
+		setIsRegister(userProfile.getUsers().getIsRegisterd());
+		setPasswd(userProfile.getUsers().getUserPasswd());
+		setPhoneNum(userProfile.getPhoneNum());
+		
+	}
+
+	@XmlElement(name = "mailid")
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	@XmlElement(name = "passwd")
+	public String getPasswd() {
+		return passwd;
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
 	}
 
 	@XmlElement(name = "first_name")
@@ -51,14 +75,14 @@ public class UserProfileDTO {
 		this.phoneNum = phoneNum;
 	}
 
-	@XmlElement(name = "mailid")
-	public String getUserEmail() {
-		return userEmail;
+	@XmlElement(name = "is_register")
+	public Boolean getIsRegister() {
+		return isRegister;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setIsRegister(Boolean isRegister) {
+		this.isRegister = isRegister;
 	}
-	
+
 	
 }
