@@ -1,4 +1,4 @@
-drop DATABASE `olxm`;
+drop DATABASE IF EXISTS `olxm`;
 CREATE DATABASE IF NOT EXISTS `olxm`;
 use `olxm`;
 
