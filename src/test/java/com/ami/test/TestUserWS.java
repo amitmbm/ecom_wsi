@@ -26,7 +26,7 @@ public class TestUserWS {
 	{
 		WebResource webResource = client.resource(TestUtility.userUrl);
 		
-		String payLoad = "{\"first_name\":\"Amit\", \"last_name\":\"khandelwal\" , \"mailid\":\"amitkhandelwal0887@gmail.com\", \"passwd\":\"khandelwal\" , \"phone\":\"8886890011\", \"is_register\":\"true\" }";
+		String payLoad = "{\"first_name\":\"Amit\", \"last_name\":\"khandelwal\" , \"mailid\":\"laccho@gmail.com\", \"passwd\":\"khandelwal\" , \"phone\":\"8886890011\", \"is_register\":\"true\" }";
 		
 		ClientResponse response = webResource.type("application/json").post(ClientResponse.class,payLoad);
 		userDTO1 = response.getEntity(UserProfileDTO.class);

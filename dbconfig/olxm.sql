@@ -1,3 +1,4 @@
+drop DATABASE `olxm`;
 CREATE DATABASE IF NOT EXISTS `olxm`;
 use `olxm`;
 
@@ -78,4 +79,4 @@ CONSTRAINT `post_add_fk2` FOREIGN KEY (`type_guid`) REFERENCES `product_sub_cate
 CONSTRAINT `post_add_fk3` FOREIGN KEY (`user_email`) REFERENCES `users` (`user_email`) ON DELETE CASCADE
 );
 
-CREATE unique index post_add_price_index on post_add (`price`);
+CREATE index post_add_price_index on post_add (`price`);

@@ -54,6 +54,7 @@ public class CategoryController {
 	public Response createCategory(CategoryDTO categoryDTO) {
 		logger.logMessage(LogLevel.INFO, "POST Category called ");
 		Response response = null;
+		ErrorsDTO errorsDTO = null;
 		try {
 			// categoryServices.validateCategory(categoryDTO);
 
@@ -62,12 +63,12 @@ public class CategoryController {
 			response = Response.status(Response.Status.CREATED)
 					.entity(new CategoryDTO(productCategory)).build();
 		} catch (CustomException e) {
-			response = Response.status(Response.Status.BAD_REQUEST)
-					.entity("error").build();
+			errorsDTO = Utility.createError(ErrorConstants.BAD_REQUEST,e.getMessage());
+			response = Response.status(Response.Status.BAD_REQUEST).entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
 					"exception occured while posting a category", e);
 		} catch (Exception e) {
-			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
+		    errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
