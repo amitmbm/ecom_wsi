@@ -1,0 +1,9 @@
+
+# Below code you need to put in Application context , when you run the system from cloud . and disable the local data-source.
+<!-- <bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://amidb.cb36667ydd6q.ap-southeast-1.rds.amazonaws.com:3306/olxm" />
+		<property name="username" value="root" />
+		<property name="password" value="rootroot" />
+	</bean>  -->
