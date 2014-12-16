@@ -1,5 +1,6 @@
 package com.ami.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,6 +11,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -230,46 +232,6 @@ public class CategoryController {
 		return response;
 	}
 
-	// Get List of All the Category
-	/*
-	 * @GET
-	 * 
-	 * @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	 * public Response getCategories() { List<ProductCategory> categoryList =
-	 * null; Response response = null; try { categoryList =
-	 * categoryServices.getCategoryList(); response =
-	 * Response.status(Response.Status.OK).entity(categoryList).build();
-	 * 
-	 * } catch (Exception e) { response =
-	 * Response.status(Response.Status.INTERNAL_SERVER_ERROR
-	 * ).entity("error").build();
-	 * logger.logException(LogLevel.ERROR,"Get Categories failed ::", e); }
-	 * 
-	 * return response; }
-	 */
-
-	// Get list of All the Sub-Categories
-	@GET
-	@Path("{catguid}/subcategories")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getSubCategories() {
-		List<ProductSubCategory> subCategoryList = null;
-		Response response = null;
-		try {
-			subCategoryList = categoryServices.getSubCategoryList();
-			response = Response.status(Response.Status.OK)
-					.entity(subCategoryList).build();
-
-		} catch (Exception e) {
-			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("error").build();
-			logger.logException(LogLevel.ERROR, "Get Sub-Categories failed ::",
-					e);
-		}
-
-		return response;
-	}
-
 	// Delete a Category
 	@DELETE
 	@Path("categories/{catguid}")
@@ -412,7 +374,7 @@ public class CategoryController {
 		return response;
 	}
 	
-	// Get Sub-Category
+	// Get Sub-Category-type
 		@GET
 		@Path("types/{typeguid}")
 		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -438,5 +400,138 @@ public class CategoryController {
 			}
 			return response;
 		}
+		
+	// Get List of All the Category
+	@GET
+	@Path("categories")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getCategories() {
+		List<ProductCategory> categoryList = null;
+		Response response = null;
+		try {
+			categoryList = categoryServices.getCategoryList();
+			 // list of category DTO
+			  List<CategoryDTO> listCategoryDTO = new ArrayList<CategoryDTO>();
+			  for(int i=0;i<categoryList.size();i++)
+			  {
+				  CategoryDTO categoryDTO = new CategoryDTO(categoryList.get(i));
+				  listCategoryDTO.add(categoryDTO);
+				  
+			  }
+			  GenericEntity<List<CategoryDTO>> genericEntity = new GenericEntity<List<CategoryDTO>>(
+					  listCategoryDTO) {
+					   };
+			response = Response.status(Response.Status.OK).entity(genericEntity)
+					.build();
+		} catch (Exception e) {
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("error").build();
+			logger.logException(LogLevel.ERROR, "Get Categories failed ::", e);
+		}
+
+		return response;
+	}
+	
+    	// Get list of All the Sub-Categories in a category
+		@GET
+		@Path("{catguid}/subcategories")
+		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+		public Response getSubCategories(@PathParam("catguid") String catGuid) {
+			List<ProductSubCategory> subCategoryList = null;
+			Response response = null;
+			try {
+				subCategoryList = categoryServices.getSubCategoryList(catGuid);
+				// list of category DTO
+				  List<SubCategoryDTO> listSubCategoryDTO = new ArrayList<SubCategoryDTO>();
+				  for(int i=0;i<subCategoryList.size();i++)
+				  {
+					  SubCategoryDTO subCategoryDTO = new SubCategoryDTO(subCategoryList.get(i));
+					  listSubCategoryDTO.add(subCategoryDTO);
+					  
+				  }
+				  GenericEntity<List<SubCategoryDTO>> genericEntity = new GenericEntity<List<SubCategoryDTO>>(
+						  listSubCategoryDTO) {
+						   };
+				response = Response.status(Response.Status.OK)
+						.entity(genericEntity).build();
+
+			} catch (Exception e) {
+				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+						.entity("error").build();
+				logger.logException(LogLevel.ERROR, "Get Sub-Categories failed ::",
+						e);
+			}
+
+			return response;
+		}
+		
+		  // Get type by passing subcatid and its name
+		// TODO :-> remove exception
+				@GET
+				@Path("types/{subcatguid}/{typename}")
+				@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+				public Response getSubCategoryTypeByName(@PathParam("catguid") String catGuid,
+						@PathParam("catguid") String typeName) {
+					ProductSubCategoryType productSubCategoryType = null;
+					Response response = null;
+					try {
+						productSubCategoryType = categoryServices.getSubCategoryTypeByIdAndName(catGuid , typeName);
+						/*// list of category DTO
+						  List<SubCategoryDTO> listSubCategoryDTO = new ArrayList<SubCategoryDTO>();
+						  for(int i=0;i<subCategoryList.size();i++)
+						  {
+							  SubCategoryDTO subCategoryDTO = new SubCategoryDTO(subCategoryList.get(i));
+							  listSubCategoryDTO.add(subCategoryDTO);
+							  
+						  }
+						  GenericEntity<List<SubCategoryDTO>> genericEntity = new GenericEntity<List<SubCategoryDTO>>(
+								  listSubCategoryDTO) {
+								   };*/
+						response = Response.status(Response.Status.OK)
+								.entity(new TypeDTO(productSubCategoryType)).build();
+
+					} catch (Exception e) {
+						response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+								.entity("error").build();
+						logger.logException(LogLevel.ERROR, "Get Sub-Categories failed ::",
+								e);
+					}
+
+					return response;
+				}
+		 
+				// Get list of All the Sub-Categories-type in a sub-category
+				@GET
+				@Path("/subcategories/{subcatguid}/types")
+				@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+				public Response getTypesInSubCat(@PathParam("subcatguid") String subCatGuid) {
+					List<ProductSubCategoryType> subCategoryTypeList = null;
+					Response response = null;
+					try {
+						subCategoryTypeList = categoryServices.getSubCategoryTypeList(subCatGuid);
+						// list of ctype DTO
+						  List<TypeDTO> listTypeDTO = new ArrayList<TypeDTO>();
+						  for(int i=0;i<subCategoryTypeList.size();i++)
+						  {
+							  TypeDTO typeDTO = new TypeDTO(subCategoryTypeList.get(i));
+							  listTypeDTO.add(typeDTO);
+							  
+						  }
+						  GenericEntity<List<TypeDTO>> genericEntity = new GenericEntity<List<TypeDTO>>(
+								  listTypeDTO) {
+								   };
+						response = Response.status(Response.Status.OK)
+								.entity(genericEntity).build();
+
+					} catch (Exception e) {
+						response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+								.entity("error").build();
+						logger.logException(LogLevel.ERROR, "Get Sub-Categories failed ::",
+								e);
+					}
+
+					return response;
+				}
+				
 
 }

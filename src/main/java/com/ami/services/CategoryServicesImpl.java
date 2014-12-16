@@ -177,12 +177,15 @@ public class CategoryServicesImpl implements CategoryServices {
 		return genericDao.getEntities(query, null);
 	}
 
-	// get Sub-Category List	
+	// get Sub-Category List in a Category
 	@Transactional
 	@Override
-	public List<ProductSubCategory> getSubCategoryList() throws Exception {
-		String query = "from ProductSubCategory";
-		return genericDao.getEntities(query, null);
+	public List<ProductSubCategory> getSubCategoryList(String catGuid) throws Exception {
+		String query = "from ProductSubCategory where productCategory = ?";
+		ProductCategory productCategory = getCategoryById(catGuid);
+		List<Object> list = new ArrayList<Object>();
+		list.add(productCategory);
+		return genericDao.getEntities(query, list);
 	}
 
 	// delete Category by Id
@@ -287,12 +290,16 @@ public class CategoryServicesImpl implements CategoryServices {
 		}	
 	}
 
+	// Get sub-category Type List
 	@Transactional
 	@Override
-	public List<ProductSubCategoryType> getSubCategoryTypeList()
+	public List<ProductSubCategoryType> getSubCategoryTypeList(String subCatGuid)
 			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "from ProductSubCategoryType where productSubCategory = ?";
+		ProductSubCategory productSubCategory = getSubCategoryById(subCatGuid);
+		List<Object> list = new ArrayList<Object>();
+		list.add(productSubCategory);
+		return genericDao.getEntities(query, list);
 	}
 
 	
@@ -309,8 +316,9 @@ public class CategoryServicesImpl implements CategoryServices {
 	public ProductSubCategoryType getSubCategoryTypeByIdAndName(String subGuid,
 			String typeName) throws Exception {
 		String query = "from ProductSubCategoryType where ProductSubCategory = ? And typeName =?";
+		ProductSubCategory prCategory = getSubCategoryById(subGuid);
 		List<Object> list = new ArrayList<Object>();
-		list.add(subGuid);
+		list.add(prCategory);
 		list.add(typeName);
 		ProductSubCategoryType productSubCategoryType = genericDao.getEntity(query,
 				list);

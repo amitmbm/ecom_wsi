@@ -26,14 +26,14 @@ public interface CategoryServices {
 	public ProductSubCategory updateSubCategory(SubCategoryDTO subCategoryDTO,String subCatGuid) throws Exception;
 	public ProductSubCategory getSubCategoryById(String subCatGuid) throws Exception;
 	public ProductSubCategory getSubCategoryByName(String name) throws Exception;
-	public List<ProductSubCategory> getSubCategoryList() throws Exception;
+	public List<ProductSubCategory> getSubCategoryList(String id) throws Exception;
 	public boolean deleteSubCategory(String subCatGuid) throws Exception;
 	
 	// sub-category type related stubs
 	ProductSubCategoryType addSubCategoryType(TypeDTO typeDTO, String subCatGuid)throws Exception;
 	public ProductSubCategoryType updateSubCategoryType(TypeDTO typeDTO,String typeGuid) throws Exception;
 	public ProductSubCategoryType getSubCategoryTypeById(String typeGuid) throws Exception;
-	public List<ProductSubCategoryType> getSubCategoryTypeList() throws Exception;
+	public List<ProductSubCategoryType> getSubCategoryTypeList(String id) throws Exception;
 	public boolean deleteSubCategoryType(String typeGuid) throws Exception;
 	public ProductSubCategoryType getSubCategoryTypeByIdAndName(String subGuid,String typeName)	throws Exception;
 
