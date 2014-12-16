@@ -18,7 +18,8 @@ public class Users implements java.io.Serializable {
 	private String userEmail;
 	private String userPasswd;
 	private Boolean isRegisterd;
-	private String userKey;
+	// TODO :-> remove user key from entity and .xml as we won't use it .
+	//private String userKey;
 	private String createdBy;
 	private String updatedBy;
 	private Date createdAt;
@@ -43,7 +44,7 @@ public class Users implements java.io.Serializable {
 		this.userEmail = userEmail;
 		this.userPasswd = userPasswd;
 		this.isRegisterd = isRegisterd;
-		this.userKey = userKey;
+		//this.userKey = userKey;
 		this.createdBy = createdBy;
 		this.updatedBy = updatedBy;
 		this.createdAt = createdAt;
@@ -76,14 +77,14 @@ public class Users implements java.io.Serializable {
 		this.isRegisterd = isRegisterd;
 	}
 
-	public String getUserKey() {
+/*	public String getUserKey() {
 		return this.userKey;
 	}
 
 	public void setUserKey(String userKey) {
 		this.userKey = userKey;
 	}
-
+*/
 	public String getCreatedBy() {
 		return this.createdBy;
 	}

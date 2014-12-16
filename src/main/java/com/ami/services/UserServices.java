@@ -24,4 +24,5 @@ public interface UserServices {
 	//public boolean validateUser(UserProfileDTO userProfileDTO) throws Exception;
 	public UserProfile updateUser(UserProfileDTO userProfileDTO, String mailId)
 			throws Exception;
+	public boolean authenticateUser(String mailId,String passwd) throws Exception;
 }

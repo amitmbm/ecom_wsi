@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ami.common.PasswordHash;
 import com.ami.dao.GenericDao;
 import com.ami.dto.UserProfileDTO;
 import com.ami.entity.UserProfile;
@@ -39,7 +40,7 @@ public class UserServicesImpl implements UserServices {
 			Users user = new Users();
 			user.setUserEmail(userProfileDTO.getEmailId());
 			user.setIsRegisterd(userProfileDTO.getIsRegister());
-		    user.setUserPasswd(userProfileDTO.getPasswd());
+		    user.setUserPasswd(PasswordHash.createHash(userProfileDTO.getPasswd()));
 		    //user.setUserKey("hardcoded");
 		    user.setCreatedAt(new Timestamp(new java.util.Date().getTime()));
 			user.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
@@ -194,6 +195,30 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	
+	    // authenticate a user (using the passwd based key dervivation function2 PBKDF2)
+	     // TODO :-> remove null pointer exception in case of success 
+		@Transactional
+		@Override
+		public boolean authenticateUser(String mailId , String passwd) throws Exception {
+			String query = "from Users where userEmail = ?";
+			List<Object> list = new ArrayList<Object>();
+			list.add(mailId);
+			Users user = genericDao.getEntity(query, list);
+			if (user == null)
+				throw new ResourceNotFoundException("User with MailId :"+ mailId + " not exist");
+ 			String passwdDB = user.getUserPasswd();
+			if(PasswordHash.validatePassword(passwd,passwdDB)) {
+                System.out.println("GOOD PASSWORD ACCEPTED!");
+                return true;
+            }
+			else
+			{
+				System.out.println("BAD PASSWORD NOT ACCEPTED!");
+				return false;
+			}
+			
+			
+		}
 }
 
 

@@ -2,10 +2,10 @@ package com.ami.common;
 
 
 /* 
- * Password Hashing With PBKDF2 (http://crackstation.net/hashing-security.htm).
+ * Password Hashing With PBKDF2 (http://en.wikipedia.org/wiki/PBKDF2) (http://crackstation.net/hashing-security.htm).
  * Copyright (c) 2013, Taylor Hornby
  * All rights reserved.
- *
+ *  PBKDF2 (Password-Based Key Derivation Function 2 
  * Redistribution and use in source and binary forms, with or without 
  * modification, are permitted provided that the following conditions are met:
  *
