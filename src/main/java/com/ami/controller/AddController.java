@@ -1,5 +1,6 @@
 package com.ami.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,10 +11,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -153,19 +156,28 @@ public class AddController {
 		
 		  @GET
 		  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		  public Response getAddsByPriceFilter(@Context HttpHeaders headers) {
-		  
-			  String from = headers.getRequestHeader("from").get(0);
-			  String to = headers.getRequestHeader("to").get(0);
-			  int lowPrice = Integer.parseInt(from);
-			  int highPrice = Integer.parseInt(to);
-			  System.out.println("lowprice" + lowPrice);
-			  System.out.println("highprice" + highPrice);
+		  public Response getAddsByPriceFilter(@Context UriInfo uriInfo
+				  , @QueryParam("from") int from,
+				  @QueryParam("to") int to) 
+		  {
+		      System.out.println("lownewprice" + from);
+			  System.out.println("highprice" + to);
 		  List<PostAdd> addList =  null; 
 		  Response response = null; 
 		  try { 
-			  addList =  dataServices.getAddList(lowPrice , highPrice); 
-			  response =  Response.status(Response.Status.OK).entity(addList).build();
+			  addList =  dataServices.getAddList(from , to); 
+			  // list of Add DTO
+			  List<PostDTO> listAddDTO = new ArrayList<PostDTO>();
+			  for(int i=0;i<addList.size();i++)
+			  {
+				  PostDTO postDTO = new PostDTO(addList.get(i));
+				  listAddDTO.add(postDTO);
+				  
+			  }
+			  GenericEntity<List<PostDTO>> genericEntity = new GenericEntity<List<PostDTO>>(
+					  listAddDTO) {
+					   };
+			  response =  Response.status(Response.Status.OK).entity(genericEntity).build();
 		  } catch (Exception e) { 
 			  response =  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("error").build();
 		  logger.logException(LogLevel.ERROR,"Get Categories failed ::", e); 
