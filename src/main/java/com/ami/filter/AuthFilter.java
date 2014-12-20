@@ -1,9 +1,12 @@
 package com.ami.filter;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ami.services.UserServices;
@@ -12,9 +15,16 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
 
 @Component
 public class AuthFilter implements ContainerRequestFilter {
+	private static final String WWWAuthHeaderVal = "Basic realm=\"insert realm\"";
 	
 	@Autowired
 	UserServices dataServices;
+	
+	@Value("${basic_user_name}")
+	private String basicUsername;
+	
+	@Value("${basic_user_password}")
+	private String basicPassword;
 	
     /**
      * Apply the filter : check input request, validate or not with user auth
@@ -22,18 +32,18 @@ public class AuthFilter implements ContainerRequestFilter {
      */
     @Override
     public ContainerRequest filter(ContainerRequest containerRequest) throws WebApplicationException {
-        //GET, POST, PUT, DELETE, ...
-        String method = containerRequest.getMethod();
         // for manage apis , which starts with api/v1/manage/*
-        String path = containerRequest.getPath(true);
-    
-       if((method.equals("GET")||method.equals("POST")||method.equals("PUT")||method.equals("DELETE")) && path.contains("api/v1/manage/")){
+        String reqPath = containerRequest.getPath(); 
+        
+       if(reqPath.startsWith("api/v1/manage"))
+       {
         	 //Get the authentification passed in HTTP headers parameters
             String auth = containerRequest.getHeaderValue("authorization");
      
             //If the user does not have the right (does not provide any HTTP Basic Auth)
             if(auth == null){
-                throw new WebApplicationException(Status.UNAUTHORIZED);
+            	Response response = Response.status(Status.UNAUTHORIZED).header(HttpHeaders.WWW_AUTHENTICATE, WWWAuthHeaderVal).entity(null).build();
+            	throw new WebApplicationException(response);
             }
      
             //lap : loginAndPassword
@@ -47,7 +57,7 @@ public class AuthFilter implements ContainerRequestFilter {
             //DATABASE CHECK is below
             Boolean authentificationResult = false;
 		try {
-			authentificationResult = dataServices.authenticateUser(lap[0], lap[1]);
+			authentificationResult = isAuthenticated(lap[0], lap[1]);
 		} catch (Exception e) {
 			// TODO use logger
 			e.printStackTrace();
@@ -61,12 +71,19 @@ public class AuthFilter implements ContainerRequestFilter {
             if(authentificationResult == true){
                 System.out.println("passed");
             }
-            
-          
         }
         return containerRequest;
        
     }
 
+    private boolean isAuthenticated(String username, String password){
+    	if(username == null || password == null)
+    		return false;
+    	
+    	if (username.equalsIgnoreCase(basicUsername) && password.equalsIgnoreCase(basicPassword))
+    		return true;
+    	return false;
+    }
+    
 	
 }
