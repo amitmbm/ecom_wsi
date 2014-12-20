@@ -40,8 +40,7 @@ public class CategoryServicesImpl implements CategoryServices {
 			ProductCategory productCategory = new ProductCategory();
 			productCategory.setCatDesc(categoryDTO.getCatdesc());
 
-			String catguid= UUID.randomUUID().toString();
-			productCategory.setCatGuid(catguid);
+			productCategory.setCatGuid(UUID.randomUUID().toString());
             
 			productCategory.setCatName(categoryDTO.getCatname());
 			
