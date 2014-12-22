@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+    <head>
+
+        <meta charset="utf-8">
+        <!-- Javascript -->
+		<link rel="stylesheet" href"bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href"bootstrap/css/bootstrap-responsive.css" />
+		</style>
+		<script src="js/jquery.min.js"> </script>
+		<script src="bootstrap/js/bootstrap.min.js"> </script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-route.min.js"></script>
+	    <script src="js/addhtml.js"></script>
+
+    </head>
+
+   <div class="container" data-ng-app="demoApp">
+	<div data-ng-controller="addSubCatTypeController">
+		<h1> Posting Sub Category Type</h1>
+		<div class="row">
+		<div class="span3">
+			<span> name: </span> &nbsp;
+			<input type="text" data-ng-model="inputData.name" placeholder="enter name " />
+		</div>
+		<div class="row">
+
+		<button class="btn btn-primary" ng-click="callService()">POST a Sub category type</button>
+				<p>{{"posted sub category type with id"+ add.id}}<p>
+
+		</div>
+</div>
+
+</html>

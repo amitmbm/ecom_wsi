@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+    <head>
+
+        <meta charset="utf-8">
+        <!-- Javascript -->
+
+        <script src="angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.min.js"></script>
+	    <script src="postadd.js"></script>
+
+    </head>
+
+    <body ng-app="demoApp">
+        <div ng-controller="demoController">
+                <button type="button" class="btn btn-default" ng-click="callService()">create category</button>
+				<p>{{"posted add with id"+ add.id}}<p>
+				
+        </div>
+
+        
+
+    </body>
+
+</html>
