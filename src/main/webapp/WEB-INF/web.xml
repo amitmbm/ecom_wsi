@@ -29,15 +29,17 @@
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 			<param-value>true</param-value>
 		</init-param>
-		<!-- for making cross-domain call -->
+		<!-- request filters -->
+		<init-param>
+		<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+		<param-value>com.sun.jersey.api.container.filter.LoggingFilter;com.ami.filter.OptionsFilter;com.ami.filter.AuthFilter</param-value>
+	</init-param>
+		<!-- for making cross-domain call(Response filter) -->
 	<init-param>
 		<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
-		<param-value>com.ami.filter.ResponseCorsFilter</param-value>
+		<param-value>com.sun.jersey.api.container.filter.LoggingFilter;com.ami.filter.ResponseCorsFilter</param-value>
 	</init-param>
-	<init-param>
-		<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-		<param-value>com.sun.jersey.api.container.filter.LoggingFilter;com.ami.filter.AuthFilter</param-value>
-	</init-param>
+	
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
