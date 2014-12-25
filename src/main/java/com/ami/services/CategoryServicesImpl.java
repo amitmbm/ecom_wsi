@@ -1,7 +1,7 @@
 package com.ami.services;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -44,9 +44,9 @@ public class CategoryServicesImpl implements CategoryServices {
             
 			productCategory.setCatName(categoryDTO.getCatname());
 			
-			java.util.Date date= new java.util.Date();
-			productCategory.setCreatedAt(new Timestamp(date.getTime()));
-			productCategory.setUpdatedAt(new Timestamp(date.getTime()));
+			Date now = new Date();
+			productCategory.setCreatedAt(now);
+			productCategory.setUpdatedAt(now);
 			return genericDao.addEntity(productCategory);
 		}
 	}
@@ -63,7 +63,7 @@ public class CategoryServicesImpl implements CategoryServices {
 			if(categoryDTO.getCatname() != null)
 				productCategory.setCatName(categoryDTO.getCatname());
             
-			productCategory.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+			productCategory.setUpdatedAt(new Date());
 			return genericDao.updateEntity(productCategory);
 		}catch(ResourceNotFoundException re){
 			throw re;
@@ -88,8 +88,9 @@ public class CategoryServicesImpl implements CategoryServices {
             productSubCategory.setProductCategory(getCategoryById(catGuid));
             
 			productSubCategory.setSubCatName(subCategoryDTO.getSubCatName());
-			productSubCategory.setCreatedAt(new Timestamp(new java.util.Date().getTime()));
-			productSubCategory.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+			Date now = new Date();
+			productSubCategory.setCreatedAt(now);
+			productSubCategory.setUpdatedAt(now);
 			return genericDao.addEntity(productSubCategory);
 		}
 	}
@@ -106,7 +107,7 @@ public class CategoryServicesImpl implements CategoryServices {
 			if(subCategoryDTO.getSubCatName() != null)
 				productSubCategory.setSubCatName(subCategoryDTO.getSubCatName());
             
-			productSubCategory.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+			productSubCategory.setUpdatedAt(new Date());
 			return genericDao.updateEntity(productSubCategory);
 		}catch(ResourceNotFoundException re){
 			throw re;
@@ -252,9 +253,7 @@ public class CategoryServicesImpl implements CategoryServices {
 	@Override
 	public ProductSubCategoryType addSubCategoryType(TypeDTO typeDTO , String subCatGuid) throws Exception {
 		try{
-			//ProductSubCategoryType productSubCategoryType = getSubCategoryTypeById(typeDTO.getTypeGuid());
 			ProductSubCategoryType productSubCategoryType = getSubCategoryTypeByIdAndName(subCatGuid, typeDTO.getTypeName());
-			updateSubCategoryType(typeDTO,productSubCategoryType.getTypeGuid() );
 			return productSubCategoryType;
 		}
 		catch(ResourceNotFoundException re)
@@ -265,9 +264,9 @@ public class CategoryServicesImpl implements CategoryServices {
 			productSubCategoryType.setTypeName(typeDTO.getTypeName());
 
 			productSubCategoryType.setTypeGuid(UUID.randomUUID().toString());
-			
-			productSubCategoryType.setCreatedAt(new Timestamp(new java.util.Date().getTime()));
-			productSubCategoryType.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+			Date now = new Date();
+			productSubCategoryType.setCreatedAt(now);
+			productSubCategoryType.setUpdatedAt(now);
 			return genericDao.addEntity(productSubCategoryType);
 		}
 	}
@@ -282,7 +281,7 @@ public class CategoryServicesImpl implements CategoryServices {
 			if (typeDTO.getTypeName()!= null)
 				productSubCategoryType.setTypeName(typeDTO.getTypeName());
 			
-			productSubCategoryType.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));   
+			productSubCategoryType.setUpdatedAt(new Date());   
 			return genericDao.updateEntity(productSubCategoryType);
 		}catch(ResourceNotFoundException re){
 			throw re;
@@ -309,15 +308,15 @@ public class CategoryServicesImpl implements CategoryServices {
 		return genericDao.deleteEntity(getSubCategoryTypeById(typeGuid));
 	}
 
-	// how to pass subcatcategory id here and am i passing it in correct way?
+	// get the sub-cat type , using the primary key (subcatid and typename)
 	@Transactional
 	@Override
 	public ProductSubCategoryType getSubCategoryTypeByIdAndName(String subGuid,
 			String typeName) throws Exception {
 		String query = "from ProductSubCategoryType where ProductSubCategory = ? And typeName =?";
-		ProductSubCategory prCategory = getSubCategoryById(subGuid);
+		ProductSubCategory subCategory = getSubCategoryById(subGuid);
 		List<Object> list = new ArrayList<Object>();
-		list.add(prCategory);
+		list.add(subCategory);
 		list.add(typeName);
 		ProductSubCategoryType productSubCategoryType = genericDao.getEntity(query,
 				list);

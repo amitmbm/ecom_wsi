@@ -1,7 +1,7 @@
 package com.ami.services;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +33,7 @@ public class AddServicesImpl implements AddServices{
 	@Transactional
 	@Override
 	public PostAdd postAdd(PostDTO postDTO) throws Exception {
+		Date now =new Date() ;
 		try {
 			PostAdd postAdd = getAddById(postDTO.getAddGuid());
 			updateAdd(postDTO, postDTO.getAddGuid());
@@ -54,8 +55,8 @@ public class AddServicesImpl implements AddServices{
 				user.setUserEmail(postDTO.getMailId());
 				user.setUserPasswd("unregister");
 				user.setIsRegisterd(false);
-				user.setCreatedAt(new Timestamp(new java.util.Date().getTime()));
-				user.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+				user.setCreatedAt(now);
+				user.setUpdatedAt(now);
 				genericDao.addEntity(user);
 			}
 
@@ -75,8 +76,8 @@ public class AddServicesImpl implements AddServices{
 			postAdd.setImage3(postDTO.getImage3());
 			postAdd.setImage4(postDTO.getImage4());
 
-			postAdd.setCreatedAt(new Timestamp(new java.util.Date().getTime()));
-			postAdd.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+			postAdd.setCreatedAt(now);
+			postAdd.setUpdatedAt(now);
 
 			return genericDao.addEntity(postAdd);
 		}
@@ -111,7 +112,7 @@ public class AddServicesImpl implements AddServices{
 			if(postDTO.getImage4() != null)
 			    postAdd.setImage4(postDTO.getImage4());
 				
-			postAdd.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+			postAdd.setUpdatedAt(new Date());
 			
 			return genericDao.updateEntity(postAdd);
 		}catch(ResourceNotFoundException re){

@@ -2,6 +2,7 @@ package com.ami.services;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class UserServicesImpl implements UserServices {
 	@Transactional
 	@Override
 	public UserProfile addUser(UserProfileDTO userProfileDTO) throws Exception {
+	          Date now = new Date();
 		try{
 			UserProfile userProfileId = getUserProfileByMailId(userProfileDTO.getEmailId());
 			updateUser(userProfileDTO, userProfileId.getUserEmail());
@@ -42,8 +44,8 @@ public class UserServicesImpl implements UserServices {
 			user.setIsRegisterd(userProfileDTO.getIsRegister());
 		    user.setUserPasswd(PasswordHash.createHash(userProfileDTO.getPasswd()));
 		    //user.setUserKey("hardcoded");
-		    user.setCreatedAt(new Timestamp(new java.util.Date().getTime()));
-			user.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+		    user.setCreatedAt(now);
+			user.setUpdatedAt(now);
 			
 			genericDao.addEntity(user);
 		    //"Select aes_encrypt(password, md5(guid))", null)
@@ -55,8 +57,8 @@ public class UserServicesImpl implements UserServices {
 		    userProfile.setPhoneNum(userProfileDTO.getPhoneNum());
 		    userProfile.setUserEmail(userProfileDTO.getEmailId());
 		    
-		    userProfile.setCreatedAt(new Timestamp(new java.util.Date().getTime()));
-		    userProfile.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+		    userProfile.setCreatedAt(now);
+		    userProfile.setUpdatedAt(now);
 
 		    userProfile.setUsers(user);
 		    
@@ -91,7 +93,7 @@ public class UserServicesImpl implements UserServices {
 				if (userProfileDTO.getPhoneNum()!=null)
 					userProfile.setPhoneNum(userProfileDTO.getPhoneNum());
 				
-				userProfile.setUpdatedAt(new Timestamp(new java.util.Date().getTime()));
+				userProfile.setUpdatedAt(new Date());
 				
 				userProfile.setUsers(user);
 				return genericDao.updateEntity(userProfile);

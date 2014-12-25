@@ -80,3 +80,5 @@ CONSTRAINT `post_add_fk3` FOREIGN KEY (`user_email`) REFERENCES `users` (`user_e
 );
 
 CREATE index post_add_price_index on post_add (`price`);
+
+alter table olxm.product_sub_category_type add unique key sub_cat_type_unique (`sub_cat_guid`, `type_name`);
