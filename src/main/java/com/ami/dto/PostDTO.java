@@ -17,6 +17,7 @@ public class PostDTO {
 	private String typeGuid;
 	// user-detail
 	@NotNull
+	@Size(min = 5, max = 128)
 	private String mailId;
 	@NotNull
 	@Size(min = 5, max = 2047)
