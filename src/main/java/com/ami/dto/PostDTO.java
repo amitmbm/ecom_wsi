@@ -1,5 +1,9 @@
 package com.ami.dto;
 
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -12,9 +16,12 @@ public class PostDTO {
 	private String subCatGuid;
 	private String typeGuid;
 	// user-detail
+	@NotNull
 	private String mailId;
-
+	@NotNull
+	@Size(min = 5, max = 2047)
 	private String addDesc;
+	@NotNull
 	private Integer price;
 	private Boolean negotiable;
 	
@@ -22,6 +29,11 @@ public class PostDTO {
 	private String image2;
 	private String image3;
 	private String image4;
+	// time-stamp detail
+	private Date createdAt;
+	private String createdBy;
+	private Date updatedAt;
+	private String updatedBy;
 	
 	public PostDTO() {
 		
@@ -37,6 +49,10 @@ public class PostDTO {
 		setImage2(postAdd.getImage2());
 		setImage3(postAdd.getImage3());
 		setImage4(postAdd.getImage4());
+		setCreatedAt(postAdd.getCreatedAt());
+		setCreatedBy(postAdd.getCreatedBy());
+		setUpdatedAt(postAdd.getUpdatedAt());
+		setUpdatedBy(postAdd.getUpdatedBy());
 	}
 
 	@XmlElement(name = "id")
@@ -136,6 +152,38 @@ public class PostDTO {
 
 	public void setMailId(String mailId) {
 		this.mailId = mailId;
+	}
+	
+	@XmlElement(name = "created_at", nillable = true)
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	@XmlElement(name = "created_by", nillable = true)
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	@XmlElement(name = "updated_at", nillable = true)
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	@XmlElement(name = "updated_by", nillable = true)
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 
 	
