@@ -5,32 +5,40 @@
 	xmlns:util="http://www.springframework.org/schema/util" 
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p"
+	
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
-  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+  http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 	<context:annotation-config />
-	
-	<context:component-scan base-package="com.ami.controller, com.ami.services, com.ami.model, com.ami.dao com.ami.common com.ami.filter" />
+
+	<cache:annotation-driven />
+
+	<context:component-scan
+		base-package="com.ami.controller, com.ami.services, com.ami.model, com.ami.dao com.ami.common com.ami.filter" />
 
 	<mvc:annotation-driven />
-	
-	<tx:annotation-driven proxy-target-class="true" transaction-manager="txManager" />
 
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
- 		<property name="location" value="classpath:olx.default.properties"></property>
+	<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="txManager" />
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:olx.default.properties"></property>
 	</bean>
-	
-	<!-- <bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://amidb.cb36667ydd6q.ap-southeast-1.rds.amazonaws.com:3306/olxm" />
-		<property name="username" value="root" />
-		<property name="password" value="rootroot" />
-	</bean>   -->
-	
+
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property 
+		name="url" value="jdbc:mysql://amidb.cb36667ydd6q.ap-southeast-1.rds.amazonaws.com:3306/olxm" 
+		/> <property name="username" value="root" /> <property name="password" value="rootroot" 
+		/> </bean> -->
+
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -71,4 +79,6 @@
 		<property name="sessionFactory" ref="olxSessionFactory" />
 	</bean>
 
+<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>
 </beans>
