@@ -33,11 +33,14 @@
 		<property name="location" value="classpath:olx.default.properties"></property>
 	</bean>
 
-	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property 
-		name="url" value="jdbc:mysql://amidb.cb36667ydd6q.ap-southeast-1.rds.amazonaws.com:3306/olxm" 
-		/> <property name="username" value="root" /> <property name="password" value="rootroot" 
-		/> </bean> -->
+	<!-- <bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url"
+		value="jdbc:mysql://amidb.cb36667ydd6q.ap-southeast-1.rds.amazonaws.com:3306/olxm" />
+	<property name="username" value="root" />
+	<property name="password" value="rootroot" />
+</bean> -->
 
 
 	<bean id="dataSource"
@@ -64,10 +67,10 @@
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="dialect">com.ami.common.CustomMysqlDialect</prop>
 				<!-- the following should disable the support of constraints inside the 
 					generated DDL and entity validation before an insert or updated Since we 
 					dont use entity validations at DDL level this change should be fine -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>	
 				<prop key="hibernate.validator.apply_to_ddl">false</prop>
 				<prop key="hibernate.validator.autoregister_listeners">false</prop>
 			</props>
