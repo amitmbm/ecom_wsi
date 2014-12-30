@@ -84,4 +84,5 @@
 
 <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
 <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>
+<bean id="serviceConstants" class="com.ami.constants.ServiceConstants" scope="prototype"/>
 </beans>

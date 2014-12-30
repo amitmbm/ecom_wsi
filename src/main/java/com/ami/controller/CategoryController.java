@@ -15,11 +15,15 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import com.ami.common.ErrorConstants;
 import com.ami.common.Utility;
+import com.ami.constants.ServiceConstants;
 import com.ami.creational.ILogger;
 import com.ami.creational.LoggerManager;
 import com.ami.dto.CategoryDTO;
@@ -40,10 +44,23 @@ import com.ami.services.CategoryServices;
 
 @Component
 @Path("/api/v1/manage/")
-public class CategoryController {
+public class CategoryController implements ApplicationContextAware{
 
 	@Autowired
 	CategoryServices categoryServices;
+	
+	private static ApplicationContext appContext;
+	
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext)
+			throws BeansException {
+		appContext = applicationContext;
+ 
+	}
+ 
+	public static Object getBean(String beanName) {
+		return appContext.getBean(beanName);
+	}
 
 	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
 			CategoryController.class.getName());
@@ -187,6 +204,8 @@ public class CategoryController {
 	public Response getCategory(@PathParam("catguid") String catGuid) {
 		ProductCategory productCategory = null;
 		Response response = null;
+		ServiceConstants serviceConstants = (ServiceConstants) CategoryController.getBean("serviceConstants");
+		System.out.println("ref of serviceConstants"+ serviceConstants);
 		try {
 			productCategory = categoryServices.getCategoryById(catGuid);
 			response = Response.status(Response.Status.OK)
