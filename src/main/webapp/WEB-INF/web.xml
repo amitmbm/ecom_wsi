@@ -20,10 +20,10 @@
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
-		<init-param>
+		<!-- <init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>com.ami.controller</param-value>
-		</init-param>
+		</init-param> -->
 		<!-- json.pojomapping is required to understand the jersey about the JSON and pojo mapping -->
 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
