@@ -21,7 +21,7 @@
 	<cache:annotation-driven />
 
 	<context:component-scan
-		base-package="com.ami.controller, com.ami.services, com.ami.model, com.ami.dao com.ami.common com.ami.filter" />
+		base-package="com.ami.controller, com.ami.services, com.ami.model, com.ami.dao com.ami.common com.ami.filter com.ami.aws" />
 
 	<mvc:annotation-driven />
 

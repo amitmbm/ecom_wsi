@@ -240,7 +240,6 @@
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.9.1</version>
-			<scope>runtime</scope>
 		</dependency>
 				
 	</dependencies>

@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.ami.common.ErrorConstants;
@@ -43,8 +44,13 @@ import com.ami.services.CategoryServices;
 public class CategoryController {
 
 	@Autowired
-	CategoryServices categoryServices;
-		
+	@Qualifier("categoryServicesImpl")
+	CategoryServices categoryServicesImpl1;
+	
+	@Autowired
+	@Qualifier("categorySvcTemp")
+	CategoryServices categoryServicesImpl2;
+	
 	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
 			CategoryController.class.getName());
 
@@ -60,7 +66,7 @@ public class CategoryController {
 		try {
 			// categoryServices.validateCategory(categoryDTO);
 
-			ProductCategory productCategory = categoryServices
+			ProductCategory productCategory = categoryServicesImpl1
 					.addCategory(categoryDTO);
 			response = Response.status(Response.Status.CREATED)
 					.entity(new CategoryDTO(productCategory)).build();
@@ -91,7 +97,7 @@ public class CategoryController {
 		Response response = null;
 		try {
 			// categoryServices.validateCategory(categoryDTO);
-			ProductCategory productCategory = categoryServices.updateCategory(
+			ProductCategory productCategory = categoryServicesImpl1.updateCategory(
 					categoryDTO, catGuid);
 			response = Response.status(Response.Status.OK)
 					.entity(new CategoryDTO(productCategory)).build();
@@ -126,7 +132,7 @@ public class CategoryController {
 			// TODO
 			// categoryServices.validateCategory(subCategoryDTO);
 
-			ProductSubCategory productSubCategory = categoryServices
+			ProductSubCategory productSubCategory = categoryServicesImpl1
 					.addSubCategory(subCategoryDTO, catGuid);
 			response = Response.status(Response.Status.CREATED)
 					.entity(new SubCategoryDTO(productSubCategory)).build();
@@ -156,7 +162,7 @@ public class CategoryController {
 		Response response = null;
 		try {
 			// categoryServices.validateCategory(categoryDTO);
-			ProductSubCategory productSubCategory = categoryServices
+			ProductSubCategory productSubCategory = categoryServicesImpl1
 					.updateSubCategory(subCategoryDTO, subCatGuid);
 			response = Response.status(Response.Status.OK)
 					.entity(new SubCategoryDTO(productSubCategory)).build();
@@ -188,7 +194,7 @@ public class CategoryController {
 		ProductCategory productCategory = null;
 		Response response = null;
 		try {
-			productCategory = categoryServices.getCategoryById(catGuid);
+			productCategory = categoryServicesImpl1.getCategoryById(catGuid);
 			response = Response.status(Response.Status.OK)
 					.entity(new CategoryDTO(productCategory)).build();
 		} catch (ResourceNotFoundException re) {
@@ -213,7 +219,7 @@ public class CategoryController {
 		ProductSubCategory productSubCategory = null;
 		Response response = null;
 		try {
-			productSubCategory = categoryServices
+			productSubCategory = categoryServicesImpl1
 					.getSubCategoryById(subCatguid);
 			response = Response.status(Response.Status.OK)
 					.entity(new SubCategoryDTO(productSubCategory)).build();
@@ -240,7 +246,7 @@ public class CategoryController {
 		System.out.println("inside delete cat" + catguid);
 		Response response = null;
 		try {
-			categoryServices.deleteCategory(catguid);
+			categoryServicesImpl1.deleteCategory(catguid);
 			response = Response.status(Response.Status.OK)
 					.entity("Category deleted successfully").build();
 		} catch (ResourceNotFoundException re) {
@@ -264,7 +270,7 @@ public class CategoryController {
 	public Response deleteSubCategory(@PathParam("subcatguid") String subcatguid) {
 		Response response = null;
 		try {
-			categoryServices.deleteSubCategory(subcatguid);
+			categoryServicesImpl1.deleteSubCategory(subcatguid);
 			response = Response.status(Response.Status.OK)
 					.entity("Sub-Category Deleted Successfully::").build();
 		} catch (ResourceNotFoundException re) {
@@ -295,7 +301,7 @@ public class CategoryController {
 			// TODO
 			// categoryServices.validateCategory(subCategoryDTO);
 
-			ProductSubCategoryType productSubCategoryType = categoryServices
+			ProductSubCategoryType productSubCategoryType = categoryServicesImpl1
 					.addSubCategoryType(typeDTO, subCatguid);
 			response = Response.status(Response.Status.CREATED)
 					.entity(new TypeDTO(productSubCategoryType)).build();
@@ -325,7 +331,7 @@ public class CategoryController {
 		Response response = null;
 		try {
 			// categoryServices.validateCategory(categoryDTO);
-			ProductSubCategoryType productSubCategoryType = categoryServices
+			ProductSubCategoryType productSubCategoryType = categoryServicesImpl1
 					.updateSubCategoryType(typeDTO, typeGuid);
 			response = Response.status(Response.Status.OK)
 					.entity(new TypeDTO(productSubCategoryType)).build();
@@ -356,7 +362,7 @@ public class CategoryController {
 	public Response deleteSubCategoryType(@PathParam("typeguid") String typeGuid) {
 		Response response = null;
 		try {
-			categoryServices.deleteSubCategoryType(typeGuid);
+			categoryServicesImpl1.deleteSubCategoryType(typeGuid);
 			response = Response.status(Response.Status.OK)
 					.entity("Sub-Category-type Deleted Successfully::").build();
 		} catch (ResourceNotFoundException re) {
@@ -382,7 +388,7 @@ public class CategoryController {
 			ProductSubCategoryType productSubCategoryType = null;
 			Response response = null;
 			try {
-				productSubCategoryType = categoryServices
+				productSubCategoryType = categoryServicesImpl1
 						.getSubCategoryTypeById(typeGuid);
 				response = Response.status(Response.Status.OK)
 						.entity(new TypeDTO(productSubCategoryType)).build();
@@ -409,7 +415,7 @@ public class CategoryController {
 		List<ProductCategory> categoryList = null;
 		Response response = null;
 		try {
-			categoryList = categoryServices.getCategoryList();
+			categoryList = categoryServicesImpl1.getCategoryList();
 			 // list of category DTO
 			  List<CategoryDTO> listCategoryDTO = new ArrayList<CategoryDTO>();
 			  for(int i=0;i<categoryList.size();i++)
@@ -440,7 +446,7 @@ public class CategoryController {
 			List<ProductSubCategory> subCategoryList = null;
 			Response response = null;
 			try {
-				subCategoryList = categoryServices.getSubCategoryList(catGuid);
+				subCategoryList = categoryServicesImpl1.getSubCategoryList(catGuid);
 				// list of category DTO
 				  List<SubCategoryDTO> listSubCategoryDTO = new ArrayList<SubCategoryDTO>();
 				  for(int i=0;i<subCategoryList.size();i++)
@@ -475,7 +481,7 @@ public class CategoryController {
 					ProductSubCategoryType productSubCategoryType = null;
 					Response response = null;
 					try {
-						productSubCategoryType = categoryServices.getSubCategoryTypeByIdAndName(catGuid , typeName);
+						productSubCategoryType = categoryServicesImpl1.getSubCategoryTypeByIdAndName(catGuid , typeName);
 						/*// list of category DTO
 						  List<SubCategoryDTO> listSubCategoryDTO = new ArrayList<SubCategoryDTO>();
 						  for(int i=0;i<subCategoryList.size();i++)
@@ -508,7 +514,7 @@ public class CategoryController {
 					List<ProductSubCategoryType> subCategoryTypeList = null;
 					Response response = null;
 					try {
-						subCategoryTypeList = categoryServices.getSubCategoryTypeList(subCatGuid);
+						subCategoryTypeList = categoryServicesImpl1.getSubCategoryTypeList(subCatGuid);
 						// list of ctype DTO
 						  List<TypeDTO> listTypeDTO = new ArrayList<TypeDTO>();
 						  for(int i=0;i<subCategoryTypeList.size();i++)

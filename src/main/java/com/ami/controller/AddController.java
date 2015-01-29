@@ -46,6 +46,7 @@ public class AddController {
 	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
 			AddController.class.getName());
 	
+	
 	// Post An Add on platform
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
