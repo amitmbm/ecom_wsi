@@ -63,11 +63,11 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -77,11 +77,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901.jdbc4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -122,19 +117,19 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- below is required to add the @Mock annotation to inject mock beans -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- below is required to remove the java.lang.ClassNotFoundException: 
 			javax.servlet.ServletContext. -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
-		</dependency>
+		</dependency> -->
 		<!-- below is required to add the libarary related to JSON -->
 		<dependency>
 			<groupId>org.json</groupId>
@@ -223,8 +218,9 @@
 			<artifactId>jersey-client</artifactId>
 			<version>${jersey-version}</version>
 		</dependency>
-		<!-- javax.validation related dependency @NULL , @NotNULL in DTO classes -->
-		<dependency>
+		<!-- javax.validation related dependency @NULL , @NotNULL in DTO classes and removing as hibernate jar was not getting unlink in 
+		 redeployment -->
+	<!-- 	<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
@@ -233,7 +229,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
 			<version>4.1.0.Final</version>
-		</dependency>
+		</dependency> -->
 		
 		 <!--  AWS dependency -->
 		<dependency>

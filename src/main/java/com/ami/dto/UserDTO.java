@@ -2,8 +2,6 @@ package com.ami.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -12,11 +10,11 @@ import com.ami.entity.Users;
 @XmlRootElement(name = "user")
 public class UserDTO {
 
-	@NotNull
-	@Size(min = 5, max = 128)
+	/*@NotNull
+	@Size(min = 5, max = 128)*/
 	private String emailId;
-	@NotNull
-	@Size(min = 5, max = 128)
+	/*@NotNull
+	@Size(min = 5, max = 128)*/
 	private String passwd;
 
 	private Boolean isRegister;

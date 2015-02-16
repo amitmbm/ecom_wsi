@@ -2,8 +2,6 @@ package com.ami.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -16,13 +14,13 @@ public class PostDTO {
 	private String subCatGuid;
 	private String typeGuid;
 	// user-detail
-	@NotNull
-	@Size(min = 5, max = 128)
+/*	@NotNull
+	@Size(min = 5, max = 128)*/
 	private String mailId;
-	@NotNull
-	@Size(min = 5, max = 2047)
+	/*@NotNull
+	@Size(min = 5, max = 2047)*/
 	private String addDesc;
-	@NotNull
+	/*@NotNull*/
 	private Integer price;
 	private Boolean negotiable;
 	

@@ -21,7 +21,7 @@
 	<cache:annotation-driven />
 
 	<context:component-scan
-		base-package="com.ami.controller, com.ami.services, com.ami.model, com.ami.dao com.ami.common com.ami.filter com.ami.aws" />
+		base-package="com.ami" />
 
 	<mvc:annotation-driven />
 
@@ -42,7 +42,7 @@
 	<property name="password" value="rootroot" />
 </bean> -->
 
-
+<!-- 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -50,7 +50,13 @@
 		<property name="username" value="dbclient" />
 		<property name="password" value="kony123" />
 	</bean>
+ -->
+ 
+<!--  data-source in case of JDBC connection-pool -->
 
+ <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="java:comp/env/jdbc/olxjndi"/>
+</bean>
 
 	<bean id="olxSessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">

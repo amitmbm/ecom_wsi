@@ -2,8 +2,8 @@ package com.ami.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+/*import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;*/
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,8 +13,8 @@ import com.ami.entity.ProductSubCategoryType;
 public class TypeDTO {
 
 	private String typeGuid;
-	@NotNull
-	@Size(min = 5, max = 128)
+	/*@NotNull
+	@Size(min = 5, max = 128)*/
 	private String typeName;
 
 	// time-stamp detail
