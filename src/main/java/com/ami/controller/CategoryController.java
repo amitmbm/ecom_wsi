@@ -3,6 +3,7 @@ package com.ami.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -47,10 +48,29 @@ public class CategoryController {
 	@Qualifier("categoryServicesImpl")
 	CategoryServices categoryServicesImpl1;
 	
+	// example of Qualifier annotation
 	@Autowired
 	@Qualifier("categorySvcTemp")
 	CategoryServices categoryServicesImpl2;
 	
+	// example of giving a custom name in the @Component Annotation
+	@Autowired
+	@Qualifier("catSvc")
+	CategoryServices categoryServicesImpl3;
+	
+	// example of include-filter to show , how to register a bean as a spring bean , without sterotype annotation ie @component , @service
+	@Autowired
+	@Qualifier("includeFilterEx")
+	CategoryServices categoryServicesImpl4;
+	
+	@PostConstruct
+	public void printServiceBeans()
+	{
+		System.out.println("normal autowitred bean"+categoryServicesImpl1);
+		System.out.println("qualifier bean"+categoryServicesImpl2);
+		System.out.println("name in component bean ex"+categoryServicesImpl3);
+		System.out.println("example of include-filter ex"+categoryServicesImpl4);
+	}
 	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
 			CategoryController.class.getName());
 

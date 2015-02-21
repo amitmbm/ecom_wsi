@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:util="http://www.springframework.org/schema/util" 	
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:cache="http://www.springframework.org/schema/cache"
@@ -20,8 +20,11 @@
 
 	<cache:annotation-driven />
 
+  <!--   include-filter to show , how to register a bean as a spring bean , without sterotype annotation ie @component , @service -->
 	<context:component-scan
-		base-package="com.ami" />
+		base-package="com.ami">
+		<context:include-filter type="assignable" expression="com.ami.services.CategoryServices"></context:include-filter> 
+		</context:component-scan>
 
 	<mvc:annotation-driven />
 
