@@ -4,7 +4,7 @@
 
 
 ## Path variable hols the local directory where your tomcat is installed
-path=E:/molx/tomcat_7/webapps
+path=E:/molx/tomcat_8/webapps
 rm -rf target/
 mvn clean install -DskipTests=true
 rm -rf $path/TestWS*
