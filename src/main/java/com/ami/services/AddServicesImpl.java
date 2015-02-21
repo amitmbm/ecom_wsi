@@ -7,9 +7,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ami.dao.GenericDao;
@@ -20,7 +19,7 @@ import com.ami.entity.ProductSubCategoryType;
 import com.ami.entity.Users;
 import com.ami.exceptions.ResourceNotFoundException;
 
-@Component
+@Service
 public class AddServicesImpl implements AddServices{
 	
 	@Autowired
