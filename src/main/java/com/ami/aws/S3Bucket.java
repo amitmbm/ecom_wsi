@@ -1,4 +1,4 @@
-package com.ami.aws;
+/*package com.ami.aws;
 
 import java.util.List;
 
@@ -41,4 +41,4 @@ static
 
 }
 
-}
+}*/

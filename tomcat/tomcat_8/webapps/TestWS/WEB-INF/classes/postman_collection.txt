@@ -1,0 +1,5 @@
+Import below postman collection in Chrome postman (Rest-client) and change the params accodingly to 
+hit the API.
+
+https://www.getpostman.com/collections/f5cb746f6cb8dc6293d3 
+

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+  http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<context:annotation-config />
+
+	<cache:annotation-driven />
+
+	<context:component-scan
+		base-package="com.ami" />
+
+	<mvc:annotation-driven />
+
+	<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="txManager" />
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:olx.default.properties"></property>
+	</bean>
+
+	<!-- <bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url"
+		value="jdbc:mysql://amidb.cb36667ydd6q.ap-southeast-1.rds.amazonaws.com:3306/olxm" />
+	<property name="username" value="root" />
+	<property name="password" value="rootroot" />
+</bean> -->
+
+<!-- 
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/olxm" />
+		<property name="username" value="dbclient" />
+		<property name="password" value="kony123" />
+	</bean>
+ -->
+ 
+<!--  data-source in case of JDBC connection-pool -->
+
+ <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="java:comp/env/jdbc/olxjndi"/>
+</bean>
+
+	<bean id="olxSessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mappingResources">
+			<list>
+				<value>hbm/PostAdd.hbm.xml</value>
+				<value>hbm/ProductCategory.hbm.xml</value>
+				<value>hbm/ProductSubCategory.hbm.xml</value>
+				<value>hbm/ProductSubCategoryType.hbm.xml</value>
+				<value>hbm/UserProfile.hbm.xml</value>
+				<value>hbm/Users.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!-- the following should disable the support of constraints inside the 
+					generated DDL and entity validation before an insert or updated Since we 
+					dont use entity validations at DDL level this change should be fine -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>	
+				<prop key="hibernate.validator.apply_to_ddl">false</prop>
+				<prop key="hibernate.validator.autoregister_listeners">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="olxSessionFactory" />
+	</bean>
+
+<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>
+<bean id="serviceConstants" class="com.ami.constants.ServiceConstants" scope="prototype"/>
+</beans>
