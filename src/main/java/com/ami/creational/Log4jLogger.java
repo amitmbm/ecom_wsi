@@ -16,6 +16,7 @@ public class Log4jLogger implements ILogger {
 	private LogLevel logLevel;
 	private final AbstractLogger logger; 
 	private static final String FQCN = Log4jLogger.class.getName();
+	
 
 	private Level getLog4jLevel(LogLevel level) {
 		switch(level){

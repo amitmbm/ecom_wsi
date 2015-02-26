@@ -3,7 +3,6 @@ package com.ami.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,18 +36,18 @@ import com.ami.exceptions.ResourceNotFoundException;
 import com.ami.services.CategoryServices;
 
 /*
- *  controller class for categories
+ *  controller class for categories for v2 version poc
  */
 
 @Component
-@Path("/api/v1/manage/")
-public class CategoryController {
+@Path("/api/v2/manage/")
+public class CategoryControllerV2 {
 
 	@Autowired
 	@Qualifier("categoryServicesImpl")
 	CategoryServices categoryServicesImpl1;
 	
-	// example of Qualifier annotation
+	/*// example of Qualifier annotation
 	@Autowired
 	@Qualifier("categorySvcTemp")
 	CategoryServices categoryServicesImpl2;
@@ -82,9 +81,9 @@ public class CategoryController {
 		System.out.println("bean ex"+ categoryServicesImpl5);
 		System.out.println("ex that spring will create just single bean using the configuration like spring container"+ categoryServicesImpl6);
 		
-	}
+	}*/
 	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
-			CategoryController.class.getName());
+			CategoryControllerV2.class.getName());
 
 	// post a category
 	@Path("categories")
@@ -219,31 +218,26 @@ public class CategoryController {
 	}
 
 	// Get Category
-	// TODO need to remove exception handling part 
-	// as this is just added for the poc of spring exception handling
 	@GET
 	@Path("categories/{catguid}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getCategory(@PathParam("catguid") String catGuid) throws Exception {
+	public Response getCategory(@PathParam("catguid") String catGuid) {
 		ProductCategory productCategory = null;
 		Response response = null;
 		try {
 			productCategory = categoryServicesImpl1.getCategoryById(catGuid);
 			response = Response.status(Response.Status.OK)
 					.entity(new CategoryDTO(productCategory)).build();
-		} /*catch (ResourceNotFoundException re) {
+		} catch (ResourceNotFoundException re) {
 			response = Response.status(Response.Status.NOT_FOUND)
 					.entity(" RESOURCE_NOT_FOUND Exception").build();
 			logger.logException(LogLevel.ERROR, "Get Category failed ::", re);
-		}*/ catch (Exception e) {
-			/*ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
+		} catch (Exception e) {
+			ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 					.entity(errorsDTO).build();
 			logger.logException(LogLevel.ERROR,
-					"exception occured while getting a category", e);*/
-			System.out.println("coming inside the ex");
-			e.printStackTrace();
-			throw e;
+					"exception occured while getting a category", e);
 		}
 		return response;
 	}

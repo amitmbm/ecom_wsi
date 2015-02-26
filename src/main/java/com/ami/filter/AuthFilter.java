@@ -5,6 +5,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.log4j.NDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,8 @@ public class AuthFilter implements ContainerRequestFilter {
 	@Value("${basic_user_password}")
 	private String basicPassword;
 	
-    /**
+	
+	/**
      * Apply the filter : check input request, validate or not with user auth
      * @param containerRequest The request from Tomcat server
      */
@@ -34,7 +36,7 @@ public class AuthFilter implements ContainerRequestFilter {
     public ContainerRequest filter(ContainerRequest containerRequest) throws WebApplicationException {
         // for manage apis , which starts with api/v1/manage/*
         String reqPath = containerRequest.getPath(); 
-        
+        NDC.push("amit");
        if(reqPath.startsWith("api/v1/manage"))
        {
         	 //Get the authentification passed in HTTP headers parameters

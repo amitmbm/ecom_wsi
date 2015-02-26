@@ -72,6 +72,7 @@
 				<value>hbm/ProductSubCategoryType.hbm.xml</value>
 				<value>hbm/UserProfile.hbm.xml</value>
 				<value>hbm/Users.hbm.xml</value>
+		<!-- 		<value>hbm</value> -->
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -94,4 +95,6 @@
 <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
 <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>
 <bean id="serviceConstants" class="com.ami.constants.ServiceConstants" scope="prototype"/>
+<!-- Exception translation bean post processor -->
+  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 </beans>
