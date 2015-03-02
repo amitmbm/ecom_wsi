@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.ami.common.ServiceContext;
 import com.ami.services.UserServices;
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
@@ -36,7 +37,17 @@ public class AuthFilter implements ContainerRequestFilter {
     public ContainerRequest filter(ContainerRequest containerRequest) throws WebApplicationException {
         // for manage apis , which starts with api/v1/manage/*
         String reqPath = containerRequest.getPath(); 
+        
+        
+        ServiceContext serviceContext = new ServiceContext();
+        serviceContext.setRequestId("test....");
+        serviceContext.setRequestFrom("In future URL");
+       //no prob 
+        long time = System.currentTimeMillis();
+        serviceContext.setInTime();
         NDC.push("amit");
+        
+        
        if(reqPath.startsWith("api/v1/manage"))
        {
         	 //Get the authentification passed in HTTP headers parameters
@@ -86,6 +97,4 @@ public class AuthFilter implements ContainerRequestFilter {
     		return true;
     	return false;
     }
-    
-	
 }

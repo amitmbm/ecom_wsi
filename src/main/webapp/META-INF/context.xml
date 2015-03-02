@@ -23,7 +23,7 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 	
-	<!--Resource name="jdbc/olxjndi"
+	<Resource name="jdbc/olxjndi"
           auth="Container"
           type="javax.sql.DataSource"
           testWhileIdle="true"
@@ -43,7 +43,7 @@
           username="root"
           password="root"
           driverClassName="com.mysql.jdbc.Driver"
-          url="jdbc:mysql://localhost:3306/olxm"/--> 
+          url="jdbc:mysql://localhost:3306/olxm"/> 
 
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
     <!--
