@@ -128,8 +128,8 @@ public class CategoryServicesImpl implements CategoryServices {
 		List<Object> list = new ArrayList<Object>();
 		list.add(id);
 		ProductCategory productCategory = genericDao.getEntity(query, list);
-		/*if (productCategory == null)
-			throw new ResourceNotFoundException("Cat-id :"+ id+ " not exist");*/
+		if (productCategory == null)
+			throw new ResourceNotFoundException("Cat-id :"+ id+ " not exist");
 		return productCategory;
 	}
 	
@@ -141,8 +141,8 @@ public class CategoryServicesImpl implements CategoryServices {
 		List<Object> list = new ArrayList<Object>();
 		list.add(name);
 		ProductCategory productCategory = genericDao.getEntity(query, list);
-		/*if (productCategory == null)
-			throw new ResourceNotFoundException("Cat Name :"+ name+ " not exist");*/
+		if (productCategory == null)
+			throw new ResourceNotFoundException("Cat Name :"+ name+ " not exist");
 		return productCategory;
 	}
 	
@@ -154,8 +154,8 @@ public class CategoryServicesImpl implements CategoryServices {
 		List<Object> list = new ArrayList<Object>();
 		list.add(name);
 		ProductSubCategory productSubCategory = genericDao.getEntity(query, list);
-		/*if (productSubCategory == null)
-			throw new ResourceNotFoundException("Cat Name :"+ name+ " not exist");*/
+		if (productSubCategory == null)
+			throw new ResourceNotFoundException("Cat Name :"+ name+ " not exist");
 		return productSubCategory;
 	}
 
@@ -168,9 +168,9 @@ public class CategoryServicesImpl implements CategoryServices {
 		list.add(id);
 		ProductSubCategory productSubCategory = genericDao.getEntity(query,
 				list);
-		/*if (productSubCategory == null)
+		if (productSubCategory == null)
 			throw new ResourceNotFoundException("Sub-catguid :" + id
-					+ " not exist");*/
+					+ " not exist");
 		return productSubCategory;
 	}
 
