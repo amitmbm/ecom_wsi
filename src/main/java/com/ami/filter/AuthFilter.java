@@ -13,14 +13,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ami.common.ServiceContext;
+import com.ami.common.ServiceLogger;
+import com.ami.creational.ILogger;
+import com.ami.creational.LoggerManager;
+import com.ami.enums.LogLevel;
 import com.ami.services.UserServices;
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
+import com.sun.jersey.spi.container.ContainerResponse;
+import com.sun.jersey.spi.container.ContainerResponseFilter;
 
 @Component
-public class AuthFilter implements ContainerRequestFilter {
+public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilter {
 	private static final String WWWAuthHeaderVal = "Basic realm=\"insert realm\"";
 
+	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
+			AuthFilter.class.getName());
 	@Autowired
 	UserServices dataServices;
 
@@ -43,7 +51,7 @@ public class AuthFilter implements ContainerRequestFilter {
 
 		ServiceContext serviceContext = new ServiceContext(httpServletRequest);
 		NDC.push(serviceContext.getRequestId());
-
+		httpServletRequest.setAttribute("servicecontext", serviceContext);
 		if(reqPath.startsWith("api/v1/manage"))
 		{
 			//Get the authentification passed in HTTP headers parameters
@@ -92,5 +100,15 @@ public class AuthFilter implements ContainerRequestFilter {
 		if (username.equalsIgnoreCase(basicUsername) && password.equalsIgnoreCase(basicPassword))
 			return true;
 		return false;
+	}
+
+	@Override
+	public ContainerResponse filter(ContainerRequest containerRequest, ContainerResponse containerResponse) {
+		logger.logMessage(LogLevel.INFO, ServiceLogger.logResponse((ServiceContext)httpServletRequest.getAttribute("servicecontext"), containerResponse.getStatus(), "Exit"));
+		
+		
+		NDC.pop();
+		NDC.remove();
+		return containerResponse;
 	}
 }

@@ -8,8 +8,8 @@ public class ServiceLogger {
 		return "Requested Service URL : "+serviceContext.getServiceUrl()+ " , message : "+message ;
 	}
 	
-	public static String logResponse(ServiceContext serviceContext, HttpServletResponse httpServletResponse , String message){
-		return "Response Service URL : "+serviceContext.getServiceUrl()+ " , message : "+message + " ,ResponseCode: "+httpServletResponse.getStatus();
+	public static String logResponse(ServiceContext serviceContext, int statusCode  , String message){
+		return "Response Service URL : "+serviceContext.getServiceUrl()+ " , message : "+message + " ,ResponseCode: "+statusCode;
 	}
 	
 	public static String log(ServiceContext serviceContext, String message){
