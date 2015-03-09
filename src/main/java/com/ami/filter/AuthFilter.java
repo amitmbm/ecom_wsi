@@ -52,6 +52,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 		ServiceContext serviceContext = new ServiceContext(httpServletRequest);
 		NDC.push(serviceContext.getRequestId());
 		httpServletRequest.setAttribute("servicecontext", serviceContext);
+		logger.logMessage(LogLevel.INFO, ServiceLogger.logRequest((ServiceContext)httpServletRequest.getAttribute("servicecontext"),"Entry"));
 		if(reqPath.startsWith("api/v1/manage"))
 		{
 			//Get the authentification passed in HTTP headers parameters
@@ -105,7 +106,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 	@Override
 	public ContainerResponse filter(ContainerRequest containerRequest, ContainerResponse containerResponse) {
 		logger.logMessage(LogLevel.INFO, ServiceLogger.logResponse((ServiceContext)httpServletRequest.getAttribute("servicecontext"), containerResponse.getStatus(), "Exit"));
-		
+		logger.logMessage(LogLevel.INFO, ServiceLogger.logServiceTime((ServiceContext)httpServletRequest.getAttribute("servicecontext"), "time taken message"));
 		
 		NDC.pop();
 		NDC.remove();

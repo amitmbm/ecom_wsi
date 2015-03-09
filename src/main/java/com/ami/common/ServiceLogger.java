@@ -1,15 +1,13 @@
 package com.ami.common;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ServiceLogger {
-	public static String logRequest(ServiceContext serviceContext, HttpServletRequest httpServletRequest ,String message){
-		return "Requested Service URL : "+serviceContext.getServiceUrl()+ " , message : "+message ;
+	public static String logRequest(ServiceContext serviceContext,String message){
+		return "Requested Service URL : "+serviceContext.getServiceUrl()+ " , message : "+message +" , x-request-id::"+serviceContext.getRequestId();
 	}
 	
 	public static String logResponse(ServiceContext serviceContext, int statusCode  , String message){
-		return "Response Service URL : "+serviceContext.getServiceUrl()+ " , message : "+message + " ,ResponseCode: "+statusCode;
+		return "Response Service URL : "+serviceContext.getServiceUrl()+ " , message : "+message + " , ResponseCode: "+statusCode+" , x-request-id::"+serviceContext.getRequestId();
 	}
 	
 	public static String log(ServiceContext serviceContext, String message){
