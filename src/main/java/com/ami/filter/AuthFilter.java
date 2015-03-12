@@ -7,7 +7,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.log4j.NDC;
+import org.apache.logging.log4j.ThreadContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -50,7 +50,10 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 		String reqPath = containerRequest.getPath(); 
 
 		ServiceContext serviceContext = new ServiceContext(httpServletRequest);
-		NDC.push(serviceContext.getRequestId());
+		
+		ThreadContext.push(serviceContext.getRequestId());
+		
+		
 		httpServletRequest.setAttribute("servicecontext", serviceContext);
 		logger.logMessage(LogLevel.INFO, ServiceLogger.logRequest((ServiceContext)httpServletRequest.getAttribute("servicecontext"),"Entry"));
 		if(reqPath.startsWith("api/v1/manage"))
@@ -108,8 +111,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 		logger.logMessage(LogLevel.INFO, ServiceLogger.logResponse((ServiceContext)httpServletRequest.getAttribute("servicecontext"), containerResponse.getStatus(), "Exit"));
 		logger.logMessage(LogLevel.INFO, ServiceLogger.logServiceTime((ServiceContext)httpServletRequest.getAttribute("servicecontext"), "time taken message"));
 		
-		NDC.pop();
-		NDC.remove();
+		ThreadContext.clearAll();
 		return containerResponse;
 	}
 }

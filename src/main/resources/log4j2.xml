@@ -3,7 +3,7 @@
   <Appenders>
      <RollingFile name="RollingFile" fileName="D:/olx/logs/olx.log"            
               filePattern="/$${date:dd-MM-yyyy}/olx-%d{MM-dd-yyyy}-%i.log.gz">
-      <PatternLayout pattern="%X %d{ISO8601}{IST} %F %L %m %ex%n"/>
+      <PatternLayout pattern="%x %d{ISO8601}{IST} %F %L %m %ex%n"/>
       <Policies>
         <TimeBasedTriggeringPolicy />
         <SizeBasedTriggeringPolicy size="5 MB"/>
