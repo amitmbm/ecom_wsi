@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import com.ami.common.ErrorConstants;
 import com.ami.common.Utility;
@@ -40,6 +42,7 @@ import com.ami.services.CategoryServices;
  *  controller class for categories
  */
 
+@Validated
 @Component
 @Path("/api/v1/manage/")
 public class CategoryController {
@@ -91,7 +94,7 @@ public class CategoryController {
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createCategory(CategoryDTO categoryDTO) {
+	public Response createCategory(@Valid CategoryDTO categoryDTO) {
 		logger.logMessage(LogLevel.INFO, "POST Category called ");
 		Response response = null;
 		ErrorsDTO errorsDTO = null;

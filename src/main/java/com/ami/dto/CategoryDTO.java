@@ -2,20 +2,25 @@ package com.ami.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.ami.entity.ProductCategory;
+
 
 @XmlRootElement(name = "category")
 public class CategoryDTO {
 
 	private String catguid;
-/*	@NotNull
-	@Size(min = 5, max = 128)*/
+	@NotEmpty
+	@Size(min = 5, max = 128 ,message="{catgory.displayname.size}")
 	private String catname;
-/*	@NotNull
-	@Size(min = 5, max = 128)*/
+	@NotNull
+	@Size(min = 5, max = 128)
 	private String catdesc;
 
 	// time-stamp detail
