@@ -19,30 +19,22 @@
 	<!-- here we are using the jersey and springs servlet , hence on top we have to define where is our application context and contextloader is defined -->
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
-		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
-		<!-- <init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.ami.controller</param-value>
-		</init-param> -->
-		<!-- json.pojomapping is required to understand the jersey about the JSON and pojo mapping -->
-		<init-param>
-			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-			<param-value>true</param-value>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		 <init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>com.ami.controller;org.codehaus.jackson.jaxrs</param-value>
 		</init-param>
+		<!-- json.pojomapping is required to understand the jersey about the JSON and pojo mapping -->
 		<!-- request filters -->
 		<init-param>
-		<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-		<param-value>com.sun.jersey.api.container.filter.LoggingFilter;com.ami.filter.AuthFilter</param-value>
+		<param-name>jersey.config.server.provider.classnames</param-name>
+		<param-value>org.glassfish.jersey.filter.LoggingFilter;com.ami.filter.ResponseCorsFilter;com.ami.filter.AuthFilter</param-value>
 	</init-param>
-	<init-param>
-	<param-name>com.sun.jersey.config.property.packages</param-name>
-	<param-value>com.ami.jersey.providers</param-value>
-</init-param>
-		<!-- for making cross-domain call(Response filter) -->
-	<init-param>
-		<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
-		<param-value>com.sun.jersey.api.container.filter.LoggingFilter;com.ami.filter.ResponseCorsFilter;com.ami.filter.AuthFilter</param-value>
-	</init-param>
+	<!-- for making cross-domain call(Response filter) -->
+	<!-- init-param>
+		<param-name>javax.ws.rs.container.ContainerResponseFilters</param-name>
+		<param-value>org.glassfish.jersey.filter.LoggingFilter;com.ami.filter.ResponseCorsFilter;com.ami.filter.AuthFilter</param-value>
+	</init-param-->
 	
 		<load-on-startup>1</load-on-startup>
 	</servlet>

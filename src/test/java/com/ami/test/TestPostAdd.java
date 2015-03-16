@@ -1,5 +1,5 @@
 package com.ami.test;
-
+/*
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -72,3 +72,5 @@ public class TestPostAdd {
 	}
 
 }
+
+*/

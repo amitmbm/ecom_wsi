@@ -1,7 +1,13 @@
 package com.ami.filter;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
@@ -18,10 +24,6 @@ import com.ami.creational.ILogger;
 import com.ami.creational.LoggerManager;
 import com.ami.enums.LogLevel;
 import com.ami.services.UserServices;
-import com.sun.jersey.spi.container.ContainerRequest;
-import com.sun.jersey.spi.container.ContainerRequestFilter;
-import com.sun.jersey.spi.container.ContainerResponse;
-import com.sun.jersey.spi.container.ContainerResponseFilter;
 
 @Component
 public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilter {
@@ -40,35 +42,49 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 
 	@Context private HttpServletRequest httpServletRequest;
 
-	/**
-	 * Apply the filter : check input request, validate or not with user auth
-	 * @param containerRequest The request from Tomcat server
-	 */
+	private boolean isAuthenticated(String username, String password){
+		if(username == null || password == null)
+			return false;
+
+		if (username.equalsIgnoreCase(basicUsername) && password.equalsIgnoreCase(basicPassword))
+			return true;
+		return false;
+	}
+
 	@Override
-	public ContainerRequest filter(ContainerRequest containerRequest) throws WebApplicationException {
-		// for manage apis , which starts with api/v1/manage/*
-		String reqPath = containerRequest.getPath(); 
+	public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
+		logger.logMessage(LogLevel.INFO, ServiceLogger.logResponse((ServiceContext)httpServletRequest.getAttribute("servicecontext"), containerResponseContext.getStatus(), "Exit"));
+		logger.logMessage(LogLevel.INFO, ServiceLogger.logServiceTime((ServiceContext)httpServletRequest.getAttribute("servicecontext"), "time taken message"));
+		ThreadContext.clearAll();
+	}
+
+	@Override
+	public void filter(ContainerRequestContext containerRequestContext) throws IOException {
+		String reqPath = containerRequestContext.getUriInfo().getPath(); 
 
 		ServiceContext serviceContext = new ServiceContext(httpServletRequest);
-		
+	
+		//this thread to be removed after service ends else it will lead to memory leak results in perm gen space issue
 		ThreadContext.push(serviceContext.getRequestId());
 		
 		
 		httpServletRequest.setAttribute("servicecontext", serviceContext);
+		
 		logger.logMessage(LogLevel.INFO, ServiceLogger.logRequest((ServiceContext)httpServletRequest.getAttribute("servicecontext"),"Entry"));
+		
 		if(reqPath.startsWith("api/v1/manage"))
 		{
 			//Get the authentification passed in HTTP headers parameters
-			String auth = containerRequest.getHeaderValue("authorization");
+			String authHeaderValue = containerRequestContext.getHeaderString("authorization");
 
 			//If the user does not have the right (does not provide any HTTP Basic Auth)
-			if(auth == null){
+			if(authHeaderValue == null){
 				Response response = Response.status(Status.UNAUTHORIZED).header(HttpHeaders.WWW_AUTHENTICATE, WWWAuthHeaderVal).entity(null).build();
 				throw new WebApplicationException(response);
 			}
 
 			//lap : loginAndPassword
-			String[] lap = BasicAuth.decode(auth);
+			String[] lap = BasicAuth.decode(authHeaderValue);
 
 			//If login or password fail
 			if(lap == null || lap.length != 2){
@@ -93,25 +109,5 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 				System.out.println("passed");
 			}
 		}
-		return containerRequest;
-
-	}
-
-	private boolean isAuthenticated(String username, String password){
-		if(username == null || password == null)
-			return false;
-
-		if (username.equalsIgnoreCase(basicUsername) && password.equalsIgnoreCase(basicPassword))
-			return true;
-		return false;
-	}
-
-	@Override
-	public ContainerResponse filter(ContainerRequest containerRequest, ContainerResponse containerResponse) {
-		logger.logMessage(LogLevel.INFO, ServiceLogger.logResponse((ServiceContext)httpServletRequest.getAttribute("servicecontext"), containerResponse.getStatus(), "Exit"));
-		logger.logMessage(LogLevel.INFO, ServiceLogger.logServiceTime((ServiceContext)httpServletRequest.getAttribute("servicecontext"), "time taken message"));
-		
-		ThreadContext.clearAll();
-		return containerResponse;
 	}
 }

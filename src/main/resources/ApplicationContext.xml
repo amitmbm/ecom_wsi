@@ -21,7 +21,7 @@
 	<cache:annotation-driven />
 	
 	<!-- dependency realted to hibernate validator integration with spring -->
-   <bean id="validator"
+   <!--bean id="validator"
 	class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	<bean
 		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
@@ -32,7 +32,7 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:ValidationMessages.properties" />
 		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
+	</bean-->
 
   <!--   include-filter to show , how to register a bean as a spring bean , without sterotype annotation ie @component , @service -->
 	<context:component-scan

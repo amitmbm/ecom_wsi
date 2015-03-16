@@ -1,5 +1,5 @@
 package com.ami.test;
-
+/*
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -8,10 +8,6 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-/*
- * Author :-> Amit
- * This is test-class for users (CRUD) operation.
- */
 public class TestCategoryWS {
 	
 	Client client = Client.create();
@@ -172,5 +168,4 @@ public class TestCategoryWS {
 		ResultActions resultActions = CategoryWSUtil.createUser("ABC", "DEF", "abc.xy@gmail.com", "908909099");
 		Assert.assertEquals(resultActions.andReturn().getResponse().getStatus(), 200,"failed to create the User");
 	}*/
-}
-
+//}

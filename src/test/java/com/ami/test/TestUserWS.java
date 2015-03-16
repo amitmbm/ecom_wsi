@@ -2,18 +2,11 @@ package com.ami.test;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
+/*
 import com.ami.dto.UserProfileDTO;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-
-/**
- * 
- * @author Amit Khandelwal 
- * This is test-class for Users (CRUD) operation.
- *
- */
 
 public class TestUserWS {
 	
@@ -80,3 +73,4 @@ public class TestUserWS {
 	}
 
 }
+*/

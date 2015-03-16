@@ -1,5 +1,5 @@
 package com.ami.test;
-
+/*
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -8,11 +8,6 @@ import com.ami.dto.SubCategoryDTO;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-
-/*
- * Author :-> Amit
- * This is test-class for sub-category (CRUD) operation.
- */
 public class TestSubCategoryWS {
 	
 	Client client = Client.create();
@@ -84,3 +79,4 @@ public class TestSubCategoryWS {
 		Assert.assertEquals(response.getStatus(), 200,"failed to delete the Category");
 	}
 }
+*/
