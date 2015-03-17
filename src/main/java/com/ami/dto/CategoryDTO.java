@@ -16,11 +16,11 @@ import com.ami.entity.ProductCategory;
 public class CategoryDTO {
 
 	private String catguid;
-	//@NotEmpty
-	//@Size(min = 5, max = 128 ,message="{catgory.displayname.size}")
+	@NotEmpty
+	@Size(min = 5, max = 128 ,message="{catgory.displayname.size}")
 	private String catname;
-	//@NotNull
-	//@Size(min = 5, max = 128)
+	@NotNull
+	@Size(min = 5, max = 128)
 	private String catdesc;
 
 	// time-stamp detail
