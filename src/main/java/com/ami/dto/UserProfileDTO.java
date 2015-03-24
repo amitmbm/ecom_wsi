@@ -2,16 +2,20 @@ package com.ami.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.ami.entity.UserProfile;
+import com.ami.validator.ValidUserRegisterStatus;
 
 @XmlRootElement(name = "user_profile")
+//@ValidUserRegisterStatus
 public class UserProfileDTO {
 
-/*	@NotNull
-	@Size(min = 5, max = 128)*/
+	@NotNull
+	@Size(min = 5, max = 128)
 	private String emailId;
 	/*@NotNull
 	@Size(min = 5, max = 128)*/
@@ -24,7 +28,8 @@ public class UserProfileDTO {
 	private String lastName;
 	
 	private Long phoneNum;
-	private Boolean isRegister;
+	@ValidUserRegisterStatus
+	private boolean isRegister;
 
 	// time-stamp detail
 	private Date createdAt;

@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.ami.entity.PostAdd;
+import com.ami.validator.ImageAnnotation;
 
 @XmlRootElement(name = "post_add")
 public class PostDTO {
@@ -24,6 +25,7 @@ public class PostDTO {
 	private Integer price;
 	private Boolean negotiable;
 	
+	@ImageAnnotation
 	private String image1;
 	private String image2;
 	private String image3;

@@ -3,6 +3,7 @@ package com.ami.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import com.ami.common.ErrorConstants;
 import com.ami.common.Utility;
@@ -38,6 +40,7 @@ import com.ami.services.AddServices;
  */
 @Component
 @Path("/api/v1/data/postadd")
+@Validated
 public class AddController {
 
 	@Autowired
@@ -51,7 +54,7 @@ public class AddController {
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postAdd(PostDTO postDTO) {
+	public Response postAdd(@Valid PostDTO postDTO) {
 		Response response = null;
 		try {
 			PostAdd postAdd = 	dataServices.postAdd(postDTO);
