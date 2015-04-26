@@ -9,7 +9,11 @@ import com.ami.entity.PostAdd;
 import com.ami.validator.ImageAnnotation;
 
 @XmlRootElement(name = "post_add")
-public class PostDTO {
+
+//TODO i am implementing the comparable interface cause i want to compare it based on the integer for which comparable interface
+// is there , but still need to check , whats the best way to do it.
+
+public class PostDTO implements Comparable<PostDTO>{
 
 	private String addGuid;
 	private String subCatGuid;
@@ -185,6 +189,13 @@ public class PostDTO {
 	}
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	
+	@Override
+	public int compareTo(PostDTO o) {
+		// TODO Auto-generated method stub
+		return Integer.compare(this.price, o.price);
 	}
 
 	

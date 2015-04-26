@@ -14,7 +14,9 @@ public interface AddServices {
 	public PostAdd updateAdd(PostDTO postDTO, String addGuid) throws Exception;
 	public PostAdd getAddById(String addGuid) throws Exception;
 	public List<PostAdd> getAddList(int low , int high) throws Exception;
+	//public List<PostAdd> getAddList() throws Exception;
 	public boolean deleteAdd(String addGuid) throws Exception;
 	//public boolean validateAdd(PostDTO postDTO) throws CustomException;
+	List<PostAdd> getAddList(String order) throws Exception;
 	
 }

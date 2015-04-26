@@ -156,6 +156,18 @@ public class AddServicesImpl implements AddServices{
 		return genericDao.deleteEntity(getAddById(addGuid));
 	}
 	
+	// TODO :-> need to add this function in interface as well .
+	// get Add List
+	@Transactional
+	@Override
+	public List<PostAdd> getAddList(String order) throws Exception {
+		String query=null;
+		if(order.equalsIgnoreCase("asc"))
+		 query = "from PostAdd order by price ASC";
+		else
+			query = "from PostAdd order by price DESC";
+		return genericDao.getEntities(query, null);
+	}
 	
 
 }
