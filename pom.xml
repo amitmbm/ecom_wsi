@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ecom</groupId>
-	<artifactId>ws</artifactId>
+	<artifactId>wsi</artifactId>
 	<version>1</version>
 	<packaging>war</packaging>
 
