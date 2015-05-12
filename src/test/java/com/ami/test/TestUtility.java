@@ -3,9 +3,9 @@ package com.ami.test;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import com.ami.creational.ILogger;
-import com.ami.creational.LoggerManager;
-import com.ami.enums.LogLevel;
+import com.wsi.creational.ILogger;
+import com.wsi.creational.LoggerManager;
+import com.wsi.enums.LogLevel;
 
 /**
  * 

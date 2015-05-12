@@ -4,11 +4,8 @@ Rohit Laddha
 */
 package com.ami.test;
 import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import com.ami.common.CommonValidation;
+import com.wsi.common.CommonValidation;
 public class TestValidation {
 	CommonValidation val = new CommonValidation();
 	
