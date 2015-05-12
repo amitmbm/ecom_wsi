@@ -21,18 +21,18 @@
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		 <init-param>
 			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>com.ami.controller;com.ami.jersey.providers;org.codehaus.jackson.jaxrs</param-value>
+			<param-value>com.wsi.controller;com.wsi.jersey.providers;org.codehaus.jackson.jaxrs</param-value>
 		</init-param>
 		<!-- json.pojomapping is required to understand the jersey about the JSON and pojo mapping -->
 		<!-- request filters -->
 		<init-param>
 		<param-name>jersey.config.server.provider.classnames</param-name>
-		<param-value>org.glassfish.jersey.filter.LoggingFilter;com.ami.filter.ResponseCorsFilter;com.ami.filter.AuthFilter</param-value>
+		<param-value>org.glassfish.jersey.filter.LoggingFilter;com.wsi.filter.ResponseCorsFilter;com.wsi.filter.AuthFilter</param-value>
 	</init-param>
 	<!-- for making cross-domain call(Response filter) -->
 	<!-- init-param>
 		<param-name>javax.ws.rs.container.ContainerResponseFilters</param-name>
-		<param-value>org.glassfish.jersey.filter.LoggingFilter;com.ami.filter.ResponseCorsFilter;com.ami.filter.AuthFilter</param-value>
+		<param-value>org.glassfish.jersey.filter.LoggingFilter;com.wsi.filter.ResponseCorsFilter;com.wsi.filter.AuthFilter</param-value>
 	</init-param-->
 	
 		<load-on-startup>1</load-on-startup>

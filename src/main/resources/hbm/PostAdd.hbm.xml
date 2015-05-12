@@ -3,18 +3,18 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.ami.entity.PostAdd" table="post_add" catalog="wsi_db">
+    <class name="com.wsi.entity.PostAdd" table="post_add" catalog="wsi_db">
         <id name="addGuid" type="string">
             <column name="add_guid" length="36" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="productSubCategory" class="com.ami.entity.ProductSubCategory" fetch="select">
+        <many-to-one name="productSubCategory" class="com.wsi.entity.ProductSubCategory" fetch="select">
             <column name="sub_cat_guid" length="36" not-null="true" />
         </many-to-one>
-        <many-to-one name="users" class="com.ami.entity.Users" fetch="select">
+        <many-to-one name="users" class="com.wsi.entity.Users" fetch="select">
             <column name="user_email" length="128" not-null="true" />
         </many-to-one>
-        <many-to-one name="productSubCategoryType" class="com.ami.entity.ProductSubCategoryType" fetch="select">
+        <many-to-one name="productSubCategoryType" class="com.wsi.entity.ProductSubCategoryType" fetch="select">
             <column name="type_guid" length="36" not-null="true" />
         </many-to-one>
         <property name="addDesc" type="string">

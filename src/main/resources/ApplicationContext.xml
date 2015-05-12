@@ -36,8 +36,8 @@
 
   <!--   include-filter to show , how to register a bean as a spring bean , without sterotype annotation ie @component , @service -->
 	<context:component-scan
-		base-package="com.ami">
-		<context:include-filter type="assignable" expression="com.ami.services.CategoryServices"></context:include-filter> 
+		base-package="com.wsi">
+		<context:include-filter type="assignable" expression="com.wsi.services.CategoryServices"></context:include-filter> 
 		</context:component-scan>
 
 	<mvc:annotation-driven />
@@ -108,7 +108,7 @@
 
 <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
 <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>
-<bean id="serviceConstants" class="com.ami.constants.ServiceConstants" scope="prototype"/>
+<bean id="serviceConstants" class="com.wsi.constants.ServiceConstants" scope="prototype"/>
 <!-- Exception translation bean post processor -->
   <!-- <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/> -->
   

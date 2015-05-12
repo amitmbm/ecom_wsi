@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.ami.entity.ProductCategory" table="product_category" catalog="wsi_db">
+    <class name="com.wsi.entity.ProductCategory" table="product_category" catalog="wsi_db">
         <id name="catGuid" type="string">
             <column name="cat_guid" length="36" />
             <generator class="assigned" />
@@ -30,7 +30,7 @@
             <key>
                 <column name="cat_guid" length="36" />
             </key>
-            <one-to-many class="com.ami.entity.ProductSubCategory" />
+            <one-to-many class="com.wsi.entity.ProductSubCategory" />
         </set>
     </class>
 </hibernate-mapping>

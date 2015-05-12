@@ -3,12 +3,12 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.ami.entity.ProductSubCategoryType" table="product_sub_category_type" catalog="wsi_db">
+    <class name="com.wsi.entity.ProductSubCategoryType" table="product_sub_category_type" catalog="wsi_db">
         <id name="typeGuid" type="string">
             <column name="type_guid" length="36" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="productSubCategory" class="com.ami.entity.ProductSubCategory" fetch="select">
+        <many-to-one name="productSubCategory" class="com.wsi.entity.ProductSubCategory" fetch="select">
             <column name="sub_cat_guid" length="36" not-null="true" />
         </many-to-one>
         <property name="typeName" type="string">
@@ -30,7 +30,7 @@
             <key>
                 <column name="type_guid" length="36" not-null="true" />
             </key>
-            <one-to-many class="com.ami.entity.PostAdd" />
+            <one-to-many class="com.wsi.entity.PostAdd" />
         </set>
     </class>
 </hibernate-mapping>
