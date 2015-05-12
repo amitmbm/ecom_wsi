@@ -1,4 +1,4 @@
-package com.ami.test;
+package com.wsi.test;
 /*
 import org.testng.Assert;
 import org.testng.annotations.Test;

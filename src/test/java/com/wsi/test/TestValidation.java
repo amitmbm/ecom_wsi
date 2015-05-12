@@ -2,7 +2,7 @@
 KH1886
 Rohit Laddha
 */
-package com.ami.test;
+package com.wsi.test;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 import com.wsi.common.CommonValidation;

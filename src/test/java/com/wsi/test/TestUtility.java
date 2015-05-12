@@ -1,4 +1,4 @@
-package com.ami.test;
+package com.wsi.test;
 
 import java.io.FileInputStream;
 import java.util.Properties;
