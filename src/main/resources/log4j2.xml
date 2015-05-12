@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn" monitorInterval="30">
   <Appenders>
-     <RollingFile name="RollingFile" fileName="D:/olx/logs/olx.log"            
+     <RollingFile name="RollingFile" fileName="C:/olx/logs/olx.log"            
               filePattern="/$${date:dd-MM-yyyy}/olx-%d{MM-dd-yyyy}-%i.log.gz">
       <PatternLayout pattern="%x %d{ISO8601}{IST} %F %L %m %ex%n"/>
       <Policies>

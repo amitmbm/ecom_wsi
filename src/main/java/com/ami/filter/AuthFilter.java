@@ -53,8 +53,9 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
-		logger.logMessage(LogLevel.INFO, ServiceLogger.logResponse((ServiceContext)httpServletRequest.getAttribute("servicecontext"), containerResponseContext.getStatus(), "Exit"));
-		logger.logMessage(LogLevel.INFO, ServiceLogger.logServiceTime((ServiceContext)httpServletRequest.getAttribute("servicecontext"), "time taken message"));
+		
+		//logger.logMessage(LogLevel.INFO, ServiceLogger.logResponse((ServiceContext)httpServletRequest.getAttribute("servicecontext"), containerResponseContext.getStatus(), "Exit"));
+		//logger.logMessage(LogLevel.INFO, ServiceLogger.logServiceTime((ServiceContext)httpServletRequest.getAttribute("servicecontext"), "time taken message"));
 		ThreadContext.clearAll();
 	}
 
