@@ -1,6 +1,6 @@
-drop DATABASE IF EXISTS `olxm`;
-CREATE DATABASE IF NOT EXISTS `olxm`;
-use `olxm`;
+drop DATABASE IF EXISTS `wsi_db`;
+CREATE DATABASE IF NOT EXISTS `wsi_db`;
+use `wsi_db`;
 
 CREATE table product_category (
 cat_guid varchar(36) primary key not null,
@@ -81,4 +81,4 @@ CONSTRAINT `post_add_fk3` FOREIGN KEY (`user_email`) REFERENCES `users` (`user_e
 
 CREATE index post_add_price_index on post_add (`price`);
 
-alter table olxm.product_sub_category_type add unique key sub_cat_type_unique (`sub_cat_guid`, `type_name`);
+alter table wsi_db.product_sub_category_type add unique key sub_cat_type_unique (`sub_cat_guid`, `type_name`);
