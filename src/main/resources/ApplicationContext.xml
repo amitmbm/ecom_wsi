@@ -86,6 +86,10 @@
 				<value>hbm/ProductSubCategoryType.hbm.xml</value>
 				<value>hbm/UserProfile.hbm.xml</value>
 				<value>hbm/Users.hbm.xml</value>
+				<value>hbm/Acls.hbm.xml</value>
+				<value>hbm/Groups.hbm.xml</value>
+				<value>hbm/Permissions.hbm.xml</value>
+				<value>hbm/Resources.hbm.xml</value>
 		<!-- 		<value>hbm</value> -->
 			</list>
 		</property>
