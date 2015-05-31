@@ -19,10 +19,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.wsi.common.ServiceContext;
-import com.wsi.common.ServiceLogger;
-import com.wsi.creational.ILogger;
-import com.wsi.creational.LoggerManager;
+import com.wsi.logging.ServiceLogger;
 import com.wsi.enums.LogLevel;
+import com.wsi.logging.ILogger;
+import com.wsi.logging.LoggerManager;
 import com.wsi.services.UserServices;
 
 @Component

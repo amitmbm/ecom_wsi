@@ -26,14 +26,14 @@ import org.springframework.validation.annotation.Validated;
 
 import com.wsi.common.ErrorConstants;
 import com.wsi.common.Utility;
-import com.wsi.creational.ILogger;
-import com.wsi.creational.LoggerManager;
 import com.wsi.dto.ErrorsDTO;
 import com.wsi.dto.PostDTO;
 import com.wsi.entity.PostAdd;
 import com.wsi.enums.LogLevel;
 import com.wsi.exceptions.CustomException;
 import com.wsi.exceptions.ResourceNotFoundException;
+import com.wsi.logging.ILogger;
+import com.wsi.logging.LoggerManager;
 import com.wsi.services.AddServices;
 
 /*

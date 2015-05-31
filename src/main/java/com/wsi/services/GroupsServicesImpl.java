@@ -24,24 +24,24 @@ public class GroupsServicesImpl implements GroupsServices {
 
 	@Override
 	@Transactional
-	public Groups CreateGroup(GroupsDTO GroupsDTO) throws Exception {
+	public Groups CreateGroup(GroupsDTO groupsDTO) throws Exception {
 		try{
-			Groups Groups = getGroupByName(GroupsDTO.getName());
-			updateGroup(GroupsDTO, Groups.getId());
-			return Groups;
+			Groups groups = getGroupByName(groupsDTO.getName());
+			updateGroup(groupsDTO, groups.getId());
+			return groups;
 		}
 		catch (ResourceNotFoundException re) {
-			Groups Groups = new Groups();
-			Groups.setName(GroupsDTO.getName());
+			Groups groups = new Groups();
+			groups.setName(groupsDTO.getName());
 
-			Groups.setId(UUID.randomUUID().toString());
+			groups.setId(UUID.randomUUID().toString());
             
-			Groups.setType(GroupsDTO.getType());
+			groups.setType(groupsDTO.getType());
 			
 			Date now = new Date();
-			Groups.setCreatedAt(now);
-			Groups.setUpdatedAt(now);
-			return genericDao.addEntity(Groups);
+			groups.setCreatedAt(now);
+			groups.setUpdatedAt(now);
+			return genericDao.addEntity(groups);
 		}
 	}
 
@@ -49,15 +49,15 @@ public class GroupsServicesImpl implements GroupsServices {
 	@Transactional
 	public Groups updateGroup(GroupsDTO groupDTO, String id) throws Exception {
 		try{
-			Groups Groups = getGroupById(id);
+			Groups groups = getGroupById(id);
 			if (groupDTO.getName() != null)
-				Groups.setName(groupDTO.getName());
+				groups.setName(groupDTO.getName());
 
 			if(groupDTO.getType() != null)
-				Groups.setType(groupDTO.getType());
+				groups.setType(groupDTO.getType());
             
-			Groups.setUpdatedAt(new Date());
-			return genericDao.updateEntity(Groups);
+			groups.setUpdatedAt(new Date());
+			return genericDao.updateEntity(groups);
 		}catch(ResourceNotFoundException re){
 			throw re;
 		}	
@@ -94,10 +94,10 @@ public class GroupsServicesImpl implements GroupsServices {
 		String query = "from Groups where name = ?";
 		List<Object> list = new ArrayList<Object>();
 		list.add(name);
-		Groups Groups = genericDao.getEntity(query, list);
-		if (Groups == null)
+		Groups groups = genericDao.getEntity(query, list);
+		if (groups == null)
 			throw new ResourceNotFoundException("Group Name :"+ name+ " not exist");
-		return Groups;
+		return groups;
 	}
 
 }

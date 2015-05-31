@@ -6,10 +6,10 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 
-import com.wsi.common.ServiceLogger;
-import com.wsi.creational.ILogger;
-import com.wsi.creational.LoggerManager;
+import com.wsi.logging.ServiceLogger;
 import com.wsi.enums.LogLevel;
+import com.wsi.logging.ILogger;
+import com.wsi.logging.LoggerManager;
 
 public class ResponseCorsFilter implements ContainerResponseFilter {
 

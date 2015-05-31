@@ -1,6 +1,5 @@
 package com.wsi.controller;
 
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,137 +15,142 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wsi.common.ErrorConstants;
 import com.wsi.common.Utility;
-import com.wsi.dto.GroupsDTO;
 import com.wsi.dto.ErrorsDTO;
-import com.wsi.entity.Groups;
+import com.wsi.dto.ResourcesDTO;
+import com.wsi.entity.Resources;
 import com.wsi.enums.LogLevel;
 import com.wsi.exceptions.CustomException;
 import com.wsi.exceptions.ResourceNotFoundException;
 import com.wsi.logging.ILogger;
 import com.wsi.logging.LoggerManager;
-import com.wsi.services.GroupsServices;
+import com.wsi.services.ResourcesServices;
 
-//@Component
-@Path("/groups")
-public class GroupsHandler {
+@Path("/resources")
+public class ResourcesHandler {
 	
 	@Autowired
-	GroupsServices groupsServicesImpl;
+	ResourcesServices resourcesServicesImpl;
 	
 	static final ILogger logger = LoggerManager.getLoggerFactory().getLogger(
-			GroupsHandler.class.getName());
+			ResourcesHandler.class.getName());
 	
-	    // post a group
+	    // post a Resource
 		@POST
 		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 		@Consumes(MediaType.APPLICATION_JSON)
-		public Response group(GroupsDTO GroupsDTO) {
-			logger.logMessage(LogLevel.INFO, "POST Group called ");
+		public Response resource(ResourcesDTO resourcesDTO) {
+			logger.logMessage(LogLevel.INFO, "POST Resource called ");
 			Response response = null;
 			ErrorsDTO errorsDTO = null;
 			try {
-				Groups Groups = groupsServicesImpl
-						.CreateGroup(GroupsDTO);
+				Resources resources = resourcesServicesImpl
+						.CreateResource(resourcesDTO);
 				response = Response.status(Response.Status.CREATED)
-						.entity(new GroupsDTO(Groups)).build();
+						.entity(new ResourcesDTO(resources)).build();
+				 logger.logMessage(LogLevel.INFO, "post resource successful");
 				
 			} catch (CustomException e) {
 				errorsDTO = Utility.createError(ErrorConstants.BAD_REQUEST,e.getMessage());
 				response = Response.status(Response.Status.BAD_REQUEST).entity(errorsDTO).build();
 				logger.logException(LogLevel.ERROR,
-						"exception occured while posting a Group", e);
+						"exception occured while posting a Resource", e);
 			} catch (Exception e) {
 			    errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 						.entity(errorsDTO).build();
 				logger.logException(LogLevel.ERROR,
-						"exception occured while posting a group", e);
+						"exception occured while posting a resource", e);
 			}
-            logger.logMessage(LogLevel.INFO, "");
 			return response;
 		}
 		
-		// update a group
+		// update a resource
 		@PUT
 		@Path("{id}")
 		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 		@Consumes(MediaType.APPLICATION_JSON)
-		public Response group(GroupsDTO groupsDTO,
+		public Response resource(ResourcesDTO resourcesDTO,
 				@PathParam("id") String id) {
-			logger.logMessage(LogLevel.INFO, "PUT Group called ");
+			logger.logMessage(LogLevel.INFO, "update Resource called ");
 			Response response = null;
 			try {
-				Groups groups = groupsServicesImpl.updateGroup(
-						groupsDTO, id);
+				Resources resources = resourcesServicesImpl.updateResource(
+						resourcesDTO, id);
 				response = Response.status(Response.Status.OK)
-						.entity(new GroupsDTO(groups)).build();
+						.entity(new ResourcesDTO(resources)).build();
+				logger.logMessage(LogLevel.INFO, "update Resource successful");
 			} catch (CustomException e) {
 				response = Response.status(Response.Status.BAD_REQUEST)
 						.entity("error").build();
-				logger.logException(LogLevel.ERROR, "update group failed ::", e);
+				logger.logException(LogLevel.ERROR, "update resource failed ::", e);
 			} catch (ResourceNotFoundException re) {
 				response = Response.status(Response.Status.NOT_FOUND)
 						.entity(" NOT_FOUND error").build();
-				logger.logException(LogLevel.ERROR, "update group failed ::", re);
+				logger.logException(LogLevel.ERROR, "update resource failed ::", re);
 			} catch (Exception e) {
 				ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 						.entity(errorsDTO).build();
 				logger.logException(LogLevel.ERROR,
-						"exception occured while updating a group", e);
+						"exception occured while updating a resource", e);
 			}
 			return response;
 		}
 		
-		// Get group detail
+		// Get resource detail
 		@GET
 		@Path("{id}")
 		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		public Response group(@PathParam("id") String id) {
-			Groups group = null;
+		public Response resource(@PathParam("id") String id) {
+			logger.logMessage(LogLevel.INFO, "get Resource called ");
+			Resources resource = null;
 			Response response = null;
 			try {
-				group = groupsServicesImpl
-						.getGroupById(id);
+				resource = resourcesServicesImpl
+						.getResourceById(id);
 				response = Response.status(Response.Status.OK)
-						.entity(new GroupsDTO(group)).build();
+						.entity(new ResourcesDTO(resource)).build();
+				logger.logMessage(LogLevel.INFO, "get Resource successful");
 			} catch (ResourceNotFoundException re) {
 				response = Response.status(Response.Status.NOT_FOUND)
 						.entity(" NOT_FOUND error").build();
-				logger.logException(LogLevel.ERROR, "Get group failed ::",
+				logger.logException(LogLevel.ERROR, "Get resource failed ::",
 						re);
 			} catch (Exception e) {
 				ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 						.entity(errorsDTO).build();
 				logger.logException(LogLevel.ERROR,
-						"exception occured while Getting a group", e);
+						"exception occured while Getting a resource", e);
 			}
 			return response;
 		}
 		
-		// Delete a group
+		// Delete a resource
 		@DELETE
 		@Path("{id}")
 		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		public Response deleteGroup(@PathParam("id") String id) {
+		public Response deleteResource(@PathParam("id") String id) {
 			Response response = null;
+			logger.logMessage(LogLevel.INFO, "delete Resource called ");
 			try {
-				groupsServicesImpl.deleteGroup(id);
+				resourcesServicesImpl.deleteResource(id);
 				response = Response.status(Response.Status.OK)
-						.entity("group deleted successfully").build();
+						.entity("resource deleted successfully").build();
+				logger.logMessage(LogLevel.INFO, "delete Resource successful");
 			} catch (ResourceNotFoundException re) {
 				response = Response.status(Response.Status.NOT_FOUND)
 						.entity(" NOT_FOUND error").build();
-				logger.logException(LogLevel.ERROR, "delete group failed ::", re);
+				logger.logException(LogLevel.ERROR, "delete resource failed ::", re);
 			} catch (Exception e) {
 				ErrorsDTO errorsDTO = Utility.createError(ErrorConstants.INTERNAL_SYSTEM_ERROR,e.getMessage());
 				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 						.entity(errorsDTO).build();
 				logger.logException(LogLevel.ERROR,
-						"exception occured while deleting a group", e);
+						"exception occured while deleting a resource", e);
 			}
 			return response;
 		}
+
 
 }

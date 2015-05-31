@@ -14,13 +14,13 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.wsi.creational.ILogger;
-import com.wsi.creational.LoggerManager;
 import com.wsi.dto.UserProfileDTO;
 import com.wsi.entity.UserProfile;
 import com.wsi.enums.LogLevel;
 import com.wsi.exceptions.CustomException;
 import com.wsi.exceptions.ResourceNotFoundException;
+import com.wsi.logging.ILogger;
+import com.wsi.logging.LoggerManager;
 import com.wsi.services.UserServices;
 
 @Component
