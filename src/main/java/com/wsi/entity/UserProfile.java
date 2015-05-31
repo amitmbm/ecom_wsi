@@ -1,6 +1,6 @@
 package com.wsi.entity;
 
-// Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 31, 2015 3:40:50 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public class UserProfile implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3777519460809227802L;
+	private static final long serialVersionUID = 7110613027266348576L;
 	private String userEmail;
 	private Users users;
 	private String firstName;

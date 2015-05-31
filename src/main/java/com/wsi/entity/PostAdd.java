@@ -1,6 +1,6 @@
 package com.wsi.entity;
 
-// Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 31, 2015 3:40:50 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public class PostAdd implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 634651044173726711L;
+	private static final long serialVersionUID = 7371215355848440131L;
 	private String addGuid;
 	private ProductSubCategory productSubCategory;
 	private Users users;

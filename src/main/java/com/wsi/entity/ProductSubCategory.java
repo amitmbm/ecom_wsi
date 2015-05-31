@@ -1,6 +1,6 @@
 package com.wsi.entity;
 
-// Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 31, 2015 3:40:50 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,7 +14,7 @@ public class ProductSubCategory implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7862421340696481392L;
+	private static final long serialVersionUID = -4058965075635792887L;
 	private String subCatGuid;
 	private ProductCategory productCategory;
 	private String subCatName;

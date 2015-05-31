@@ -1,6 +1,6 @@
 package com.wsi.entity;
 
-// Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 31, 2015 3:40:50 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,12 +14,12 @@ public class Users implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7245681925470656433L;
+	private static final long serialVersionUID = -4055803596191814717L;
 	private String userEmail;
+	private Groups groups;
 	private String userPasswd;
 	private Boolean isRegisterd;
-	// TODO :-> remove user key from entity and .xml as we won't use it .
-	//private String userKey;
+	private String userKey;
 	private String createdBy;
 	private String updatedBy;
 	private Date createdAt;
@@ -38,13 +38,15 @@ public class Users implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Users(String userEmail, String userPasswd, Boolean isRegisterd,
-			String userKey, String createdBy, String updatedBy, Date createdAt,
-			Date updatedAt, Set postAdds, UserProfile userProfile) {
+	public Users(String userEmail, Groups groups, String userPasswd,
+			Boolean isRegisterd, String userKey, String createdBy,
+			String updatedBy, Date createdAt, Date updatedAt, Set postAdds,
+			UserProfile userProfile) {
 		this.userEmail = userEmail;
+		this.groups = groups;
 		this.userPasswd = userPasswd;
 		this.isRegisterd = isRegisterd;
-		//this.userKey = userKey;
+		this.userKey = userKey;
 		this.createdBy = createdBy;
 		this.updatedBy = updatedBy;
 		this.createdAt = createdAt;
@@ -59,6 +61,14 @@ public class Users implements java.io.Serializable {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+
+	public Groups getGroups() {
+		return this.groups;
+	}
+
+	public void setGroups(Groups groups) {
+		this.groups = groups;
 	}
 
 	public String getUserPasswd() {
@@ -77,14 +87,14 @@ public class Users implements java.io.Serializable {
 		this.isRegisterd = isRegisterd;
 	}
 
-/*	public String getUserKey() {
+	public String getUserKey() {
 		return this.userKey;
 	}
 
 	public void setUserKey(String userKey) {
 		this.userKey = userKey;
 	}
-*/
+
 	public String getCreatedBy() {
 		return this.createdBy;
 	}
