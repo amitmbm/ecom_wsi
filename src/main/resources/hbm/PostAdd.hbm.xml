@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 28, 2014 10:29:37 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wsi.entity.PostAdd" table="post_add" catalog="wsi_db">
+        <id name="addGuid" type="string">
+            <column name="add_guid" length="36" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="productSubCategory" class="com.wsi.entity.ProductSubCategory" fetch="select">
+            <column name="sub_cat_guid" length="36" not-null="true" />
+        </many-to-one>
+        <many-to-one name="users" class="com.wsi.entity.Users" fetch="select">
+            <column name="user_email" length="128" not-null="true" />
+        </many-to-one>
+        <many-to-one name="productSubCategoryType" class="com.wsi.entity.ProductSubCategoryType" fetch="select">
+            <column name="type_guid" length="36" not-null="true" />
+        </many-to-one>
+        <property name="addDesc" type="string">
+            <column name="add_desc" length="2048" not-null="true" />
+        </property>
+        <property name="price" type="int">
+            <column name="price" not-null="true" unique="true" />
+        </property>
+        <property name="negotiable" type="java.lang.Boolean">
+            <column name="negotiable" />
+        </property>
+        <property name="image1" type="string">
+            <column name="image_1" length="16777215" />
+        </property>
+        <property name="image2" type="string">
+            <column name="image_2" length="16777215" />
+        </property>
+        <property name="image3" type="string">
+            <column name="image_3" length="16777215" />
+        </property>
+        <property name="image4" type="string">
+            <column name="image_4" length="16777215" />
+        </property>
+        <property name="createdBy" type="string">
+            <column name="created_by" length="128" />
+        </property>
+        <property name="updatedBy" type="string">
+            <column name="updated_by" length="128" />
+        </property>
+        <property name="createdAt" type="timestamp">
+            <column name="created_at" length="19" not-null="true" />
+        </property>
+        <property name="updatedAt" type="timestamp">
+            <column name="updated_at" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
