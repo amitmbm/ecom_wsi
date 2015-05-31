@@ -1,8 +1,13 @@
 -- MySQL dump 10.13  Distrib 5.6.23, for Win32 (x86)
 --
--- Host: localhost    Database: wsi_db
+-- Host: localhost    Database: wsi
 -- ------------------------------------------------------
 -- Server version	5.6.23-log
+drop database if exists `wsi_db`;
+
+create database `wsi_db`;
+
+use `wsi_db`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,9 +40,9 @@ CREATE TABLE `acls` (
   KEY `grp_fk1` (`grp_name`),
   KEY `res_fk1` (`res_name`),
   KEY `perm_fk1` (`perm_name`),
-  CONSTRAINT `grp_fk1` FOREIGN KEY (`grp_name`) REFERENCES `group` (`name`),
-  CONSTRAINT `perm_fk1` FOREIGN KEY (`perm_name`) REFERENCES `permission` (`name`),
-  CONSTRAINT `res_fk1` FOREIGN KEY (`res_name`) REFERENCES `resource` (`name`)
+  CONSTRAINT `grp_fk1` FOREIGN KEY (`grp_name`) REFERENCES `groups` (`name`),
+  CONSTRAINT `perm_fk1` FOREIGN KEY (`perm_name`) REFERENCES `permissions` (`name`),
+  CONSTRAINT `res_fk1` FOREIGN KEY (`res_name`) REFERENCES `resources` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,13 +56,13 @@ LOCK TABLES `acls` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `group`
+-- Table structure for table `groups`
 --
 
-DROP TABLE IF EXISTS `group`;
+DROP TABLE IF EXISTS `groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `group` (
+CREATE TABLE `groups` (
   `id` varchar(36) NOT NULL,
   `name` varchar(128) NOT NULL,
   `type` varchar(128) NOT NULL,
@@ -71,22 +76,22 @@ CREATE TABLE `group` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `group`
+-- Dumping data for table `groups`
 --
 
-LOCK TABLES `group` WRITE;
-/*!40000 ALTER TABLE `group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `group` ENABLE KEYS */;
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `permission`
+-- Table structure for table `permissions`
 --
 
-DROP TABLE IF EXISTS `permission`;
+DROP TABLE IF EXISTS `permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `permission` (
+CREATE TABLE `permissions` (
   `id` varchar(36) NOT NULL,
   `name` varchar(128) NOT NULL,
   `created_by` varchar(128) DEFAULT NULL,
@@ -99,12 +104,12 @@ CREATE TABLE `permission` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `permission`
+-- Dumping data for table `permissions`
 --
 
-LOCK TABLES `permission` WRITE;
-/*!40000 ALTER TABLE `permission` DISABLE KEYS */;
-/*!40000 ALTER TABLE `permission` ENABLE KEYS */;
+LOCK TABLES `permissions` WRITE;
+/*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -243,13 +248,13 @@ LOCK TABLES `product_sub_category_type` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `resource`
+-- Table structure for table `resources`
 --
 
-DROP TABLE IF EXISTS `resource`;
+DROP TABLE IF EXISTS `resources`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `resource` (
+CREATE TABLE `resources` (
   `id` varchar(36) NOT NULL,
   `name` varchar(128) NOT NULL,
   `created_by` varchar(128) DEFAULT NULL,
@@ -262,12 +267,12 @@ CREATE TABLE `resource` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `resource`
+-- Dumping data for table `resources`
 --
 
-LOCK TABLES `resource` WRITE;
-/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
+LOCK TABLES `resources` WRITE;
+/*!40000 ALTER TABLE `resources` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resources` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -319,7 +324,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_email`),
   KEY `user_grp_fk1` (`grp_name`),
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`grp_name`) REFERENCES `group` (`name`) ON DELETE CASCADE
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`grp_name`) REFERENCES `groups` (`name`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
