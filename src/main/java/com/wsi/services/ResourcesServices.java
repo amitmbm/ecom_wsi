@@ -2,13 +2,12 @@ package com.wsi.services;
 
 import java.util.List;
 
-import com.wsi.dto.ResourcesDTO;
 import com.wsi.entity.Resources;
 
 public interface ResourcesServices {
 	
-	public Resources CreateResource(ResourcesDTO resourcesDTO) throws Exception;
-	public Resources updateResource(ResourcesDTO resourcesDTO, String id) throws Exception;
+	public Resources CreateResource(Resources resources) throws Exception;
+	public Resources updateResource(Resources resources, String id) throws Exception;
 	public Resources getResourceById(String id) throws Exception;
 	public Resources getResourceByName(String name) throws Exception;
 	//public List<Resources> getResourceList(int low , int high) throws Exception;

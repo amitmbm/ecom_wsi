@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wsi.dao.GenericDao;
-import com.wsi.dto.GroupsDTO;
 import com.wsi.entity.Groups;
-import com.wsi.entity.Groups;
-import com.wsi.entity.ProductCategory;
 import com.wsi.exceptions.ResourceNotFoundException;
 
 @Service
@@ -24,19 +21,14 @@ public class GroupsServicesImpl implements GroupsServices {
 
 	@Override
 	@Transactional
-	public Groups CreateGroup(GroupsDTO groupsDTO) throws Exception {
+	public Groups CreateGroup(Groups groups) throws Exception {
 		try{
-			Groups groups = getGroupByName(groupsDTO.getName());
-			updateGroup(groupsDTO, groups.getId());
-			return groups;
+			getGroupByName(groups.getName());
+			return updateGroup(groups, groups.getId());
 		}
 		catch (ResourceNotFoundException re) {
-			Groups groups = new Groups();
-			groups.setName(groupsDTO.getName());
-
 			groups.setId(UUID.randomUUID().toString());
-            
-			groups.setType(groupsDTO.getType());
+            groups.setType(groups.getType());
 			
 			Date now = new Date();
 			groups.setCreatedAt(now);
@@ -47,17 +39,17 @@ public class GroupsServicesImpl implements GroupsServices {
 
 	@Override
 	@Transactional
-	public Groups updateGroup(GroupsDTO groupDTO, String id) throws Exception {
+	public Groups updateGroup(Groups groups , String id) throws Exception {
 		try{
-			Groups groups = getGroupById(id);
-			if (groupDTO.getName() != null)
-				groups.setName(groupDTO.getName());
+			Groups groups1 = getGroupById(id);
+			if (groups.getName() != null)
+				groups1.setName(groups.getName());
 
-			if(groupDTO.getType() != null)
-				groups.setType(groupDTO.getType());
+			if(groups.getType() != null)
+				groups1.setType(groups.getType());
             
-			groups.setUpdatedAt(new Date());
-			return genericDao.updateEntity(groups);
+			groups1.setUpdatedAt(new Date());
+			return genericDao.updateEntity(groups1);
 		}catch(ResourceNotFoundException re){
 			throw re;
 		}	

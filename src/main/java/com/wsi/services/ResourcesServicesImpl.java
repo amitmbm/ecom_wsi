@@ -10,47 +10,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wsi.dao.GenericDao;
-import com.wsi.dto.ResourcesDTO;
 import com.wsi.entity.Resources;
 import com.wsi.exceptions.ResourceNotFoundException;
 
 @Service
 public class ResourcesServicesImpl implements ResourcesServices {
-	
+
 	@Autowired
 	GenericDao genericDao;
 
 	@Override
 	@Transactional
-	public Resources CreateResource(ResourcesDTO resourcesDTO) throws Exception {
+	public Resources CreateResource(Resources resources) throws Exception {
 		try{
-			Resources Resources = getResourceByName(resourcesDTO.getName());
-			updateResource(resourcesDTO, Resources.getId());
-			return Resources;
+			getResourceByName(resources.getName());
+			return updateResource(resources, resources.getId());
 		}
 		catch (ResourceNotFoundException re) {
-			Resources Resources = new Resources();
-			Resources.setName(resourcesDTO.getName());
-
-			Resources.setId(UUID.randomUUID().toString());
+			resources.setName(resources.getName());
+			resources.setId(UUID.randomUUID().toString());
 			Date now = new Date();
-			Resources.setCreatedAt(now);
-			Resources.setUpdatedAt(now);
-			return genericDao.addEntity(Resources);
+			resources.setCreatedAt(now);
+			resources.setUpdatedAt(now);
+			return genericDao.addEntity(resources);
 		}
 	}
 
 	@Override
 	@Transactional
-	public Resources updateResource(ResourcesDTO resourcesDTO, String id)
+	public Resources updateResource(Resources resources, String id)
 			throws Exception {
 		try{
-			Resources Resources = getResourceById(id);
-			if (resourcesDTO.getName() != null)
-				Resources.setName(resourcesDTO.getName());
+			Resources resources1 = getResourceById(id);
+			if (resources.getName() != null)
+				resources1.setName(resources.getName());
 
-			Resources.setUpdatedAt(new Date());
-			return genericDao.updateEntity(Resources);
+			resources1.setUpdatedAt(new Date());
+			return genericDao.updateEntity(resources1);
 		}catch(ResourceNotFoundException re){
 			throw re;
 		}	
