@@ -27,11 +27,7 @@ public class ResourcesServicesImpl implements ResourcesServices {
 			return updateResource(resources, resources.getId());
 		}
 		catch (ResourceNotFoundException re) {
-			resources.setName(resources.getName());
 			resources.setId(UUID.randomUUID().toString());
-			Date now = new Date();
-			resources.setCreatedAt(now);
-			resources.setUpdatedAt(now);
 			return genericDao.addEntity(resources);
 		}
 	}
@@ -45,7 +41,6 @@ public class ResourcesServicesImpl implements ResourcesServices {
 			if (resources.getName() != null)
 				resources1.setName(resources.getName());
 
-			resources1.setUpdatedAt(new Date());
 			return genericDao.updateEntity(resources1);
 		}catch(ResourceNotFoundException re){
 			throw re;

@@ -28,11 +28,6 @@ public class GroupsServicesImpl implements GroupsServices {
 		}
 		catch (ResourceNotFoundException re) {
 			groups.setId(UUID.randomUUID().toString());
-            groups.setType(groups.getType());
-			
-			Date now = new Date();
-			groups.setCreatedAt(now);
-			groups.setUpdatedAt(now);
 			return genericDao.addEntity(groups);
 		}
 	}
@@ -48,7 +43,6 @@ public class GroupsServicesImpl implements GroupsServices {
 			if(groups.getType() != null)
 				groups1.setType(groups.getType());
             
-			groups1.setUpdatedAt(new Date());
 			return genericDao.updateEntity(groups1);
 		}catch(ResourceNotFoundException re){
 			throw re;
