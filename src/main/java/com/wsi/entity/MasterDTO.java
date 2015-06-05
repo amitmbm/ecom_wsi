@@ -40,5 +40,12 @@ public class MasterDTO {
 		this.updatedAt = updatedAt;
 	}
 
+	@XmlElement(name = "created_by")
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
 
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 }

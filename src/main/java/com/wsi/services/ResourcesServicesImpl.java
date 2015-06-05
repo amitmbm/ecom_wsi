@@ -1,7 +1,6 @@
 package com.wsi.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,8 +22,7 @@ public class ResourcesServicesImpl implements ResourcesServices {
 	@Transactional
 	public Resources CreateResource(Resources resources) throws Exception {
 		try{
-			getResourceByName(resources.getName());
-			return updateResource(resources, resources.getId());
+			return updateResource(resources, getResourceByName(resources.getName()).getId());
 		}
 		catch (ResourceNotFoundException re) {
 			resources.setId(UUID.randomUUID().toString());

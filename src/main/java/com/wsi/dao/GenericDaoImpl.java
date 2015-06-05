@@ -1,5 +1,6 @@
 package com.wsi.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -7,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.wsi.entity.MasterDTO;
 
 @Repository
 public class GenericDaoImpl implements GenericDao {
@@ -135,6 +138,9 @@ public class GenericDaoImpl implements GenericDao {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.update(entity);
+			if (entity instanceof MasterDTO)
+				((MasterDTO)entity).setUpdatedAt(new Date());
+			
 			return entity;
 		}catch(Exception e){
 			e.printStackTrace();

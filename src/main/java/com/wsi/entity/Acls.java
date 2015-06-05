@@ -4,7 +4,6 @@ package com.wsi.entity;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -12,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 
 @XmlRootElement
-public class Acls implements java.io.Serializable {
+public class Acls extends MasterDTO implements java.io.Serializable {
 
 	/**
 	 * 
@@ -22,11 +21,7 @@ public class Acls implements java.io.Serializable {
 	private Resources resources;
 	private Permissions permissions;
 	private Groups groups;
-	private String createdBy;
-	private String updatedBy;
-	private Date createdAt;
-	private Date updatedAt;
-
+	
 	public Acls() {
 	}
 
@@ -84,41 +79,4 @@ public class Acls implements java.io.Serializable {
 	public void setGroups(Groups groups) {
 		this.groups = groups;
 	}
-    
-	@XmlElement(name = "created_by")
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	@XmlElement(name = "updated_by")
-	public String getUpdatedBy() {
-		return this.updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	@XmlElement(name = "created_at")
-	public Date getCreatedAt() {
-		return this.createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	@XmlElement(name = "updated_at")
-	public Date getUpdatedAt() {
-		return this.updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
 }

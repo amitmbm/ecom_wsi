@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -73,15 +71,6 @@ public class Groups extends MasterDTO implements java.io.Serializable {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-	
-	@XmlElement(name = "created_by")
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 	
 	@XmlTransient

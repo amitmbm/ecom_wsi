@@ -1,7 +1,6 @@
 package com.wsi.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +14,7 @@ import com.wsi.exceptions.ResourceNotFoundException;
 
 @Service
 public class PermissionsServicesImpl implements PermissionServices{
-	
+
 	@Autowired
 	GenericDao genericDao;
 
@@ -24,8 +23,7 @@ public class PermissionsServicesImpl implements PermissionServices{
 	public Permissions createPermissions(Permissions permissions)
 			throws Exception {
 		try{
-			getPermissionsByName(permissions.getName());
-			return updatePermissions(permissions, permissions.getId());
+			return updatePermissions(permissions, getPermissionsByName(permissions.getName()).getId());
 		}
 		catch (ResourceNotFoundException re) {
 			permissions.setId(UUID.randomUUID().toString());

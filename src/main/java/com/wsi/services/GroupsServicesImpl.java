@@ -1,7 +1,6 @@
 package com.wsi.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +14,7 @@ import com.wsi.exceptions.ResourceNotFoundException;
 
 @Service
 public class GroupsServicesImpl implements GroupsServices {
-	
+
 	@Autowired
 	GenericDao genericDao;
 
@@ -23,8 +22,7 @@ public class GroupsServicesImpl implements GroupsServices {
 	@Transactional
 	public Groups CreateGroup(Groups groups) throws Exception {
 		try{
-			getGroupByName(groups.getName());
-			return updateGroup(groups, groups.getId());
+			return updateGroup(groups, getGroupByName(groups.getName()).getId());
 		}
 		catch (ResourceNotFoundException re) {
 			groups.setId(UUID.randomUUID().toString());
@@ -42,7 +40,7 @@ public class GroupsServicesImpl implements GroupsServices {
 
 			if(groups.getType() != null)
 				groups1.setType(groups.getType());
-            
+
 			return genericDao.updateEntity(groups1);
 		}catch(ResourceNotFoundException re){
 			throw re;
@@ -85,5 +83,4 @@ public class GroupsServicesImpl implements GroupsServices {
 			throw new ResourceNotFoundException("Group Name :"+ name+ " not exist");
 		return groups;
 	}
-
 }

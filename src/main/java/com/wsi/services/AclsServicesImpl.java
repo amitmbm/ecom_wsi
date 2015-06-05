@@ -1,7 +1,6 @@
 package com.wsi.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,11 +22,8 @@ public class AclsServicesImpl implements AclsServices {
 	@Transactional
 	public Acls createAcls(Acls acls) throws Exception {
 		try {
-			// method to check whether an Acls is present with the unique
-			// combination of Group , Resource and Permission.
-			getAclsByGrpResPerm(acls.getGroups().getName(), acls.getResources()
-					.getName(), acls.getPermissions().getName());
-			return updateAcls(acls, acls.getId());
+			return updateAcls(acls, getAclsByGrpResPerm(acls.getGroups().getName(), acls.getResources()
+					.getName(), acls.getPermissions().getName()).getId());
 		} catch (ResourceNotFoundException re) {
 			acls.setId(UUID.randomUUID().toString());
 			return genericDao.addEntity(acls);
@@ -44,7 +40,7 @@ public class AclsServicesImpl implements AclsServices {
 
 			if (acls.getResources().getName() != null)
 				acls1.getResources().setName(acls.getResources().getName());
-			
+
 			if(acls.getPermissions().getName() !=null)
 				acls1.getPermissions().setName(acls.getPermissions().getName());
 
